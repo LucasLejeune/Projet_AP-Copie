@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="InscriptionC" prefHeight="606.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet_ap.FormCController">
+   <children>
+      <TextField fx:id="id" layoutX="127.0" layoutY="334.0" prefHeight="25.0" prefWidth="161.0" promptText="Identifiant" />
+      <Button layoutX="71.0" layoutY="458.0" mnemonicParsing="false" onAction="#inscription_C" prefHeight="30.0" prefWidth="161.0" text="Soumettre" />
+      <Button fx:id="BackButton" layoutX="70.0" layoutY="495.0" mnemonicParsing="false" onAction="#switchToAcceuil" prefHeight="30.0" prefWidth="163.0" text="Revenir à l'Acceuil" />
+      <Label layoutX="14.0" layoutY="30.0" prefHeight="90.0" prefWidth="275.0" text="Formulaire d'inscription en temp que Comptable" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="332.0" prefHeight="30.0" prefWidth="76.0" text="Identifiant :" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="376.0" prefHeight="21.0" prefWidth="99.0" text="Mot de passe :">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="291.0" prefHeight="25.0" prefWidth="76.0" text="Email :">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="Email" layoutX="127.0" layoutY="291.0" prefHeight="25.0" prefWidth="161.0" promptText="Adresse Email" />
+      <TextField fx:id="Prenom" layoutX="127.0" layoutY="195.0" prefHeight="25.0" prefWidth="161.0" promptText="Prenom" />
+      <TextField fx:id="Nom" layoutX="127.0" layoutY="153.0" prefHeight="25.0" prefWidth="161.0" promptText="Nom" />
+      <Label layoutX="14.0" layoutY="157.0" text="Nom :">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="199.0" text="Prenom :">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="244.0" text="Date de Naissance :">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="Date_naissance" layoutX="153.0" layoutY="241.0" prefHeight="26.0" prefWidth="136.0" promptText="JJ/MM/AAAA" />
+      <PasswordField fx:id="mdp" layoutX="122.0" layoutY="374.0" onAction="#inscription_C" prefHeight="26.0" prefWidth="162.0" promptText="Mot de passe" />
+   </children>
+</AnchorPane>

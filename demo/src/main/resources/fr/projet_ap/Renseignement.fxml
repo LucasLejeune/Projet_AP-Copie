@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" prefHeight="35.0" prefWidth="299.0" text="ETAT DE FRAIS ENGAGES" textAlignment="CENTER" textFill="#272e5b">
+         <font>
+            <Font name="Times New Roman Bold" size="17.0" />
+         </font>
+      </Label>
+      <Separator layoutY="34.0" prefHeight="3.0" prefWidth="299.0" />
+      <Label layoutX="14.0" layoutY="48.0" prefHeight="14.0" prefWidth="53.0" text="Visiteur :" textFill="#3f6bab">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField layoutX="140.0" layoutY="42.0" prefHeight="25.0" prefWidth="134.0" promptText="Matricule" />
+      <Label layoutX="71.0" layoutY="48.0" text="Matricule :">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="71.0" layoutY="74.0" prefHeight="14.0" prefWidth="53.0" text="Nom :">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <TextField layoutX="140.0" layoutY="70.0" prefHeight="25.0" prefWidth="134.0" promptText="Nom" />
+      <Label layoutX="7.0" layoutY="146.0" prefHeight="14.0" prefWidth="87.0" text="Frais Forfaitaires">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="146.0" prefHeight="14.0" prefWidth="44.0" text="Quantité">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Separator layoutX="-2.0" layoutY="163.0" prefHeight="3.0" prefWidth="299.0" />
+      <Separator layoutX="-2.0" layoutY="141.0" prefHeight="3.0" prefWidth="299.0" />
+      <Label layoutX="154.0" layoutY="146.0" text="Montant unitaire">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="253.0" layoutY="146.0" prefHeight="14.0" prefWidth="36.0" text="Total">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Separator layoutX="97.0" layoutY="163.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
+      <Separator layoutX="145.0" layoutY="163.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
+      <Separator layoutX="241.0" layoutY="163.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
+      <Separator layoutX="-2.0" layoutY="188.0" prefHeight="3.0" prefWidth="299.0" />
+      <Separator layoutX="-1.0" layoutY="214.0" prefHeight="3.0" prefWidth="299.0" />
+      <Separator layoutX="-2.0" layoutY="237.0" prefHeight="3.0" prefWidth="299.0" />
+      <Label layoutX="34.0" layoutY="168.0" text="Nuitée">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="23.0" layoutY="193.0" text="Repas Midi">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="219.0" text="Kilometrage">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="177.0" layoutY="168.0" text="80.00 €">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="177.0" layoutY="193.0" text="29.00 €">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="106.0" text="Mois :" textFill="#3f6bab">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </Label>
+      <TextField layoutX="66.0" layoutY="101.0" prefHeight="25.0" prefWidth="208.0" promptText="mm/aaaa" />
+      <TextField layoutX="96.0" layoutY="163.0" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <TextField layoutX="96.0" layoutY="188.0" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <TextField layoutX="96.0" layoutY="213.0" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <TextField layoutX="149.0" layoutY="213.0" prefHeight="25.0" prefWidth="94.0" promptText="00.00€" />
+      <Label layoutX="117.0" layoutY="259.0" text="Autres Frais" textFill="#3f6bab">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="38.0" layoutY="298.0" text="Date">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Separator layoutX="-1.0" layoutY="295.0" prefHeight="3.0" prefWidth="299.0" />
+      <Label layoutX="134.0" layoutY="298.0" text="Libellé">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="234.0" layoutY="298.0" text="Montant">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Separator layoutX="-2.0" layoutY="341.0" prefHeight="3.0" prefWidth="299.0" />
+      <TextField layoutX="-2.0" layoutY="316.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
+      <TextField layoutX="96.0" layoutY="316.0" prefHeight="25.0" prefWidth="113.0" />
+      <TextField layoutX="207.0" layoutY="316.0" prefHeight="25.0" prefWidth="94.0" />
+      <TextField layoutX="-1.0" layoutY="341.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
+      <TextField layoutX="-3.0" layoutY="366.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
+      <TextField layoutX="-3.0" layoutY="391.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
+      <TextField layoutX="-3.0" layoutY="416.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
+      <TextField layoutX="96.0" layoutY="341.0" prefHeight="25.0" prefWidth="113.0" />
+      <TextField layoutX="96.0" layoutY="366.0" prefHeight="25.0" prefWidth="113.0" />
+      <TextField layoutX="96.0" layoutY="391.0" prefHeight="25.0" prefWidth="113.0" />
+      <TextField layoutX="96.0" layoutY="416.0" prefHeight="25.0" prefWidth="113.0" />
+      <TextField layoutX="207.0" layoutY="341.0" prefHeight="25.0" prefWidth="94.0" />
+      <TextField layoutX="207.0" layoutY="366.0" prefHeight="25.0" prefWidth="94.0" />
+      <TextField layoutX="207.0" layoutY="391.0" prefHeight="25.0" prefWidth="94.0" />
+      <TextField layoutX="207.0" layoutY="416.0" prefHeight="25.0" prefWidth="94.0" />
+      <Button layoutX="89.0" layoutY="451.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Signer et Soumettre" />
+      <Button layoutX="15.0" layoutY="560.0" mnemonicParsing="false" text="Revenir en arrière" />
+   </children>
+</AnchorPane>
