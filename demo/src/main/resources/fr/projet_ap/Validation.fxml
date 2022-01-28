@@ -80,12 +80,12 @@
       </Label>
       <Separator layoutX="-2.0" layoutY="220.0" prefHeight="3.0" prefWidth="299.0" />
       <Separator layoutX="-2.0" layoutY="198.0" prefHeight="3.0" prefWidth="299.0" />
-      <Label layoutX="154.0" layoutY="202.0" prefHeight="18.0" prefWidth="54.0" text="Montant unitaire" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="152.0" layoutY="202.0" prefHeight="18.0" prefWidth="54.0" text="Montant" textAlignment="CENTER">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="232.0" layoutY="203.0" prefHeight="14.0" prefWidth="36.0" text="Total">
+      <Label layoutX="226.0" layoutY="203.0" prefHeight="14.0" prefWidth="36.0" text="Total">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
@@ -111,12 +111,12 @@
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="163.0" layoutY="225.0" text="80.00 €">
+      <Label layoutX="163.0" layoutY="226.0" text="80.00 €">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="163.0" layoutY="250.0" text="29.00 €">
+      <Label layoutX="163.0" layoutY="251.0" text="29.00 €">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
@@ -132,18 +132,18 @@
             <Font name="Times New Roman Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="38.0" layoutY="355.0" text="Date">
+      <Label layoutX="19.0" layoutY="355.0" text="Date">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
       <Separator layoutX="-1.0" layoutY="352.0" prefHeight="3.0" prefWidth="299.0" />
-      <Label layoutX="134.0" layoutY="355.0" text="Libellé">
+      <Label layoutX="93.0" layoutY="355.0" text="Libellé">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="234.0" layoutY="355.0" text="Montant">
+      <Label layoutX="179.0" layoutY="355.0" text="Montant">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
@@ -155,37 +155,58 @@
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Button>
-      <Label fx:id="QuantiteNuitee" alignment="CENTER" layoutX="101.0" layoutY="221.0" prefHeight="26.0" prefWidth="44.0" text="00" />
-      <Label fx:id="QuantiteRepas" alignment="CENTER" layoutX="102.0" layoutY="245.0" prefHeight="26.0" prefWidth="41.0" text="00" />
-      <Label fx:id="QuantiteKilometrage" alignment="CENTER" layoutX="101.0" layoutY="271.0" prefHeight="26.0" prefWidth="44.0" text="00" />
-      <Label fx:id="MontantKilometrage" alignment="CENTER" layoutX="139.0" layoutY="273.0" prefHeight="14.0" prefWidth="82.0" text="0 €" />
-      <Label fx:id="TotalNuitee" alignment="CENTER" layoutX="225.0" layoutY="224.0" prefHeight="18.0" prefWidth="44.0" text="0.00 €">
+      <Label fx:id="QuantiteNuitee" alignment="CENTER" layoutX="101.0" layoutY="221.0" prefHeight="26.0" prefWidth="44.0" text="00">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font></Label>
+      <Label fx:id="QuantiteRepas" alignment="CENTER" layoutX="102.0" layoutY="245.0" prefHeight="26.0" prefWidth="41.0" text="00">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font></Label>
+      <Label fx:id="QuantiteKilometrage" alignment="CENTER" layoutX="101.0" layoutY="271.0" prefHeight="26.0" prefWidth="44.0" text="00">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font></Label>
+      <Label fx:id="MontantKilometrage" alignment="CENTER" layoutX="139.0" layoutY="276.0" prefHeight="14.0" prefWidth="82.0" text="0 €">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font></Label>
+      <Label fx:id="TotalNuitee" alignment="CENTER" layoutX="219.0" layoutY="224.0" prefHeight="18.0" prefWidth="44.0" text="0.00 €">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="TotalRepas" alignment="CENTER" layoutX="226.0" layoutY="250.0" prefHeight="18.0" prefWidth="44.0" text="0.00 €">
+      <Label fx:id="TotalRepas" alignment="CENTER" layoutX="219.0" layoutY="250.0" prefHeight="18.0" prefWidth="44.0" text="0.00 €">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="TotalKilometrage" alignment="CENTER" layoutX="225.0" layoutY="275.0" prefHeight="18.0" prefWidth="44.0" text="0 €" />
-      <Label fx:id="AutreDate1" layoutX="1.0" layoutY="372.0" prefHeight="26.0" prefWidth="102.0" />
-      <Label fx:id="AutreLibelle1" layoutX="102.0" layoutY="372.0" prefHeight="26.0" prefWidth="94.0" />
-      <Label fx:id="AutreMontant1" layoutX="195.0" layoutY="372.0" prefHeight="26.0" prefWidth="102.0" />
-      <Label fx:id="AutreDate2" layoutX="1.0" layoutY="398.0" prefHeight="26.0" prefWidth="102.0" />
-      <Label fx:id="AutreLibelle2" layoutX="102.0" layoutY="398.0" prefHeight="26.0" prefWidth="94.0" />
-      <Label fx:id="AutreMontant2" layoutX="195.0" layoutY="398.0" prefHeight="26.0" prefWidth="102.0" />
-      <Label fx:id="AutreDate3" layoutX="1.0" layoutY="424.0" prefHeight="26.0" prefWidth="102.0" />
-      <Label fx:id="AutreLibelle2" layoutX="102.0" layoutY="424.0" prefHeight="26.0" prefWidth="94.0" />
-      <Label fx:id="AutreMontant3" layoutX="195.0" layoutY="424.0" prefHeight="26.0" prefWidth="102.0" />
+      <Label fx:id="TotalKilometrage" alignment="CENTER" layoutX="218.0" layoutY="275.0" prefHeight="18.0" prefWidth="44.0" text="0.00 €">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font></Label>
+      <Label fx:id="AutreDate1" layoutX="1.0" layoutY="372.0" prefHeight="26.0" prefWidth="62.0" />
+      <Label fx:id="AutreLibelle1" layoutX="63.0" layoutY="372.0" prefHeight="26.0" prefWidth="94.0" />
+      <Label fx:id="AutreMontant1" layoutX="158.0" layoutY="372.0" prefHeight="26.0" prefWidth="82.0" />
+      <Label fx:id="AutreDate2" layoutX="1.0" layoutY="398.0" prefHeight="26.0" prefWidth="62.0" />
+      <Label fx:id="AutreLibelle2" layoutX="64.0" layoutY="398.0" prefHeight="26.0" prefWidth="94.0" />
+      <Label fx:id="AutreMontant2" layoutX="158.0" layoutY="398.0" prefHeight="26.0" prefWidth="82.0" />
+      <Label fx:id="AutreDate3" layoutX="1.0" layoutY="424.0" prefHeight="26.0" prefWidth="62.0" />
+      <Label fx:id="AutreLibelle2" layoutX="64.0" layoutY="424.0" prefHeight="26.0" prefWidth="94.0" />
+      <Label fx:id="AutreMontant3" layoutX="158.0" layoutY="424.0" prefHeight="26.0" prefWidth="82.0" />
       <Separator layoutY="423.0" prefHeight="3.0" prefWidth="299.0" />
       <Separator layoutY="397.0" prefHeight="3.0" prefWidth="299.0" />
       <Separator layoutX="1.0" layoutY="449.0" prefHeight="3.0" prefWidth="299.0" />
       <Separator layoutY="371.0" prefHeight="3.0" prefWidth="299.0" />
       <Separator layoutX="267.0" layoutY="221.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
-      <CheckBox fx:id="CheckNuitee" layoutX="276.0" layoutY="224.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="17.0" />
-      <CheckBox fx:id="CheckKm" layoutX="276.0" layoutY="274.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="17.0" />
-      <CheckBox fx:id="CheckRepas" layoutX="276.0" layoutY="249.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="17.0" />
+      <CheckBox fx:id="CheckNuitee" layoutX="276.0" layoutY="224.0" mnemonicParsing="false" onAction="#AutorisationNuit" prefHeight="18.0" prefWidth="17.0" />
+      <CheckBox fx:id="CheckKm" layoutX="276.0" layoutY="274.0" mnemonicParsing="false" onAction="#AutorisationKm" prefHeight="18.0" prefWidth="17.0" />
+      <CheckBox fx:id="CheckRepas" layoutX="276.0" layoutY="249.0" mnemonicParsing="false" onAction="#AutorisationRepas" prefHeight="18.0" prefWidth="17.0" />
+      <Separator layoutX="62.0" layoutY="373.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
+      <Separator layoutX="156.0" layoutY="373.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
+      <Separator layoutX="237.0" layoutY="373.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
+      <CheckBox fx:id="CheckKm1" layoutX="258.0" layoutY="428.0" mnemonicParsing="false" onAction="#AutorisationAutre3" prefHeight="18.0" prefWidth="17.0" />
+      <CheckBox fx:id="CheckKm2" layoutX="258.0" layoutY="402.0" mnemonicParsing="false" onAction="#AutorisationAutre2" prefHeight="18.0" prefWidth="17.0" />
+      <CheckBox fx:id="CheckKm3" layoutX="258.0" layoutY="376.0" mnemonicParsing="false" onAction="#AutorisationAutre1" prefHeight="18.0" prefWidth="17.0" />
    </children>
 </AnchorPane>
