@@ -96,14 +96,6 @@ public class ComptabiliteController {
      * @throws IOException
      */
     @FXML
-    private void switchTovalidation() throws IOException {
-        App.setRoot("Validation");
-    }
-
-    /**
-     * @throws IOException
-     */
-    @FXML
     private void Generer_ff() throws IOException {
         String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
         String username = "root";
@@ -119,13 +111,13 @@ public class ComptabiliteController {
             while (result.next()) {
                 String ident = result.getString(1);
 
-                String SqlQN = "SELECT QuantiteNuitee FROM fiches JOIN users ON VisiteurMatricule = Matricule WHERE Matricule = '"
+                String SqlQN = "SELECT QuantiteNuitee FROM fiches JOIN visiteur ON VisiteurMatricule = Matricule WHERE Matricule = '"
                         + ident + "';";
 
-                String SqlQR = "SELECT QuantiteRepas FROM fiches JOIN users ON VisiteurMatricule = Matricule WHERE Matricule = '"
+                String SqlQR = "SELECT QuantiteRepas FROM fiches JOIN visiteur ON VisiteurMatricule = Matricule WHERE Matricule = '"
                         + ident + "';";
 
-                String SqlQK = "SELECT QuantiteKilometrage FROM fiches JOIN users ON VisiteurMatricule = Matricule WHERE Matricule = '"
+                String SqlQK = "SELECT QuantiteKilometrage FROM fiches JOIN visiteur ON VisiteurMatricule = Matricule WHERE Matricule = '"
                         + ident + "';";
 
                 Statement stmt = conn.createStatement();
