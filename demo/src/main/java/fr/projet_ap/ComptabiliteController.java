@@ -111,14 +111,14 @@ public class ComptabiliteController {
             while (result.next()) {
                 String ident = result.getString(1);
 
-                String SqlQN = "SELECT QuantiteNuitee FROM fiches JOIN visiteur ON VisiteurMatricule = Matricule WHERE Matricule = '"
-                        + ident + "';";
+                String SqlQN = "SELECT Quantite FROM frais_forfaitaires JOIN visiteur ON vi_matricule = fk_matricule WHERE Matricule = '"
+                        + ident + "' AND ff_nom = nuitee;";
 
-                String SqlQR = "SELECT QuantiteRepas FROM fiches JOIN visiteur ON VisiteurMatricule = Matricule WHERE Matricule = '"
-                        + ident + "';";
+                String SqlQR = "SELECT Quantite FROM frais_forfaitaires JOIN visiteur ON vi_matricule = fk_matricule WHERE Matricule = '"
+                        + ident + "' AND ff_nom = repas;";
 
-                String SqlQK = "SELECT QuantiteKilometrage FROM fiches JOIN visiteur ON VisiteurMatricule = Matricule WHERE Matricule = '"
-                        + ident + "';";
+                String SqlQK = "SELECT Quantite FROM frais_forfaitaires JOIN visiteur ON vi_matricule = fk_matricule WHERE Matricule = '"
+                        + ident + "' AND ff_nom = kilometre;";
 
                 Statement stmt = conn.createStatement();
                 ResultSet resultatQN = stmt.executeQuery(SqlQN);
