@@ -58,8 +58,8 @@ public class ComptabiliteController {
 
         try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
 
-            String sql = "SELECT Matricule FROM users WHERE Matricule = '" + id.getText() + "' AND Mot_de_passe = '"
-                    + mdp.getText() + "'; ";
+            String sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule = '" + id.getText()
+                    + "' AND vi_mdp = '" + mdp.getText() + "'; ";
 
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(sql);
@@ -104,54 +104,56 @@ public class ComptabiliteController {
      * @throws IOException
      */
     @FXML
-    private void validation() throws IOException {
+    private void Generer_ff() throws IOException {
         String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
         String username = "root";
         String password = "";
 
         try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
 
-            String sql = "SELECT Matricule, nom, prenom FROM users;";
+            String sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule ='" + Matricule.getText() + "';";
 
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(sql);
 
             while (result.next()) {
                 String ident = result.getString(1);
-                String Nom = result.getString(2);
-                String prenom = result.getString(3);
 
-                String Nom_prenom = Nom + " " + prenom;
+                String SqlQN = "SELECT QuantiteNuitee FROM fiches JOIN users ON VisiteurMatricule = Matricule WHERE Matricule = '"
+                        + ident + "';";
 
-                if (Matricule.getText().equals(ident) && nom.getText().equals(Nom_prenom)) {
-                    String ficheSql = "SELECT QuantiteNuitee, QuantiteRepas, QuantiteKilometrage FROM fiches JOIN users ON VisiteurMatricule = Matricule WHERE Matricule = '"
-                            + ident + "';";
+                String SqlQR = "SELECT QuantiteRepas FROM fiches JOIN users ON VisiteurMatricule = Matricule WHERE Matricule = '"
+                        + ident + "';";
 
-                    Statement stmt = conn.createStatement();
-                    ResultSet resultat = stmt.executeQuery(ficheSql);
+                String SqlQK = "SELECT QuantiteKilometrage FROM fiches JOIN users ON VisiteurMatricule = Matricule WHERE Matricule = '"
+                        + ident + "';";
 
-                    resultat.next();
-                    String QNuitee = resultat.getString(1);
-                    String QRepas = resultat.getString(2);
-                    String QKilometrage = resultat.getString(3);
+                Statement stmt = conn.createStatement();
+                ResultSet resultatQN = stmt.executeQuery(SqlQN);
+                ResultSet resultatQR = stmt.executeQuery(SqlQR);
+                ResultSet resultatQK = stmt.executeQuery(SqlQK);
 
-                    QuantiteNuitee.setText(QNuitee);
-                    QuantiteRepas.setText(QRepas);
-                    QuantiteKilometrage.setText(QKilometrage);
+                resultatQN.next();
+                String QNuitee = resultatQN.getString(1);
+                String QRepas = resultatQR.getString(1);
+                String QKilometrage = resultatQK.getString(1);
 
-                    float QnuiteeInt = Float.parseFloat(QNuitee) * 80;
-                    String TotalNuit = String.valueOf(QnuiteeInt);
+                QuantiteNuitee.setText(QNuitee);
+                QuantiteRepas.setText(QRepas);
+                QuantiteKilometrage.setText(QKilometrage);
 
-                    float QRepasInt = Float.parseFloat(QRepas) * 29;
-                    String TotalRepasstr = String.valueOf(QRepasInt);
+                float QnuiteeInt = Float.parseFloat(QNuitee) * 80;
+                String TotalNuit = String.valueOf(QnuiteeInt);
 
-                    float QKmInt = Float.parseFloat(QKilometrage) * (80 / 100);
-                    String TotalKm = String.valueOf(QKmInt);
+                float QRepasInt = Float.parseFloat(QRepas) * 29;
+                String TotalRepasstr = String.valueOf(QRepasInt);
 
-                    TotalNuitee.setText(TotalNuit);
-                    TotalRepas.setText(TotalRepasstr);
-                    TotalKilometrage.setText(TotalKm);
-                }
+                float QKmInt = Float.parseFloat(QKilometrage) * (80 / 100);
+                String TotalKm = String.valueOf(QKmInt);
+
+                TotalNuitee.setText(TotalNuit);
+                TotalRepas.setText(TotalRepasstr);
+                TotalKilometrage.setText(TotalKm);
             }
 
         } catch (SQLException ex) {
