@@ -22,6 +22,9 @@ public class VisiteurController {
     @FXML
     private Label pasBon;
 
+    /**
+     * @throws IOException
+     */
     @FXML
     private void switchToClient() throws IOException {
         String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
@@ -56,6 +59,9 @@ public class VisiteurController {
 
     }
 
+    /**
+     * @throws IOException
+     */
     @FXML
     private void switchToAcceuil() throws IOException {
         App.setRoot("Acceuil");

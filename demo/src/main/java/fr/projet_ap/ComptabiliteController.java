@@ -47,6 +47,9 @@ public class ComptabiliteController {
     @FXML
     private Label TotalRepas;
 
+    /**
+     * @throws IOException
+     */
     @FXML
     private void switchToClient() throws IOException {
         String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
@@ -81,11 +84,25 @@ public class ComptabiliteController {
 
     }
 
+    /**
+     * @throws IOException
+     */
     @FXML
     private void switchToAcceuil() throws IOException {
         App.setRoot("Acceuil");
     }
 
+    /**
+     * @throws IOException
+     */
+    @FXML
+    private void switchTovalidation() throws IOException {
+        App.setRoot("Validation");
+    }
+
+    /**
+     * @throws IOException
+     */
     @FXML
     private void validation() throws IOException {
         String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
@@ -142,4 +159,34 @@ public class ComptabiliteController {
         }
     }
 
+    /**
+     * @throws IOException
+     */
+    @FXML
+    private void validationNuit() throws IOException {
+        String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
+        String username = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
+
+            String sql = "SELECT validee from fiche";
+
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+
+            while (result.next()) {
+                int validee = result.getInt(1);
+                if (validee == 0) {
+                    // changer BDD pour avoir validation pour chaque enregistrement
+
+                }
+            }
+        }
+
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
 }

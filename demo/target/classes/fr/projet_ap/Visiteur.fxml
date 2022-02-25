@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="606.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet_ap.VisiteurController">
    <children>
-      <TextField fx:id="identifiant" layoutX="35.0" layoutY="259.0" prefHeight="25.0" prefWidth="240.0" promptText="Identifiant" />
+      <TextField fx:id="id" layoutX="35.0" layoutY="259.0" prefHeight="25.0" prefWidth="240.0" promptText="Identifiant" />
       <TextField fx:id="mdp" layoutX="31.0" layoutY="366.0" prefHeight="25.0" prefWidth="240.0" promptText="Mot de passe" />
       <Button fx:id="Identification" layoutX="71.0" layoutY="436.0" mnemonicParsing="false" onAction="#switchToClient" prefHeight="30.0" prefWidth="161.0" text="S'identifier" />
       <Button fx:id="BackButton" layoutX="70.0" layoutY="480.0" mnemonicParsing="false" onAction="#switchToAcceuil" prefHeight="30.0" prefWidth="163.0" text="Revenir à l'Acceuil" />
@@ -25,6 +25,11 @@
       <Label layoutX="106.0" layoutY="333.0" prefHeight="21.0" prefWidth="99.0" text="Mot de passe :">
          <font>
             <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="pasBon" alignment="CENTER" layoutX="41.0" layoutY="303.0" prefHeight="18.0" prefWidth="223.0" textFill="RED">
+         <font>
+            <Font name="System Italic" size="12.0" />
          </font>
       </Label>
    </children>

@@ -33,21 +33,33 @@ public class RenseignementController {
     @FXML
     private Label ttRepas;
 
+    /**
+     * @throws IOException
+     */
     @FXML
     private void GoBack() throws IOException {
         App.setRoot("ClientV");
     }
 
+    /**
+     * @param event
+     */
     @FXML
     void calculerTTK(ActionEvent event) {
 
     }
 
+    /**
+     * @param event
+     */
     @FXML
     void calculerTTN(ActionEvent event) {
 
     }
 
+    /**
+     * @param event
+     */
     @FXML
     void calculerTTR(ActionEvent event) {
 

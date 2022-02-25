@@ -7,9 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet_ap.RenseignementController">
    <children>
       <Label alignment="CENTER" prefHeight="35.0" prefWidth="299.0" text="ETAT DE FRAIS ENGAGES" textAlignment="CENTER" textFill="#272e5b">
          <font>
@@ -22,7 +20,6 @@
             <Font name="Times New Roman Bold" size="12.0" />
          </font>
       </Label>
-      <TextField layoutX="140.0" layoutY="42.0" prefHeight="25.0" prefWidth="134.0" promptText="Matricule" />
       <Label layoutX="71.0" layoutY="48.0" text="Matricule :">
          <font>
             <Font name="Times New Roman" size="12.0" />
@@ -33,7 +30,6 @@
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <TextField layoutX="140.0" layoutY="70.0" prefHeight="25.0" prefWidth="134.0" promptText="Nom" />
       <Label layoutX="7.0" layoutY="146.0" prefHeight="14.0" prefWidth="87.0" text="Frais Forfaitaires">
          <font>
             <Font name="Times New Roman" size="12.0" />
@@ -93,10 +89,10 @@
          </font>
       </Label>
       <TextField layoutX="66.0" layoutY="101.0" prefHeight="25.0" prefWidth="208.0" promptText="mm/aaaa" />
-      <TextField layoutX="96.0" layoutY="163.0" prefHeight="25.0" prefWidth="53.0" promptText="00" />
-      <TextField layoutX="96.0" layoutY="188.0" prefHeight="25.0" prefWidth="53.0" promptText="00" />
-      <TextField layoutX="96.0" layoutY="213.0" prefHeight="25.0" prefWidth="53.0" promptText="00" />
-      <TextField layoutX="149.0" layoutY="213.0" prefHeight="25.0" prefWidth="94.0" promptText="00.00€" />
+      <TextField fx:id="nbrNuitee" layoutX="96.0" layoutY="163.0" onAction="#calculerTTN" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <TextField fx:id="nbrRepas" layoutX="96.0" layoutY="188.0" onAction="#calculerTTR" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <TextField fx:id="nbrKilo" layoutX="96.0" layoutY="213.0" onAction="#calculerTTK" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <TextField fx:id="mtntKilo" layoutX="149.0" layoutY="213.0" onAction="#calculerTTK" prefHeight="25.0" prefWidth="94.0" promptText="00.00€" />
       <Label layoutX="117.0" layoutY="259.0" text="Autres Frais" textFill="#3f6bab">
          <font>
             <Font name="Times New Roman Bold Italic" size="12.0" />
@@ -135,6 +131,28 @@
       <TextField layoutX="207.0" layoutY="391.0" prefHeight="25.0" prefWidth="94.0" />
       <TextField layoutX="207.0" layoutY="416.0" prefHeight="25.0" prefWidth="94.0" />
       <Button layoutX="89.0" layoutY="451.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Signer et Soumettre" />
-      <Button layoutX="15.0" layoutY="560.0" mnemonicParsing="false" text="Revenir en arrière" />
+      <Button fx:id="BackButton" layoutX="15.0" layoutY="560.0" mnemonicParsing="false" onAction="#GoBack" text="Revenir en arrière" />
+      <Label fx:id="ttNuitee" layoutX="247.0" layoutY="167.0" prefHeight="17.0" prefWidth="44.0" textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font></Label>
+      <Label fx:id="ttRepas" layoutX="247.0" layoutY="192.0" prefHeight="17.0" prefWidth="44.0">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font></Label>
+      <Label fx:id="ttNuitee" layoutX="247.0" layoutY="218.0" prefHeight="17.0" prefWidth="44.0">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font></Label>
+      <Label fx:id="Matricule" layoutX="148.0" layoutY="43.0" prefHeight="25.0" prefWidth="128.0">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="Nom" layoutX="148.0" layoutY="68.0" prefHeight="25.0" prefWidth="128.0">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.Projet_AP.ConsulationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet_ap.ConsultationController">
    <children>
       <Label alignment="CENTER" prefHeight="35.0" prefWidth="299.0" text="ETAT DE FRAIS ENGAGES" textAlignment="CENTER" textFill="#272e5b">
          <font>
@@ -109,8 +109,7 @@
          </font>
       </Label>
       <Separator layoutX="-2.0" layoutY="341.0" prefHeight="3.0" prefWidth="299.0" />
-      <Button layoutX="89.0" layoutY="451.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Signer et Soumettre" />
-      <Button layoutX="15.0" layoutY="560.0" mnemonicParsing="false" text="Revenir en arrière" />
+      <Button fx:id="BackButton" layoutX="15.0" layoutY="560.0" mnemonicParsing="false" onAction="#GoBack" text="Revenir en arrière" />
       <Label fx:id="ttNuitee" layoutX="247.0" layoutY="167.0" prefHeight="17.0" prefWidth="44.0" textAlignment="CENTER" />
       <Label fx:id="ttRepas" layoutX="247.0" layoutY="192.0" prefHeight="17.0" prefWidth="44.0" textAlignment="CENTER" />
       <Label fx:id="ttNuitee" layoutX="247.0" layoutY="218.0" prefHeight="17.0" prefWidth="44.0" textAlignment="CENTER" />
@@ -142,6 +141,6 @@
       <Label layoutX="177.0" layoutY="218.0" prefHeight="17.0" prefWidth="36.0" textAlignment="CENTER" />
       <Label layoutX="152.0" layoutY="43.0" prefHeight="25.0" prefWidth="110.0" />
       <Label layoutX="152.0" layoutY="70.0" prefHeight="25.0" prefWidth="110.0" />
-      <Button layoutX="206.0" layoutY="560.0" mnemonicParsing="false" text="Modification" />
+      <Button fx:id="Modifier" layoutX="217.0" layoutY="560.0" mnemonicParsing="false" onAction="#Modifier" prefHeight="17.0" prefWidth="72.0" text="Modifier" />
    </children>
 </AnchorPane>
