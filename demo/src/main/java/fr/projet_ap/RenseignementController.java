@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseDragEvent;
 
 import java.sql.Connection;
@@ -52,22 +53,30 @@ public class RenseignementController {
     private Label ttKilometrage;
 
     @FXML
-    void calculerTTK(MouseDragEvent event) {
-
+    void calculerTTN(KeyEvent event) {
+        String nNuitee = nbrNuitee.getText();
+        int nbrNuitee = Integer.parseInt(nNuitee);
+        int totalNuitees = nbrNuitee * 80;
+        String Nuitee = String.valueOf(totalNuitees);
+        ttNuitee.setText(Nuitee + " €");
     }
 
     @FXML
-    void calculerTTN(MouseDragEvent event) {
-
-    }
-
-    @FXML
-    void calculerTTR(DragEvent event) {
+    void calculerTTR(KeyEvent event) {
         String nRepas = nbrRepas.getText();
         int nbrRepas = Integer.parseInt(nRepas);
-        int totalRepas = nbrRepas * 50;
+        int totalRepas = nbrRepas * 29;
         String Repas = String.valueOf(totalRepas);
-        ttRepas.setText(Repas);
+        ttRepas.setText(Repas + " €");
+    }
+
+    @FXML
+    void calculerTTK(KeyEvent event) {
+        String nKilo = nbrKilo.getText();
+        int nbrKilos = Integer.parseInt(nKilo);
+        int totalKilos = nbrKilos * 100;
+        String Kilos = String.valueOf(totalKilos);
+        ttKilometrage.setText(Kilos + " €");
     }
 
     /**

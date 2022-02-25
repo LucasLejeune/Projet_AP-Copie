@@ -10,7 +10,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet_ap.RenseignementController">
    <children>
       <Separator layoutX="-1.0" layoutY="43.0" prefHeight="3.0" prefWidth="299.0" />
-      <Label layoutX="107.0" layoutY="111.0" prefHeight="14.0" prefWidth="94.0" text="Frais Forfaitaires" textFill="#3f6bab">
+      <Label layoutX="101.0" layoutY="111.0" prefHeight="14.0" prefWidth="101.0" text="Frais Forfaitaires :" textFill="#3f6bab">
          <font>
             <Font name="Times New Roman Bold Italic" size="12.0" />
          </font>
@@ -34,7 +34,7 @@
       </Label>
       <Separator layoutX="97.0" layoutY="163.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
       <Separator layoutX="145.0" layoutY="163.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
-      <Separator layoutX="241.0" layoutY="163.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
+      <Separator layoutX="213.0" layoutY="163.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="14.0" />
       <Separator layoutX="-2.0" layoutY="188.0" prefHeight="3.0" prefWidth="299.0" />
       <Separator layoutX="-1.0" layoutY="214.0" prefHeight="3.0" prefWidth="299.0" />
       <Separator layoutX="-2.0" layoutY="237.0" prefHeight="3.0" prefWidth="299.0" />
@@ -53,20 +53,20 @@
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="muNuitee" layoutX="177.0" layoutY="168.0" prefHeight="17.0" prefWidth="36.0" text=" ">
+      <Label fx:id="muNuitee" layoutX="155.0" layoutY="167.0" prefHeight="17.0" prefWidth="81.0" text="80 €">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="muRepas" layoutX="177.0" layoutY="193.0" prefHeight="17.0" prefWidth="36.0" text=" ">
+      <Label fx:id="muRepas" layoutX="155.0" layoutY="192.0" prefHeight="17.0" prefWidth="81.0" text="29 €">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="nbrNuitee" layoutX="96.0" layoutY="163.0" onAction="#calculerTTN" onMouseDragExited="#calculerTTN" prefHeight="25.0" prefWidth="53.0" promptText="00" />
-      <TextField fx:id="nbrRepas" layoutX="96.0" layoutY="188.0" onAction="#calculerTTR" prefHeight="25.0" prefWidth="53.0" promptText="00" />
-      <TextField fx:id="nbrKilo" layoutX="96.0" layoutY="213.0" onAction="#calculerTTK" onMouseDragExited="#calculerTTK" prefHeight="25.0" prefWidth="53.0" promptText="00" />
-      <Label layoutX="117.0" layoutY="259.0" text="Autres Frais" textFill="#3f6bab">
+      <TextField fx:id="nbrNuitee" layoutX="96.0" layoutY="163.0" onKeyPressed="#calculerTTN" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <TextField fx:id="nbrRepas" layoutX="96.0" layoutY="188.0" onKeyPressed="#calculerTTR" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <TextField fx:id="nbrKilo" layoutX="96.0" layoutY="213.0" onKeyPressed="#calculerTTK" onMouseDragExited="#calculerTTK" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <Label layoutX="117.0" layoutY="259.0" text="Autres Frais :" textFill="#3f6bab">
          <font>
             <Font name="Times New Roman Bold Italic" size="12.0" />
          </font>
@@ -99,15 +99,15 @@
       <TextField layoutX="207.0" layoutY="366.0" prefHeight="25.0" prefWidth="94.0" />
       <Button layoutX="89.0" layoutY="451.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Signer et Soumettre" />
       <Button fx:id="BackButton" layoutX="15.0" layoutY="560.0" mnemonicParsing="false" onAction="#GoBack" text="Revenir en arrière" />
-      <Label fx:id="ttNuitee" layoutX="247.0" layoutY="167.0" prefHeight="17.0" prefWidth="44.0" textAlignment="CENTER">
+      <Label fx:id="ttNuitee" layoutX="221.0" layoutY="167.0" prefHeight="17.0" prefWidth="70.0" textAlignment="CENTER">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font></Label>
-      <Label fx:id="ttRepas" layoutX="247.0" layoutY="192.0" prefHeight="17.0" prefWidth="44.0">
+      <Label fx:id="ttRepas" layoutX="221.0" layoutY="192.0" prefHeight="17.0" prefWidth="70.0">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font></Label>
-      <Label fx:id="ttKilometrage" layoutX="247.0" layoutY="218.0" prefHeight="17.0" prefWidth="44.0">
+      <Label fx:id="ttKilometrage" layoutX="221.0" layoutY="218.0" prefHeight="17.0" prefWidth="70.0">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font></Label>
@@ -117,11 +117,12 @@
          </font>
       </Label>
       <Label fx:id="muKilometrage" layoutX="177.0" layoutY="217.0" prefHeight="17.0" prefWidth="36.0" text=" " />
-      <Label layoutX="9.0" layoutY="46.0" text="Connecté(e) en temp que :">
+      <Label layoutX="7.0" layoutY="55.0" text="Connecté(e) en temp que :">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="idConnexion" layoutX="140.0" layoutY="45.0" prefHeight="17.0" prefWidth="127.0" />
+      <Label fx:id="idConnexion" layoutX="138.0" layoutY="54.0" prefHeight="17.0" prefWidth="127.0" />
+      <Label layoutX="155.0" layoutY="217.0" prefHeight="17.0" prefWidth="81.0" text="100€" />
    </children>
 </AnchorPane>
