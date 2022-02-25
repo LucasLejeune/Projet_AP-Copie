@@ -33,8 +33,8 @@ public class VisiteurController {
 
         try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
 
-            String sql = "SELECT Matricule FROM users WHERE Matricule = '" + id.getText() + "' AND Mot_de_passe = '"
-                    + mdp.getText() + "'; ";
+            String sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule = '" + id.getText()
+                    + "' AND vi_mdp = '" + mdp.getText() + "'; ";
 
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(sql);
