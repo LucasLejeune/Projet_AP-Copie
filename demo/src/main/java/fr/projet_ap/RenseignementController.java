@@ -87,4 +87,26 @@ public class RenseignementController {
         App.setRoot("ClientV");
     }
 
+    public void initialize() {
+        String dbURL = "jdbc:mysql://localhost:3306/projet_ap";
+        String username = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
+
+            String SqlNom = "SELECT vi_nom, vi_prenom FROM visiteur Where vi_matricule = '" + Common.login + "';";
+
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(SqlNom);
+
+            result.next();
+            String nom = result.getString(1);
+            String prenom = result.getString(2);
+            idConnexion.setText(nom + " " + prenom);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
 }
