@@ -117,14 +117,14 @@
          </font>
       </Label>
       <Label fx:id="muKilometrage" layoutX="177.0" layoutY="217.0" prefHeight="17.0" prefWidth="36.0" text=" " />
-      <Label layoutX="25.0" layoutY="72.0" text="Connecté(e) en temp que :">
+      <Label layoutX="84.0" layoutY="60.0" text="Connecté(e) en temp que :">
          <font>
-            <Font name="Times New Roman" size="12.0" />
+            <Font name="Times New Roman Italic" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="idConnexion" layoutX="157.0" layoutY="72.0" prefHeight="14.0" prefWidth="127.0">
+      <Label fx:id="idConnexion" alignment="TOP_CENTER" layoutX="84.0" layoutY="77.0" prefHeight="14.0" prefWidth="127.0" textAlignment="CENTER">
          <font>
-            <Font name="Times New Roman Bold Italic" size="12.0" />
+            <Font name="Times New Roman Bold" size="12.0" />
          </font></Label>
       <Label layoutX="155.0" layoutY="217.0" prefHeight="17.0" prefWidth="81.0" text="100€" />
    </children>
