@@ -203,14 +203,14 @@
       <CheckBox fx:id="CheckKm2" layoutX="258.0" layoutY="402.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="17.0" />
       <CheckBox fx:id="CheckKm3" layoutX="258.0" layoutY="376.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="17.0" />
       <Label layoutX="243.0" layoutY="354.0" prefHeight="18.0" prefWidth="62.0" text="Validation" />
-      <Label layoutX="70.0" layoutY="566.0" prefHeight="18.0" prefWidth="101.0" text="Consultation de la fiche de:">
+      <Label layoutX="12.0" layoutY="195.0" prefHeight="18.0" prefWidth="142.0" text="Consultation de la fiche de:">
          <font>
-            <Font size="8.0" />
+            <Font name="System Italic" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="Nom_prenom" layoutX="172.0" layoutY="566.0" prefHeight="18.0" prefWidth="123.0">
+      <Label fx:id="Nom_prenom" layoutX="156.0" layoutY="195.0" prefHeight="18.0" prefWidth="142.0">
          <font>
-            <Font name="System Italic" size="8.0" />
+            <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
       <Label layoutX="61.0" layoutY="105.0" prefHeight="18.0" prefWidth="170.0" />

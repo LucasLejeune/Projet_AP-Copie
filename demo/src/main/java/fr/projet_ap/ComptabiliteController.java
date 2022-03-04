@@ -166,7 +166,7 @@ public class ComptabiliteController {
                 resultat.next();
                 String nom = resultat.getString(1);
                 String prenom = resultat.getString(2);
-                Nom_prenom.setText(nom + " " + prenom);
+                Nom_prenom.setText(nom + "-" + prenom);
             }
 
         } catch (SQLException ex) {
