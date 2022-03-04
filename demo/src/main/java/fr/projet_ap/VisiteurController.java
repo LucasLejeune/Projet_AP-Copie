@@ -43,6 +43,7 @@ public class VisiteurController {
                 String ident = result.getString(1);
 
                 if (id.getText().equals(ident)) {
+                    Common.login = ident;
                     App.setRoot("ClientV");
                 }
 
