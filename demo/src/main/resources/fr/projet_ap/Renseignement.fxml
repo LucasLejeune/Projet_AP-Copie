@@ -122,7 +122,10 @@
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="idConnexion" layoutX="138.0" layoutY="54.0" prefHeight="17.0" prefWidth="127.0" />
+      <Label fx:id="idConnexion" layoutX="138.0" layoutY="54.0" prefHeight="17.0" prefWidth="127.0">
+         <font>
+            <Font name="Times New Roman Italic" size="12.0" />
+         </font></Label>
       <Label layoutX="155.0" layoutY="217.0" prefHeight="17.0" prefWidth="81.0" text="100€" />
    </children>
 </AnchorPane>
