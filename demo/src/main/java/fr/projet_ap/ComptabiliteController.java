@@ -47,6 +47,9 @@ public class ComptabiliteController {
     @FXML
     private Label TotalRepas;
 
+    @FXML
+    private Label Nom_prenom;
+
     /**
      * @throws IOException
      */
@@ -68,6 +71,7 @@ public class ComptabiliteController {
                 String ident = result.getString(1);
 
                 if (id.getText().equals(ident)) {
+                    Common.login = ident;
                     App.setRoot("ClientC");
                 }
 
@@ -109,43 +113,60 @@ public class ComptabiliteController {
             ResultSet result = statement.executeQuery(sql);
 
             while (result.next()) {
+
                 String ident = result.getString(1);
 
-                String SqlQN = "SELECT QuantiteNuitee FROM fiches JOIN visiteur ON VisiteurMatricule = Matricule WHERE Matricule = '"
+                String SqlQN = "SELECT vi_nom FROM visiteur WHERE vi_matricule = '" // JOIN visiteur ON vi_matricule =
+                        // fk_matricule
                         + ident + "';";
 
-                String SqlQR = "SELECT QuantiteRepas FROM fiches JOIN visiteur ON VisiteurMatricule = Matricule WHERE Matricule = '"
+                String SqlQR = "SELECT vi_nom FROM visiteur WHERE vi_matricule = '" // JOIN visiteur ON vi_matricule =
+                        // fk_matricule
                         + ident + "';";
 
-                String SqlQK = "SELECT QuantiteKilometrage FROM fiches JOIN visiteur ON VisiteurMatricule = Matricule WHERE Matricule = '"
+                String SqlQK = "SELECT vi_nom FROM visiteur WHERE vi_matricule = '" // JOIN visiteur ON vi_matricule =
+                        // fk_matricule
                         + ident + "';";
 
                 Statement stmt = conn.createStatement();
                 ResultSet resultatQN = stmt.executeQuery(SqlQN);
-                ResultSet resultatQR = stmt.executeQuery(SqlQR);
-                ResultSet resultatQK = stmt.executeQuery(SqlQK);
-
                 resultatQN.next();
                 String QNuitee = resultatQN.getString(1);
+
+                ResultSet resultatQR = stmt.executeQuery(SqlQR);
+                resultatQR.next();
                 String QRepas = resultatQR.getString(1);
+
+                ResultSet resultatQK = stmt.executeQuery(SqlQK);
+                resultatQK.next();
                 String QKilometrage = resultatQK.getString(1);
 
                 QuantiteNuitee.setText(QNuitee);
                 QuantiteRepas.setText(QRepas);
                 QuantiteKilometrage.setText(QKilometrage);
 
-                float QnuiteeInt = Float.parseFloat(QNuitee) * 80;
+                float QnuiteeInt = 4 * 80; // Float.parseFloat(QNuitee)
                 String TotalNuit = String.valueOf(QnuiteeInt);
 
-                float QRepasInt = Float.parseFloat(QRepas) * 29;
+                float QRepasInt = 4 * 29; // Float.parseFloat(QRepas)
                 String TotalRepasstr = String.valueOf(QRepasInt);
 
-                float QKmInt = Float.parseFloat(QKilometrage) * (80 / 100);
+                float QKmInt = 4 * (80 / 100); // Float.parseFloat(QKilometrage)
                 String TotalKm = String.valueOf(QKmInt);
 
                 TotalNuitee.setText(TotalNuit);
                 TotalRepas.setText(TotalRepasstr);
                 TotalKilometrage.setText(TotalKm);
+
+                String SqlNom = "SELECT vi_nom, vi_prenom FROM visiteur Where vi_matricule = '" + ident
+                        + "';";
+
+                ResultSet resultat = statement.executeQuery(SqlNom);
+
+                resultat.next();
+                String nom = resultat.getString(1);
+                String prenom = resultat.getString(2);
+                Nom_prenom.setText(nom + " " + prenom);
             }
 
         } catch (SQLException ex) {
