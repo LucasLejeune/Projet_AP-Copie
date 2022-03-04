@@ -90,7 +90,7 @@
       <Separator layoutX="-2.0" layoutY="341.0" prefHeight="3.0" prefWidth="299.0" />
       <TextField layoutX="-2.0" layoutY="316.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
       <TextField layoutX="96.0" layoutY="316.0" prefHeight="25.0" prefWidth="113.0" />
-      <TextField layoutX="207.0" layoutY="316.0" prefHeight="25.0" prefWidth="94.0" />
+      <TextField layoutX="207.0" layoutY="316.0" prefHeight="26.0" prefWidth="94.0" />
       <TextField layoutX="-1.0" layoutY="341.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
       <TextField layoutX="-3.0" layoutY="366.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
       <TextField layoutX="96.0" layoutY="341.0" prefHeight="25.0" prefWidth="113.0" />
