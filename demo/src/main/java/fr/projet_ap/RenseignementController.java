@@ -102,7 +102,7 @@ public class RenseignementController {
             result.next();
             String nom = result.getString(1);
             String prenom = result.getString(2);
-            idConnexion.setText(nom + " " + prenom);
+            idConnexion.setText(nom + "-" + prenom);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
