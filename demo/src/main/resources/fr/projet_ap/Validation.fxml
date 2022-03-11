@@ -146,7 +146,7 @@
          </font>
       </Label>
       <Button layoutX="87.0" layoutY="476.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="134.0" text="Valider" />
-      <Button layoutX="102.0" layoutY="521.0" mnemonicParsing="false" onAction="#switchToAcceuil" text="Revenir en arrière" />
+      <Button layoutX="102.0" layoutY="521.0" mnemonicParsing="false" onAction="#RetourClient" text="Revenir en arrière" />
       <Button layoutX="75.0" layoutY="145.0" mnemonicParsing="false" onAction="#Generer_ff" prefHeight="30.0" prefWidth="148.0" text="Générer Fiche de frais">
          <font>
             <Font name="Times New Roman" size="12.0" />

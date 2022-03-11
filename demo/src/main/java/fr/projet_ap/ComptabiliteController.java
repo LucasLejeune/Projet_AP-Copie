@@ -96,6 +96,11 @@ public class ComptabiliteController {
         App.setRoot("Acceuil");
     }
 
+    @FXML
+    private void RetourClient() throws IOException {
+        App.setRoot("ClientC");
+    }
+
     /**
      * @throws IOException
      */
