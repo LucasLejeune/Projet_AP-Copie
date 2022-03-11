@@ -50,6 +50,15 @@ public class ComptabiliteController {
     @FXML
     private Label Nom_prenom;
 
+    @FXML
+    private Label MontantUkilometrage;
+
+    @FXML
+    private Label MontantUnuitee;
+
+    @FXML
+    private Label MontantUrepas;
+
     /**
      * @throws IOException
      */
@@ -121,43 +130,64 @@ public class ComptabiliteController {
 
                 String ident = result.getString(1);
 
-                String SqlQN = "SELECT vi_nom FROM visiteur WHERE vi_matricule = '" // JOIN visiteur ON vi_matricule =
-                        // fk_matricule
-                        + ident + "';";
+                String SqlQN = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
+                        + ident + "' AND ff_nom = 'Nuitee' AND fi_mois = 'MAI';";
 
-                String SqlQR = "SELECT vi_nom FROM visiteur WHERE vi_matricule = '" // JOIN visiteur ON vi_matricule =
-                        // fk_matricule
-                        + ident + "';";
+                String SqlQR = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
+                        + ident + "' AND ff_nom = 'Repas' AND fi_mois = 'MAI';";
 
-                String SqlQK = "SELECT vi_nom FROM visiteur WHERE vi_matricule = '" // JOIN visiteur ON vi_matricule =
-                        // fk_matricule
-                        + ident + "';";
+                String SqlQK = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
+                        + ident + "' AND ff_nom = 'Kilometrage' AND fi_mois = 'MAI';";
+
+                String QNuitee = "";
+                String MUNuitee = "";
+                String QRepas = "";
+                String MURepas = "";
+                String QKilometrage = "";
+                String MUkilometrage = "";
 
                 Statement stmt = conn.createStatement();
                 ResultSet resultatQN = stmt.executeQuery(SqlQN);
-                resultatQN.next();
-                String QNuitee = resultatQN.getString(1);
+
+                while (resultatQN.next()) {
+                    QNuitee = resultatQN.getString(1);
+                    MUNuitee = resultatQN.getString(2);
+                }
 
                 ResultSet resultatQR = stmt.executeQuery(SqlQR);
-                resultatQR.next();
-                String QRepas = resultatQR.getString(1);
+                while (resultatQR.next()) {
+                    QRepas = resultatQR.getString(1);
+                    MURepas = resultatQR.getString(2);
+                }
 
                 ResultSet resultatQK = stmt.executeQuery(SqlQK);
-                resultatQK.next();
-                String QKilometrage = resultatQK.getString(1);
+                while (resultatQK.next()) {
+                    QKilometrage = resultatQK.getString(1);
+                    MUkilometrage = resultatQK.getString(2);
+                }
 
                 QuantiteNuitee.setText(QNuitee);
                 QuantiteRepas.setText(QRepas);
                 QuantiteKilometrage.setText(QKilometrage);
+                MontantUnuitee.setText(MUNuitee);
+                MontantUrepas.setText(MURepas);
+                MontantUkilometrage.setText(MUkilometrage);
 
-                float QnuiteeInt = 4 * 80; // Float.parseFloat(QNuitee)
-                String TotalNuit = String.valueOf(QnuiteeInt);
+                Float QNuiteeINT = Float.parseFloat(QNuitee);
+                Float QRepasINT = Float.parseFloat(QRepas);
+                Float QKilometrageINT = Float.parseFloat(QKilometrage);
+                Float MuNuiteeINT = Float.parseFloat(MUNuitee);
+                Float MuRepasINT = Float.parseFloat(MURepas);
+                Float MuKilometrageINT = Float.parseFloat(MUkilometrage);
 
-                float QRepasInt = 4 * 29; // Float.parseFloat(QRepas)
-                String TotalRepasstr = String.valueOf(QRepasInt);
+                Float Tnuitee = QNuiteeINT * MuNuiteeINT;
+                String TotalNuit = String.valueOf(Tnuitee);
 
-                float QKmInt = 4 * (80 / 100); // Float.parseFloat(QKilometrage)
-                String TotalKm = String.valueOf(QKmInt);
+                Float Trepas = QRepasINT * MuRepasINT;
+                String TotalRepasstr = String.valueOf(Trepas);
+
+                Float Tkilometrage = QKilometrageINT * MuKilometrageINT; // Float.parseFloat(QKilometrage)
+                String TotalKm = String.valueOf(Tkilometrage);
 
                 TotalNuitee.setText(TotalNuit);
                 TotalRepas.setText(TotalRepasstr);
