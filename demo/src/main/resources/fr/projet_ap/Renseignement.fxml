@@ -58,7 +58,7 @@
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="muRepas" layoutX="155.0" layoutY="192.0" prefHeight="17.0" prefWidth="81.0" text="29 €">
+      <Label fx:id="muRepas" layoutX="155.0" layoutY="192.0" prefHeight="17.0" prefWidth="60.0">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
@@ -97,7 +97,7 @@
       <TextField layoutX="96.0" layoutY="366.0" prefHeight="25.0" prefWidth="113.0" />
       <TextField layoutX="207.0" layoutY="341.0" prefHeight="25.0" prefWidth="94.0" />
       <TextField layoutX="207.0" layoutY="366.0" prefHeight="25.0" prefWidth="94.0" />
-      <Button layoutX="89.0" layoutY="451.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="Signer et Soumettre" />
+      <Button fx:id="Soumettre" layoutX="89.0" layoutY="451.0" mnemonicParsing="false" onAction="#Inserts" prefHeight="25.0" prefWidth="128.0" text="Signer et Soumettre" />
       <Button fx:id="BackButton" layoutX="15.0" layoutY="560.0" mnemonicParsing="false" onAction="#GoBack" text="Revenir en arrière" />
       <Label fx:id="ttNuitee" layoutX="221.0" layoutY="167.0" prefHeight="17.0" prefWidth="70.0" textAlignment="CENTER">
          <font>
@@ -116,7 +116,10 @@
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="muKilometrage" layoutX="177.0" layoutY="217.0" prefHeight="17.0" prefWidth="36.0" text=" " />
+      <Label fx:id="muKilometrage" layoutX="153.0" layoutY="217.0" prefHeight="17.0" prefWidth="60.0" text=" ">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font></Label>
       <Label layoutX="84.0" layoutY="60.0" text="Connecté(e) en temp que :">
          <font>
             <Font name="Times New Roman Italic" size="12.0" />
@@ -126,6 +129,5 @@
          <font>
             <Font name="Times New Roman Bold" size="12.0" />
          </font></Label>
-      <Label layoutX="155.0" layoutY="217.0" prefHeight="17.0" prefWidth="81.0" text="100€" />
    </children>
 </AnchorPane>
