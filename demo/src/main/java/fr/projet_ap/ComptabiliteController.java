@@ -11,6 +11,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class ComptabiliteController {
 
@@ -58,6 +64,36 @@ public class ComptabiliteController {
 
     @FXML
     private Label MontantUrepas;
+
+    @FXML
+    private Label Mois;
+
+    @FXML
+    private Label AutreDate1;
+
+    @FXML
+    private Label AutreDate2;
+
+    @FXML
+    private Label AutreDate3;
+
+    @FXML
+    private Label AutreLibelle1;
+
+    @FXML
+    private Label AutreLibelle2;
+
+    @FXML
+    private Label AutreLibelle3;
+
+    @FXML
+    private Label AutreMontant1;
+
+    @FXML
+    private Label AutreMontant2;
+
+    @FXML
+    private Label AutreMontant3;
 
     /**
      * @throws IOException
@@ -126,82 +162,153 @@ public class ComptabiliteController {
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(sql);
 
-            while (result.next()) {
+            result.next();
 
-                String ident = result.getString(1);
+            Map<String, String> dicoMois = new HashMap<String, String>();
+            dicoMois.put("janvier", "1");
+            dicoMois.put("fevrier", "2");
+            dicoMois.put("mars", "3");
+            dicoMois.put("avril", "4");
+            dicoMois.put("mai", "5");
+            dicoMois.put("juin", "6");
+            dicoMois.put("juillet", "7");
+            dicoMois.put("aout", "8");
+            dicoMois.put("septembre", "9");
+            dicoMois.put("octobre", "10");
+            dicoMois.put("novembre", "11");
+            dicoMois.put("decembre", "12");
 
-                String SqlQN = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
-                        + ident + "' AND ff_nom = 'Nuitee' AND fi_mois = 'MAI';";
+            Map<String, String> dicoFR = new HashMap<String, String>();
+            dicoFR.put("janvier", "JANVIER");
+            dicoFR.put("fevrier", "FEVRIER");
+            dicoFR.put("mars", "MARS");
+            dicoFR.put("avril", "AVRIL");
+            dicoFR.put("mai", "MAI");
+            dicoFR.put("juin", "JUIN");
+            dicoFR.put("juillet", "JUILLET");
+            dicoFR.put("aout", "AOUT");
+            dicoFR.put("septembre", "SEPTEMBRE");
+            dicoFR.put("octobre", "OCTOBRE");
+            dicoFR.put("novembre", "NOVEMBRE");
+            dicoFR.put("decembre", "DECEMBRE");
 
-                String SqlQR = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
-                        + ident + "' AND ff_nom = 'Repas' AND fi_mois = 'MAI';";
-
-                String SqlQK = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
-                        + ident + "' AND ff_nom = 'Kilometrage' AND fi_mois = 'MAI';";
-
-                String QNuitee = "";
-                String MUNuitee = "";
-                String QRepas = "";
-                String MURepas = "";
-                String QKilometrage = "";
-                String MUkilometrage = "";
-
-                Statement stmt = conn.createStatement();
-                ResultSet resultatQN = stmt.executeQuery(SqlQN);
-
-                while (resultatQN.next()) {
-                    QNuitee = resultatQN.getString(1);
-                    MUNuitee = resultatQN.getString(2);
+            LocalDate currentdate = LocalDate.now();
+            Month currentMonth = currentdate.getMonth();
+            String leMois = currentMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
+            int moisP = Integer.parseInt(dicoMois.get(leMois)) - 1;
+            String mois = "";
+            for (Map.Entry<String, String> entry : dicoMois.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                if (Integer.parseInt(value) == moisP) {
+                    mois = dicoFR.get(key);
                 }
+            }
 
-                ResultSet resultatQR = stmt.executeQuery(SqlQR);
-                while (resultatQR.next()) {
-                    QRepas = resultatQR.getString(1);
-                    MURepas = resultatQR.getString(2);
-                }
+            Mois.setText(mois);
 
-                ResultSet resultatQK = stmt.executeQuery(SqlQK);
-                while (resultatQK.next()) {
-                    QKilometrage = resultatQK.getString(1);
-                    MUkilometrage = resultatQK.getString(2);
-                }
+            String ident = result.getString(1);
 
-                QuantiteNuitee.setText(QNuitee);
-                QuantiteRepas.setText(QRepas);
-                QuantiteKilometrage.setText(QKilometrage);
-                MontantUnuitee.setText(MUNuitee);
-                MontantUrepas.setText(MURepas);
-                MontantUkilometrage.setText(MUkilometrage);
+            String SqlQN = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
+                    + ident + "' AND ff_nom = 'Nuitee' AND fi_mois = '" + mois + "';";
 
-                Float QNuiteeINT = Float.parseFloat(QNuitee);
-                Float QRepasINT = Float.parseFloat(QRepas);
-                Float QKilometrageINT = Float.parseFloat(QKilometrage);
-                Float MuNuiteeINT = Float.parseFloat(MUNuitee);
-                Float MuRepasINT = Float.parseFloat(MURepas);
-                Float MuKilometrageINT = Float.parseFloat(MUkilometrage);
+            String SqlQR = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
+                    + ident + "' AND ff_nom = 'Repas' AND fi_mois = '" + mois + "';";
 
-                Float Tnuitee = QNuiteeINT * MuNuiteeINT;
-                String TotalNuit = String.valueOf(Tnuitee);
+            String SqlQK = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
+                    + ident + "' AND ff_nom = 'Kilometrage' AND fi_mois = '" + mois + "';";
 
-                Float Trepas = QRepasINT * MuRepasINT;
-                String TotalRepasstr = String.valueOf(Trepas);
+            String QNuitee = "";
+            String MUNuitee = "";
+            String QRepas = "";
+            String MURepas = "";
+            String QKilometrage = "";
+            String MUkilometrage = "";
 
-                Float Tkilometrage = QKilometrageINT * MuKilometrageINT; // Float.parseFloat(QKilometrage)
-                String TotalKm = String.valueOf(Tkilometrage);
+            Statement stmt = conn.createStatement();
+            ResultSet resultatQN = stmt.executeQuery(SqlQN);
 
-                TotalNuitee.setText(TotalNuit);
-                TotalRepas.setText(TotalRepasstr);
-                TotalKilometrage.setText(TotalKm);
+            resultatQN.next();
+            QNuitee = resultatQN.getString(1);
+            MUNuitee = resultatQN.getString(2);
 
-                String SqlNom = "SELECT vi_nom, vi_prenom FROM visiteur Where vi_matricule = '" + ident
-                        + "';";
+            ResultSet resultatQR = stmt.executeQuery(SqlQR);
+            resultatQR.next();
+            QRepas = resultatQR.getString(1);
+            MURepas = resultatQR.getString(2);
 
-                ResultSet resultat = statement.executeQuery(SqlNom);
+            ResultSet resultatQK = stmt.executeQuery(SqlQK);
+            resultatQK.next();
+            QKilometrage = resultatQK.getString(1);
+            MUkilometrage = resultatQK.getString(2);
 
-                resultat.next();
-                String nom = resultat.getString(1);
-                String prenom = resultat.getString(2);
-                Nom_prenom.setText(nom + "-" + prenom);
+            QuantiteNuitee.setText(QNuitee);
+            QuantiteRepas.setText(QRepas);
+            QuantiteKilometrage.setText(QKilometrage);
+            MontantUnuitee.setText(MUNuitee);
+            MontantUrepas.setText(MURepas);
+            MontantUkilometrage.setText(MUkilometrage);
+
+            Float QNuiteeINT = Float.parseFloat(QNuitee);
+            Float QRepasINT = Float.parseFloat(QRepas);
+            Float QKilometrageINT = Float.parseFloat(QKilometrage);
+            Float MuNuiteeINT = Float.parseFloat(MUNuitee);
+            Float MuRepasINT = Float.parseFloat(MURepas);
+            Float MuKilometrageINT = Float.parseFloat(MUkilometrage);
+
+            Float Tnuitee = QNuiteeINT * MuNuiteeINT;
+            String TotalNuit = String.valueOf(Tnuitee);
+
+            Float Trepas = QRepasINT * MuRepasINT;
+            String TotalRepasstr = String.valueOf(Trepas);
+
+            Float Tkilometrage = QKilometrageINT * MuKilometrageINT;
+            String TotalKm = String.valueOf(Tkilometrage);
+
+            TotalNuitee.setText(TotalNuit);
+            TotalRepas.setText(TotalRepasstr);
+            TotalKilometrage.setText(TotalKm);
+
+            String SqlNom = "SELECT vi_nom, vi_prenom FROM visiteur Where vi_matricule = '" + ident
+                    + "';";
+
+            ResultSet resultat = statement.executeQuery(SqlNom);
+
+            resultat.next();
+            String nom = resultat.getString(1);
+            String prenom = resultat.getString(2);
+            Nom_prenom.setText(nom + "-" + prenom);
+
+            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
+                    + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
+            ResultSet resultAF = statement.executeQuery(SqlAf);
+
+            if (resultAF.next()) {
+                String ad1 = resultAF.getString(1);
+                String al1 = resultAF.getString(2);
+                String am1 = resultAF.getString(3);
+                AutreDate1.setText(ad1);
+                AutreLibelle1.setText(al1);
+                AutreMontant1.setText(am1);
+            }
+
+            if (resultAF.next()) {
+                String ad2 = resultAF.getString(1);
+                String al2 = resultAF.getString(2);
+                String am2 = resultAF.getString(3);
+                AutreDate2.setText(ad2);
+                AutreLibelle2.setText(al2);
+                AutreMontant2.setText(am2);
+
+            }
+
+            if (resultAF.next()) {
+                String ad3 = resultAF.getString(1);
+                String al3 = resultAF.getString(2);
+                String am3 = resultAF.getString(3);
+                AutreDate3.setText(ad3);
+                AutreLibelle3.setText(al3);
+                AutreMontant3.setText(am3);
             }
 
         } catch (SQLException ex) {
@@ -209,34 +316,4 @@ public class ComptabiliteController {
         }
     }
 
-    /**
-     * @throws IOException
-     */
-    @FXML
-    private void validationNuit() throws IOException {
-        String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
-        String username = "root";
-        String password = "";
-
-        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
-
-            String sql = "SELECT validee from fiche";
-
-            Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-
-            while (result.next()) {
-                int validee = result.getInt(1);
-                if (validee == 0) {
-                    // changer BDD pour avoir validation pour chaque enregistrement
-
-                }
-            }
-        }
-
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-    }
 }
