@@ -84,7 +84,7 @@ public class RenseignementController {
             ResultSet resultN = statement.executeQuery(TarifUN);
             resultN.next();
             String montantN = resultN.getString(1);
-            muNuitee.setText(montantN + " €");
+            muNuitee.setText(montantN);
 
             String TarifUR = "SELECT re_Prix_Repas FROM region INNER JOIN visiteur ON re_nom = fk_re WHERE vi_matricule = '"
                     + Common.login + "';";
@@ -92,7 +92,7 @@ public class RenseignementController {
             ResultSet resultR = statement.executeQuery(TarifUR);
             resultR.next();
             String montantR = resultR.getString(1);
-            muRepas.setText(montantR + " €");
+            muRepas.setText(montantR);
 
             String TarifUK = "SELECT ve_Prix_km FROM vehicule INNER JOIN visiteur ON ve_Puissance = fk_ve WHERE vi_matricule = '"
                     + Common.login + "';";
@@ -100,7 +100,7 @@ public class RenseignementController {
             ResultSet resultK = statement.executeQuery(TarifUK);
             resultK.next();
             String montantK = resultK.getString(1);
-            muKilometrage.setText(montantK + " €");
+            muKilometrage.setText(montantK);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -231,8 +231,8 @@ public class RenseignementController {
             String mois = dicoFR.get(leMois);
 
             Statement statement = conn.createStatement();
-            String SqlFiche = "INSERT INTO fiche (fi_id, fi_mois, fk_vi) VALUES (uuid(), '" + mois + "', '"
-                    + Common.login + "');";
+            String SqlFiche = "INSERT INTO fiche (fi_id, fi_mois, fi_signature, fk_vi) VALUES (uuid(), '" + mois
+                    + "', 1, " + Common.login + ");";
             statement.executeUpdate(SqlFiche);
 
             // Recuperation de l'ID
@@ -242,22 +242,22 @@ public class RenseignementController {
 
             String nNuitee = nbrNuitee.getText();
             String mNuitee = muNuitee.getText();
-            String SqlFFN = "INSERT INTO frais_forfaitaire` (`ff_nom`, `ff_quantite`, `ff_montant_unitaire`, `fk_fiche_ff`) VALUES ('Nuitée', '"
-                    + nNuitee + "', '" + mNuitee + "', '" + UUID + "');";
+            String SqlFFN = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Nuitee', "
+                    + nNuitee + ", " + mNuitee + ", " + UUID + ");";
             statement.executeUpdate(SqlFFN);
 
             // insert NbrRepas
             String nRepas = nbrRepas.getText();
             String mRepas = muRepas.getText();
-            String SqlFFR = "INSERT INTO frais_forfaitaire` (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Repas', '"
-                    + nRepas + "', '" + mRepas + "', '" + UUID + "');";
+            String SqlFFR = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Repas', "
+                    + nRepas + ", " + mRepas + ", " + UUID + ");";
             statement.executeUpdate(SqlFFR);
 
             // insert NbrKilometrage
             String nKilo = nbrKilo.getText();
             String mKilo = muKilometrage.getText();
-            String SqlFFK = "INSERT INTO frais_forfaitaire` (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Kilometrage', '"
-                    + nKilo + "', '" + mKilo + "', '" + UUID + "');";
+            String SqlFFK = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Kilometrage', "
+                    + nKilo + ", " + mKilo + ", " + UUID + ");";
             statement.executeUpdate(SqlFFK);
 
         } catch (SQLException ex) {
