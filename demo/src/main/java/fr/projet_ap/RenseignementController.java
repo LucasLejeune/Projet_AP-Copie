@@ -14,9 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.HashMap;
 import java.util.Locale;
@@ -31,6 +29,9 @@ public class RenseignementController {
     private Label idConnexion;
 
     @FXML
+    private Label Enregistre;
+
+    @FXML
     private Label muNuitee;
 
     @FXML
@@ -41,6 +42,33 @@ public class RenseignementController {
 
     @FXML
     private Button Soumettre;
+
+    @FXML
+    private TextField dateaf1;
+
+    @FXML
+    private TextField dateaf2;
+
+    @FXML
+    private TextField dateaf3;
+
+    @FXML
+    private TextField libelleaf1;
+
+    @FXML
+    private TextField libelleaf2;
+
+    @FXML
+    private TextField libelleaf3;
+
+    @FXML
+    private TextField montantaf1;
+
+    @FXML
+    private TextField montantaf2;
+
+    @FXML
+    private TextField montantaf3;
 
     @FXML
     private TextField nbrKilo;
@@ -131,7 +159,6 @@ public class RenseignementController {
             double totalNuitees = nbrNuitee * MontantUN;
             String Nuitee = String.valueOf(totalNuitees);
             ttNuitee.setText(Nuitee + " €");
-            // InsertN();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -163,7 +190,6 @@ public class RenseignementController {
             double totalRepas = nbrRepas * MontantUR;
             String Repas = String.valueOf(totalRepas);
             ttRepas.setText(Repas + " €");
-            // InsertR();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -194,7 +220,6 @@ public class RenseignementController {
             double totalKilos = nbrKilos * MontantUK;
             String Kilos = String.valueOf(totalKilos);
             ttKilometrage.setText(Kilos + " €");
-            // InsertK();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -231,34 +256,64 @@ public class RenseignementController {
             String mois = dicoFR.get(leMois);
 
             Statement statement = conn.createStatement();
-            String SqlFiche = "INSERT INTO fiche (fi_id, fi_mois, fi_signature, fk_vi) VALUES (uuid(), '" + mois
-                    + "', 1, " + Common.login + ");";
-            statement.executeUpdate(SqlFiche);
 
             // Recuperation de l'ID
-            String TellUUID = "Select fi_id FROM fiche WHERE fi_mois = '" + leMois + "' AND fk_vi = '" + Common.login
-                    + "' ;";
-            ResultSet UUID = statement.executeQuery(TellUUID);
+            String TellID = "SELECT fi_id FROM fiche order by fi_id DESC LIMIT 1;";
+            ResultSet ID = statement.executeQuery(TellID);
+            ID.next();
+            String StrID = ID.getString(1);
+            int IntID = Integer.parseInt(StrID);
+            IntID += 1;
+
+            String SqlFiche = "INSERT INTO fiche (fi_id, fi_mois, fi_signature, fk_vi) VALUES (" + IntID + ", '" + mois
+                    + "', 1, " + Common.login + ");";
+            statement.executeUpdate(SqlFiche);
 
             String nNuitee = nbrNuitee.getText();
             String mNuitee = muNuitee.getText();
             String SqlFFN = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Nuitee', "
-                    + nNuitee + ", " + mNuitee + ", " + UUID + ");";
+                    + nNuitee + ", " + mNuitee + ", " + IntID + ");";
             statement.executeUpdate(SqlFFN);
 
             // insert NbrRepas
             String nRepas = nbrRepas.getText();
             String mRepas = muRepas.getText();
             String SqlFFR = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Repas', "
-                    + nRepas + ", " + mRepas + ", " + UUID + ");";
+                    + nRepas + ", " + mRepas + ", " + IntID + " );";
             statement.executeUpdate(SqlFFR);
 
             // insert NbrKilometrage
             String nKilo = nbrKilo.getText();
             String mKilo = muKilometrage.getText();
             String SqlFFK = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Kilometrage', "
-                    + nKilo + ", " + mKilo + ", " + UUID + ");";
+                    + nKilo + ", " + mKilo + ", " + IntID + " );";
             statement.executeUpdate(SqlFFK);
+
+            // insert AF1
+            String date1 = dateaf1.getText();
+            String libelle1 = libelleaf1.getText();
+            String montant1 = montantaf1.getText();
+            String SqlAF1 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+                    + date1 + ", " + libelle1 + ", " + montant1 + ", " + IntID + ");";
+            statement.executeUpdate(SqlAF1);
+
+            // insert AF2
+            String date2 = dateaf2.getText();
+            String libelle2 = libelleaf2.getText();
+            String montant2 = montantaf2.getText();
+            String SqlAF2 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+                    + date2 + ", " + libelle2 + ", " + montant2 + ", " + IntID + ");";
+            statement.executeUpdate(SqlAF2);
+
+            // insert AF3
+            String date3 = dateaf3.getText();
+            String libelle3 = libelleaf3.getText();
+            String montant3 = montantaf3.getText();
+            String SqlAF3 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+                    + date3 + ", " + libelle3 + ", " + montant3 + ", " + IntID + ");";
+            statement.executeUpdate(SqlAF3);
+
+            Enregistre.setText("Fiche de renseignement: Enregistrée");
 
         } catch (SQLException ex) {
             ex.printStackTrace();

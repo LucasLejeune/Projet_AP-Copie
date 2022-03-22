@@ -88,16 +88,16 @@
          </font>
       </Label>
       <Separator layoutX="-2.0" layoutY="341.0" prefHeight="3.0" prefWidth="299.0" />
-      <TextField layoutX="-2.0" layoutY="316.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
-      <TextField layoutX="96.0" layoutY="316.0" prefHeight="25.0" prefWidth="113.0" />
-      <TextField layoutX="207.0" layoutY="316.0" prefHeight="26.0" prefWidth="94.0" />
-      <TextField layoutX="-1.0" layoutY="341.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
-      <TextField layoutX="-3.0" layoutY="366.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
-      <TextField layoutX="96.0" layoutY="341.0" prefHeight="25.0" prefWidth="113.0" />
-      <TextField layoutX="96.0" layoutY="366.0" prefHeight="25.0" prefWidth="113.0" />
-      <TextField layoutX="207.0" layoutY="341.0" prefHeight="25.0" prefWidth="94.0" />
-      <TextField layoutX="207.0" layoutY="366.0" prefHeight="25.0" prefWidth="94.0" />
-      <Button fx:id="Soumettre" layoutX="89.0" layoutY="451.0" mnemonicParsing="false" onAction="#Inserts" prefHeight="25.0" prefWidth="128.0" text="Signer et Soumettre" />
+      <TextField fx:id="dateaf1" layoutX="-2.0" layoutY="316.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
+      <TextField fx:id="libelleaf1" layoutX="96.0" layoutY="316.0" prefHeight="25.0" prefWidth="113.0" />
+      <TextField fx:id="montantaf1" layoutX="207.0" layoutY="316.0" prefHeight="26.0" prefWidth="94.0" />
+      <TextField fx:id="dateaf2" layoutX="-1.0" layoutY="341.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
+      <TextField fx:id="dateaf3" layoutX="-3.0" layoutY="366.0" prefHeight="25.0" prefWidth="101.0" promptText="jj/mm" />
+      <TextField fx:id="libelleaf2" layoutX="96.0" layoutY="341.0" prefHeight="25.0" prefWidth="113.0" />
+      <TextField fx:id="libelleaf2" layoutX="96.0" layoutY="366.0" prefHeight="25.0" prefWidth="113.0" />
+      <TextField fx:id="montantaf2" layoutX="207.0" layoutY="341.0" prefHeight="25.0" prefWidth="94.0" />
+      <TextField fx:id="montantaf3" layoutX="207.0" layoutY="366.0" prefHeight="25.0" prefWidth="94.0" />
+      <Button fx:id="Soumettre" layoutX="89.0" layoutY="483.0" mnemonicParsing="false" onAction="#Inserts" prefHeight="25.0" prefWidth="128.0" text="Signer et Soumettre" />
       <Button fx:id="BackButton" layoutX="15.0" layoutY="560.0" mnemonicParsing="false" onAction="#GoBack" text="Revenir en arrière" />
       <Label fx:id="ttNuitee" layoutX="221.0" layoutY="167.0" prefHeight="17.0" prefWidth="70.0" textAlignment="CENTER">
          <font>
@@ -132,5 +132,10 @@
       <Label layoutX="197.0" layoutY="167.0" prefHeight="17.0" prefWidth="14.0" text="€" />
       <Label layoutX="197.0" layoutY="192.0" prefHeight="17.0" prefWidth="14.0" text="€" />
       <Label layoutX="197.0" layoutY="217.0" prefHeight="17.0" prefWidth="14.0" text="€" />
+      <Label fx:id="Enregistre" alignment="CENTER" layoutX="5.0" layoutY="426.0" prefHeight="26.0" prefWidth="299.0">
+         <font>
+            <Font name="Times New Roman Italic" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
