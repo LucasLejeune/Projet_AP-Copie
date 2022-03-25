@@ -24,67 +24,48 @@ public class RenseignementController {
 
     @FXML
     private Label muKilometrage;
-
     @FXML
     private Label idConnexion;
-
     @FXML
     private Label Enregistre;
-
     @FXML
     private Label muNuitee;
-
     @FXML
     private Label muRepas;
-
     @FXML
     private Button BackButton;
-
     @FXML
     private Button Soumettre;
-
+    @FXML
+    private Button ValiderAF;
     @FXML
     private TextField dateaf1;
-
     @FXML
     private TextField dateaf2;
-
     @FXML
     private TextField dateaf3;
-
     @FXML
     private TextField libelleaf1;
-
     @FXML
     private TextField libelleaf2;
-
     @FXML
     private TextField libelleaf3;
-
     @FXML
     private TextField montantaf1;
-
     @FXML
     private TextField montantaf2;
-
     @FXML
     private TextField montantaf3;
-
     @FXML
     private TextField nbrKilo;
-
     @FXML
     private TextField nbrNuitee;
-
     @FXML
     private TextField nbrRepas;
-
     @FXML
     private Label ttNuitee;
-
     @FXML
     private Label ttRepas;
-
     @FXML
     private Label ttKilometrage;
 
@@ -129,6 +110,38 @@ public class RenseignementController {
             resultK.next();
             String montantK = resultK.getString(1);
             muKilometrage.setText(montantK);
+
+            // insert fiche
+            Map<String, String> dicoFR = new HashMap<String, String>();
+            dicoFR.put("janvier", "JANVIER");
+            dicoFR.put("fevrier", "FEVRIER");
+            dicoFR.put("mars", "MARS");
+            dicoFR.put("avril", "AVRIL");
+            dicoFR.put("mai", "MAI");
+            dicoFR.put("juin", "JUIN");
+            dicoFR.put("juillet", "JUILLET");
+            dicoFR.put("aout", "AOUT");
+            dicoFR.put("septembre", "SEPTEMBRE");
+            dicoFR.put("octobre", "OCTOBRE");
+            dicoFR.put("novembre", "NOVEMBRE");
+            dicoFR.put("decembre", "DECEMBRE");
+
+            LocalDate currentdate = LocalDate.now();
+            Month currentMonth = currentdate.getMonth();
+            String leMois = currentMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
+            String mois = dicoFR.get(leMois);
+
+            // Recuperation de l'ID
+            String TellID = "SELECT fi_id FROM fiche order by fi_id DESC LIMIT 1;";
+            ResultSet ID = statement.executeQuery(TellID);
+            ID.next();
+            String StrID = ID.getString(1);
+            int fi_id = Integer.parseInt(StrID);
+            fi_id += 1;
+
+            String SqlFiche = "INSERT INTO fiche (fi_id, fi_mois, fi_signature, fk_vi) VALUES (" + fi_id + ", '" + mois
+                    + "', 1, " + Common.login + ");";
+            statement.executeUpdate(SqlFiche);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -228,73 +241,27 @@ public class RenseignementController {
     }
 
     @FXML
-    public void Inserts(ActionEvent event) throws ClassNotFoundException {
+    void ValiderAF(ActionEvent event) {
         String dbURL = "jdbc:mysql://localhost:3306/projet_ap";
         String username = "root";
         String password = "";
 
         try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
-
-            // insert NbrNuitees
-            Map<String, String> dicoFR = new HashMap<String, String>();
-            dicoFR.put("janvier", "JANVIER");
-            dicoFR.put("fevrier", "FEVRIER");
-            dicoFR.put("mars", "MARS");
-            dicoFR.put("avril", "AVRIL");
-            dicoFR.put("mai", "MAI");
-            dicoFR.put("juin", "JUIN");
-            dicoFR.put("juillet", "JUILLET");
-            dicoFR.put("aout", "AOUT");
-            dicoFR.put("septembre", "SEPTEMBRE");
-            dicoFR.put("octobre", "OCTOBRE");
-            dicoFR.put("novembre", "NOVEMBRE");
-            dicoFR.put("decembre", "DECEMBRE");
-
-            LocalDate currentdate = LocalDate.now();
-            Month currentMonth = currentdate.getMonth();
-            String leMois = currentMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
-            String mois = dicoFR.get(leMois);
-
             Statement statement = conn.createStatement();
 
-            // Recuperation de l'ID
-            String TellID = "SELECT fi_id FROM fiche order by fi_id DESC LIMIT 1;";
+            // select de fi_id
+            String TellID = "SELECT fi_id FROM fiche INNER JOIN visiteur ON fk_vi = vi_matricule WHERE vi_matricule = "
+                    + Common.login + " order by fi_id DESC LIMIT 1;";
             ResultSet ID = statement.executeQuery(TellID);
             ID.next();
-            String StrID = ID.getString(1);
-            int IntID = Integer.parseInt(StrID);
-            IntID += 1;
-
-            String SqlFiche = "INSERT INTO fiche (fi_id, fi_mois, fi_signature, fk_vi) VALUES (" + IntID + ", '" + mois
-                    + "', 1, " + Common.login + ");";
-            statement.executeUpdate(SqlFiche);
-
-            String nNuitee = nbrNuitee.getText();
-            String mNuitee = muNuitee.getText();
-            String SqlFFN = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Nuitee', "
-                    + nNuitee + ", " + mNuitee + ", " + IntID + ");";
-            statement.executeUpdate(SqlFFN);
-
-            // insert NbrRepas
-            String nRepas = nbrRepas.getText();
-            String mRepas = muRepas.getText();
-            String SqlFFR = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Repas', "
-                    + nRepas + ", " + mRepas + ", " + IntID + " );";
-            statement.executeUpdate(SqlFFR);
-
-            // insert NbrKilometrage
-            String nKilo = nbrKilo.getText();
-            String mKilo = muKilometrage.getText();
-            String SqlFFK = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Kilometrage', "
-                    + nKilo + ", " + mKilo + ", " + IntID + " );";
-            statement.executeUpdate(SqlFFK);
+            String fi_id = ID.getString(1);
 
             // insert AF1
             String date1 = dateaf1.getText();
             String libelle1 = libelleaf1.getText();
             String montant1 = montantaf1.getText();
             String SqlAF1 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
-                    + date1 + ", " + libelle1 + ", " + montant1 + ", " + IntID + ");";
+                    + date1 + ", " + libelle1 + ", " + montant1 + ", " + fi_id + ");";
             statement.executeUpdate(SqlAF1);
 
             // insert AF2
@@ -302,7 +269,7 @@ public class RenseignementController {
             String libelle2 = libelleaf2.getText();
             String montant2 = montantaf2.getText();
             String SqlAF2 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
-                    + date2 + ", " + libelle2 + ", " + montant2 + ", " + IntID + ");";
+                    + date2 + ", " + libelle2 + ", " + montant2 + ", " + fi_id + ");";
             statement.executeUpdate(SqlAF2);
 
             // insert AF3
@@ -310,7 +277,94 @@ public class RenseignementController {
             String libelle3 = libelleaf3.getText();
             String montant3 = montantaf3.getText();
             String SqlAF3 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
-                    + date3 + ", " + libelle3 + ", " + montant3 + ", " + IntID + ");";
+                    + date3 + ", " + libelle3 + ", " + montant3 + ", " + fi_id + ");";
+            statement.executeUpdate(SqlAF3);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void Inserts(ActionEvent event) throws ClassNotFoundException {
+        String dbURL = "jdbc:mysql://localhost:3306/projet_ap";
+        String username = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
+
+            Statement statement = conn.createStatement();
+            // select de fi_id
+            String TellID = "SELECT fi_id FROM fiche INNER JOIN visiteur ON fk_vi = vi_matricule WHERE vi_matricule = "
+                    + Common.login + " order by fi_id DESC LIMIT 1;";
+            ResultSet ID = statement.executeQuery(TellID);
+            ID.next();
+            String fi_id = ID.getString(1);
+
+            // Insert NbrNuitee
+            String nNuitee = nbrNuitee.getText();
+            String mNuitee = muNuitee.getText();
+            String SqlFFN = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Nuitee', "
+                    + nNuitee + ", " + mNuitee + ", " + fi_id + ");";
+            statement.executeUpdate(SqlFFN);
+            String TellFFID1 = "SELECT ff_id FROM frais_forfaitaires order by ff_id DESC LIMIT 1;";
+            ResultSet FFID1 = statement.executeQuery(TellFFID1);
+            FFID1.next();
+            String StrFFID1 = FFID1.getString(1);
+            // Insert a_ff
+            String SqlAFF1 = "INSERT INTO a_ff (fk_id, fk_fi) VALUES (" + StrFFID1 + ", " + fi_id + ");";
+            statement.executeUpdate(SqlAFF1);
+
+            // insert NbrRepas
+            String nRepas = nbrRepas.getText();
+            String mRepas = muRepas.getText();
+            String SqlFFR = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Repas', "
+                    + nRepas + ", " + mRepas + ", " + fi_id + " );";
+            statement.executeUpdate(SqlFFR);
+            String TellFFID2 = "SELECT ff_id FROM frais_forfaitaires order by ff_id DESC LIMIT 1;";
+            ResultSet FFID2 = statement.executeQuery(TellFFID2);
+            FFID2.next();
+            String StrFFID2 = FFID2.getString(1);
+            // Insert a_ff
+            String SqlAFF2 = "INSERT INTO a_ff (fk_id, fk_fi) VALUES (" + StrFFID2 + ", " + fi_id + ");";
+            statement.executeUpdate(SqlAFF2);
+
+            // insert NbrKilometrage
+            String nKilo = nbrKilo.getText();
+            String mKilo = muKilometrage.getText();
+            String SqlFFK = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Kilometrage', "
+                    + nKilo + ", " + mKilo + ", " + fi_id + " );";
+            statement.executeUpdate(SqlFFK);
+            String TellFFID3 = "SELECT ff_id FROM frais_forfaitaires order by ff_id DESC LIMIT 1;";
+            ResultSet FFID3 = statement.executeQuery(TellFFID3);
+            FFID3.next();
+            String StrFFID3 = FFID3.getString(1);
+            // Insert a_ff
+            String SqlAFF3 = "INSERT INTO a_ff (fk_id, fk_fi) VALUES (" + StrFFID3 + ", " + fi_id + ");";
+            statement.executeUpdate(SqlAFF3);
+
+            // insert AF1
+            String date1 = dateaf1.getText();
+            String libelle1 = libelleaf1.getText();
+            String montant1 = montantaf1.getText();
+            String SqlAF1 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+                    + date1 + ", " + libelle1 + ", " + montant1 + ", " + fi_id + ");";
+            statement.executeUpdate(SqlAF1);
+
+            // insert AF2
+            String date2 = dateaf2.getText();
+            String libelle2 = libelleaf2.getText();
+            String montant2 = montantaf2.getText();
+            String SqlAF2 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+                    + date2 + ", " + libelle2 + ", " + montant2 + ", " + fi_id + ");";
+            statement.executeUpdate(SqlAF2);
+
+            // insert AF3
+            String date3 = dateaf3.getText();
+            String libelle3 = libelleaf3.getText();
+            String montant3 = montantaf3.getText();
+            String SqlAF3 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+                    + date3 + ", " + libelle3 + ", " + montant3 + ", " + fi_id + ");";
             statement.executeUpdate(SqlAF3);
 
             Enregistre.setText("Fiche de renseignement: Enregistrée");
