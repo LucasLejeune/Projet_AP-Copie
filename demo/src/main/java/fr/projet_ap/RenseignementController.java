@@ -1,6 +1,8 @@
 package fr.projet_ap;
 
 import java.io.IOException;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +13,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class RenseignementController {
 
@@ -21,6 +29,9 @@ public class RenseignementController {
     private Label idConnexion;
 
     @FXML
+    private Label Enregistre;
+
+    @FXML
     private Label muNuitee;
 
     @FXML
@@ -28,6 +39,36 @@ public class RenseignementController {
 
     @FXML
     private Button BackButton;
+
+    @FXML
+    private Button Soumettre;
+
+    @FXML
+    private TextField dateaf1;
+
+    @FXML
+    private TextField dateaf2;
+
+    @FXML
+    private TextField dateaf3;
+
+    @FXML
+    private TextField libelleaf1;
+
+    @FXML
+    private TextField libelleaf2;
+
+    @FXML
+    private TextField libelleaf3;
+
+    @FXML
+    private TextField montantaf1;
+
+    @FXML
+    private TextField montantaf2;
+
+    @FXML
+    private TextField montantaf3;
 
     @FXML
     private TextField nbrKilo;
@@ -71,7 +112,23 @@ public class RenseignementController {
             ResultSet resultN = statement.executeQuery(TarifUN);
             resultN.next();
             String montantN = resultN.getString(1);
-            muNuitee.setText(montantN + " €");
+            muNuitee.setText(montantN);
+
+            String TarifUR = "SELECT re_Prix_Repas FROM region INNER JOIN visiteur ON re_nom = fk_re WHERE vi_matricule = '"
+                    + Common.login + "';";
+
+            ResultSet resultR = statement.executeQuery(TarifUR);
+            resultR.next();
+            String montantR = resultR.getString(1);
+            muRepas.setText(montantR);
+
+            String TarifUK = "SELECT ve_Prix_km FROM vehicule INNER JOIN visiteur ON ve_Puissance = fk_ve WHERE vi_matricule = '"
+                    + Common.login + "';";
+
+            ResultSet resultK = statement.executeQuery(TarifUK);
+            resultK.next();
+            String montantK = resultK.getString(1);
+            muKilometrage.setText(montantK);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -90,42 +147,18 @@ public class RenseignementController {
                     + Common.login + "';";
 
             Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery(TarifUN);
-            result.next();
-            String montantN = result.getString(1);
+            ResultSet resultN = statement.executeQuery(TarifUN);
+            resultN.next();
+
+            String montantN = resultN.getString(1);
+            double MontantUN = Double.parseDouble(montantN);
 
             String nNuitee = nbrNuitee.getText();
             int nbrNuitee = Integer.parseInt(nNuitee);
-            int MontantUN = Integer.parseInt(TarifUN);
-            int totalNuitees = nbrNuitee * MontantUN;
+
+            double totalNuitees = nbrNuitee * MontantUN;
             String Nuitee = String.valueOf(totalNuitees);
             ttNuitee.setText(Nuitee + " €");
-            // InsertN();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-    }
-
-    public void InsertN() {
-        String dbURL = "jdbc:mysql://localhost:3306/projet_ap";
-        String username = "root";
-        String password = "";
-        String nNuitee = nbrNuitee.getText();
-
-        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
-
-            String FraisNuitee = "SELECT re_Prix_nuitee FROM region INNER JOIN visiteur ON re_nom = fk_re WHERE vi_matricule = '"
-                    + Common.login + "';";
-            String SqlFiche = "INSERT INTO fiche ('fi_id', `fk_vi`) VALUES ('1', '" + Common.login
-                    + "');";
-            String SqlFFN = "INSERT INTO frais_forfaitaire` (`ff_nom`, `ff_quantite`, `ff_montant_unitaire`, `fk_fiche`) VALUES ('Nuitée', '"
-                    + nNuitee + "', '" + FraisNuitee + "', '1');";
-
-            Statement statement = conn.createStatement();
-            statement.executeQuery(SqlFiche);
-            statement.executeQuery(SqlFFN);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -135,25 +168,58 @@ public class RenseignementController {
 
     @FXML
     void calculerTTR(KeyEvent event) {
-        String nRepas = nbrRepas.getText();
-        int nbrRepas = Integer.parseInt(nRepas);
-        int totalRepas = nbrRepas * 29;
-        String Repas = String.valueOf(totalRepas);
-        ttRepas.setText(Repas + " €");
-        InsertR();
-    }
-
-    public void InsertR() {
         String dbURL = "jdbc:mysql://localhost:3306/projet_ap";
         String username = "root";
         String password = "";
 
         try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
 
-            String SqlNom = "INSERT INTO `projet_ap`.`frais_forfaitaires` (`ff_nom`, `ff_quantite`, `ff_montant_unitaire`, `fk_fiche`) VALUES ('Repas', '6', '25', '1');";
+            String TarifUR = "SELECT re_Prix_Repas FROM region INNER JOIN visiteur ON re_nom = fk_re WHERE vi_matricule = '"
+                    + Common.login + "';";
 
             Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery(SqlNom);
+            ResultSet resultR = statement.executeQuery(TarifUR);
+            resultR.next();
+
+            String montantR = resultR.getString(1);
+            double MontantUR = Double.parseDouble(montantR);
+
+            String nRepas = nbrRepas.getText();
+            int nbrRepas = Integer.parseInt(nRepas);
+
+            double totalRepas = nbrRepas * MontantUR;
+            String Repas = String.valueOf(totalRepas);
+            ttRepas.setText(Repas + " €");
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    void calculerTTK(KeyEvent event) {
+        String dbURL = "jdbc:mysql://localhost:3306/projet_ap";
+        String username = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
+
+            String TarifUK = "SELECT ve_Prix_km FROM vehicule INNER JOIN visiteur ON ve_Puissance = fk_ve WHERE vi_matricule = '"
+                    + Common.login + "';";
+
+            Statement statement = conn.createStatement();
+            ResultSet resultK = statement.executeQuery(TarifUK);
+            resultK.next();
+
+            String montantK = resultK.getString(1);
+            double MontantUK = Double.parseDouble(montantK);
+
+            String nKilo = nbrKilo.getText();
+            int nbrKilos = Integer.parseInt(nKilo);
+
+            double totalKilos = nbrKilos * MontantUK;
+            String Kilos = String.valueOf(totalKilos);
+            ttKilometrage.setText(Kilos + " €");
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -162,26 +228,92 @@ public class RenseignementController {
     }
 
     @FXML
-    void calculerTTK(KeyEvent event) {
-        String nKilo = nbrKilo.getText();
-        int nbrKilos = Integer.parseInt(nKilo);
-        int totalKilos = nbrKilos * 100;
-        String Kilos = String.valueOf(totalKilos);
-        ttKilometrage.setText(Kilos + " €");
-        InsertK();
-    }
-
-    public void InsertK() {
+    public void Inserts(ActionEvent event) throws ClassNotFoundException {
         String dbURL = "jdbc:mysql://localhost:3306/projet_ap";
         String username = "root";
         String password = "";
 
         try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
 
-            String SqlNom = "INSERT INTO `projet_ap`.`frais_forfaitaires` (`ff_nom`, `ff_quantite`, `ff_montant_unitaire`, `fk_fiche`) VALUES ('Kilometrage', '6', '25', '1');";
+            // insert NbrNuitees
+            Map<String, String> dicoFR = new HashMap<String, String>();
+            dicoFR.put("janvier", "JANVIER");
+            dicoFR.put("fevrier", "FEVRIER");
+            dicoFR.put("mars", "MARS");
+            dicoFR.put("avril", "AVRIL");
+            dicoFR.put("mai", "MAI");
+            dicoFR.put("juin", "JUIN");
+            dicoFR.put("juillet", "JUILLET");
+            dicoFR.put("aout", "AOUT");
+            dicoFR.put("septembre", "SEPTEMBRE");
+            dicoFR.put("octobre", "OCTOBRE");
+            dicoFR.put("novembre", "NOVEMBRE");
+            dicoFR.put("decembre", "DECEMBRE");
+
+            LocalDate currentdate = LocalDate.now();
+            Month currentMonth = currentdate.getMonth();
+            String leMois = currentMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
+            String mois = dicoFR.get(leMois);
 
             Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery(SqlNom);
+
+            // Recuperation de l'ID
+            String TellID = "SELECT fi_id FROM fiche order by fi_id DESC LIMIT 1;";
+            ResultSet ID = statement.executeQuery(TellID);
+            ID.next();
+            String StrID = ID.getString(1);
+            int IntID = Integer.parseInt(StrID);
+            IntID += 1;
+
+            String SqlFiche = "INSERT INTO fiche (fi_id, fi_mois, fi_signature, fk_vi) VALUES (" + IntID + ", '" + mois
+                    + "', 1, " + Common.login + ");";
+            statement.executeUpdate(SqlFiche);
+
+            String nNuitee = nbrNuitee.getText();
+            String mNuitee = muNuitee.getText();
+            String SqlFFN = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Nuitee', "
+                    + nNuitee + ", " + mNuitee + ", " + IntID + ");";
+            statement.executeUpdate(SqlFFN);
+
+            // insert NbrRepas
+            String nRepas = nbrRepas.getText();
+            String mRepas = muRepas.getText();
+            String SqlFFR = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Repas', "
+                    + nRepas + ", " + mRepas + ", " + IntID + " );";
+            statement.executeUpdate(SqlFFR);
+
+            // insert NbrKilometrage
+            String nKilo = nbrKilo.getText();
+            String mKilo = muKilometrage.getText();
+            String SqlFFK = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Kilometrage', "
+                    + nKilo + ", " + mKilo + ", " + IntID + " );";
+            statement.executeUpdate(SqlFFK);
+
+            // insert AF1
+            String date1 = dateaf1.getText();
+            String libelle1 = libelleaf1.getText();
+            String montant1 = montantaf1.getText();
+            String SqlAF1 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+                    + date1 + ", " + libelle1 + ", " + montant1 + ", " + IntID + ");";
+            statement.executeUpdate(SqlAF1);
+
+            // insert AF2
+            String date2 = dateaf2.getText();
+            String libelle2 = libelleaf2.getText();
+            String montant2 = montantaf2.getText();
+            String SqlAF2 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+                    + date2 + ", " + libelle2 + ", " + montant2 + ", " + IntID + ");";
+            statement.executeUpdate(SqlAF2);
+
+            // insert AF3
+            String date3 = dateaf3.getText();
+            String libelle3 = libelleaf3.getText();
+            String montant3 = montantaf3.getText();
+            String SqlAF3 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+                    + date3 + ", " + libelle3 + ", " + montant3 + ", " + IntID + ");";
+            statement.executeUpdate(SqlAF3);
+
+            Enregistre.setText("Fiche de renseignement: Enregistrée");
 
         } catch (SQLException ex) {
             ex.printStackTrace();
