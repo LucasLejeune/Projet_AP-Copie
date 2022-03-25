@@ -2,6 +2,7 @@ package fr.projet_ap;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -95,6 +96,18 @@ public class ComptabiliteController {
     @FXML
     private Label AutreMontant3;
 
+    @FXML
+    private Label idConnexion;
+
+    @FXML
+    private CheckBox CheckAf1;
+
+    @FXML
+    private CheckBox CheckAf2;
+
+    @FXML
+    private CheckBox CheckAf3;
+
     /**
      * @throws IOException
      */
@@ -157,57 +170,26 @@ public class ComptabiliteController {
 
         try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
 
-            String sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule ='" + Matricule.getText() + "';";
+            String SqlConn = "SELECT vi_nom, vi_prenom FROM visiteur Where vi_matricule = '" + Common.login + "';";
 
             Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery(sql);
+            ResultSet result = statement.executeQuery(SqlConn);
 
             result.next();
+            String nom = result.getString(1);
+            String prenom = result.getString(2);
+            idConnexion.setText(nom + "-" + prenom);
 
-            Map<String, String> dicoMois = new HashMap<String, String>();
-            dicoMois.put("janvier", "1");
-            dicoMois.put("fevrier", "2");
-            dicoMois.put("mars", "3");
-            dicoMois.put("avril", "4");
-            dicoMois.put("mai", "5");
-            dicoMois.put("juin", "6");
-            dicoMois.put("juillet", "7");
-            dicoMois.put("aout", "8");
-            dicoMois.put("septembre", "9");
-            dicoMois.put("octobre", "10");
-            dicoMois.put("novembre", "11");
-            dicoMois.put("decembre", "12");
+            String sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule ='" + Matricule.getText() + "';";
 
-            Map<String, String> dicoFR = new HashMap<String, String>();
-            dicoFR.put("janvier", "JANVIER");
-            dicoFR.put("fevrier", "FEVRIER");
-            dicoFR.put("mars", "MARS");
-            dicoFR.put("avril", "AVRIL");
-            dicoFR.put("mai", "MAI");
-            dicoFR.put("juin", "JUIN");
-            dicoFR.put("juillet", "JUILLET");
-            dicoFR.put("aout", "AOUT");
-            dicoFR.put("septembre", "SEPTEMBRE");
-            dicoFR.put("octobre", "OCTOBRE");
-            dicoFR.put("novembre", "NOVEMBRE");
-            dicoFR.put("decembre", "DECEMBRE");
+            ResultSet resultat = statement.executeQuery(sql);
 
-            LocalDate currentdate = LocalDate.now();
-            Month currentMonth = currentdate.getMonth();
-            String leMois = currentMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
-            int moisP = Integer.parseInt(dicoMois.get(leMois)) - 1;
-            String mois = "";
-            for (Map.Entry<String, String> entry : dicoMois.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                if (Integer.parseInt(value) == moisP) {
-                    mois = dicoFR.get(key);
-                }
-            }
+            resultat.next();
+            String ident = resultat.getString(1);
+
+            String mois = GetMois();
 
             Mois.setText(mois);
-
-            String ident = result.getString(1);
 
             String SqlQN = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
                     + ident + "' AND ff_nom = 'Nuitee' AND fi_mois = '" + mois + "';";
@@ -225,19 +207,18 @@ public class ComptabiliteController {
             String QKilometrage = "";
             String MUkilometrage = "";
 
-            Statement stmt = conn.createStatement();
-            ResultSet resultatQN = stmt.executeQuery(SqlQN);
+            ResultSet resultatQN = statement.executeQuery(SqlQN);
 
             resultatQN.next();
             QNuitee = resultatQN.getString(1);
             MUNuitee = resultatQN.getString(2);
 
-            ResultSet resultatQR = stmt.executeQuery(SqlQR);
+            ResultSet resultatQR = statement.executeQuery(SqlQR);
             resultatQR.next();
             QRepas = resultatQR.getString(1);
             MURepas = resultatQR.getString(2);
 
-            ResultSet resultatQK = stmt.executeQuery(SqlQK);
+            ResultSet resultatQK = statement.executeQuery(SqlQK);
             resultatQK.next();
             QKilometrage = resultatQK.getString(1);
             MUkilometrage = resultatQK.getString(2);
@@ -272,12 +253,12 @@ public class ComptabiliteController {
             String SqlNom = "SELECT vi_nom, vi_prenom FROM visiteur Where vi_matricule = '" + ident
                     + "';";
 
-            ResultSet resultat = statement.executeQuery(SqlNom);
+            ResultSet resultatNom = statement.executeQuery(SqlNom);
 
-            resultat.next();
-            String nom = resultat.getString(1);
-            String prenom = resultat.getString(2);
-            Nom_prenom.setText(nom + "-" + prenom);
+            resultatNom.next();
+            String nomV = resultatNom.getString(1);
+            String prenomV = resultatNom.getString(2);
+            Nom_prenom.setText(nomV + "-" + prenomV);
 
             String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
                     + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
@@ -314,6 +295,136 @@ public class ComptabiliteController {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @FXML
+    private void Generer_af() throws IOException {
+        String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
+        String username = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
+
+            String sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule ='" + Matricule.getText() + "';";
+
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+
+            result.next();
+            String ident = result.getString(1);
+
+            String mois = GetMois();
+
+            String ModifAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
+                    + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
+
+            ResultSet resultMAF = statement.executeQuery(ModifAf);
+            if (resultMAF.next()) {
+                String mad1 = resultMAF.getString(1);
+                String mal1 = resultMAF.getString(2);
+                String mam1 = resultMAF.getString(3);
+                if (CheckAf1.isSelected()) {
+                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 1 WHERE fk_vi = '"
+                            + ident + "' AND fi_mois = '" + mois + "' AND af_date ='" + mad1 + "' AND af_libelle ='"
+                            + mal1 + "' AND af_montant ='" + mam1 + "';";
+                    statement.executeQuery(UpdateAf);
+                }
+            }
+
+            if (resultMAF.next()) {
+                String mad2 = resultMAF.getString(1);
+                String mal2 = resultMAF.getString(2);
+                String mam2 = resultMAF.getString(3);
+            }
+
+            if (resultMAF.next()) {
+                String mad3 = resultMAF.getString(1);
+                String mal3 = resultMAF.getString(2);
+                String mam3 = resultMAF.getString(3);
+            }
+
+            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
+                    + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
+
+            ResultSet resultAF = statement.executeQuery(SqlAf);
+
+            if (resultAF.next()) {
+                String ad1 = resultAF.getString(1);
+                String al1 = resultAF.getString(2);
+                String am1 = resultAF.getString(3);
+                AutreDate1.setText(ad1);
+                AutreLibelle1.setText(al1);
+                AutreMontant1.setText(am1);
+            }
+
+            if (resultAF.next()) {
+                String ad2 = resultAF.getString(1);
+                String al2 = resultAF.getString(2);
+                String am2 = resultAF.getString(3);
+                AutreDate2.setText(ad2);
+                AutreLibelle2.setText(al2);
+                AutreMontant2.setText(am2);
+            }
+
+            if (resultAF.next()) {
+                String ad3 = resultAF.getString(1);
+                String al3 = resultAF.getString(2);
+                String am3 = resultAF.getString(3);
+                AutreDate3.setText(ad3);
+                AutreLibelle3.setText(al3);
+                AutreMontant3.setText(am3);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    private String GetMois() {
+        Map<String, String> dicoMois = new HashMap<String, String>();
+        dicoMois.put("janvier", "1");
+        dicoMois.put("fevrier", "2");
+        dicoMois.put("mars", "3");
+        dicoMois.put("avril", "4");
+        dicoMois.put("mai", "5");
+        dicoMois.put("juin", "6");
+        dicoMois.put("juillet", "7");
+        dicoMois.put("aout", "8");
+        dicoMois.put("septembre", "9");
+        dicoMois.put("octobre", "10");
+        dicoMois.put("novembre", "11");
+        dicoMois.put("decembre", "12");
+
+        Map<String, String> dicoFR = new HashMap<String, String>();
+        dicoFR.put("janvier", "JANVIER");
+        dicoFR.put("fevrier", "FEVRIER");
+        dicoFR.put("mars", "MARS");
+        dicoFR.put("avril", "AVRIL");
+        dicoFR.put("mai", "MAI");
+        dicoFR.put("juin", "JUIN");
+        dicoFR.put("juillet", "JUILLET");
+        dicoFR.put("aout", "AOUT");
+        dicoFR.put("septembre", "SEPTEMBRE");
+        dicoFR.put("octobre", "OCTOBRE");
+        dicoFR.put("novembre", "NOVEMBRE");
+        dicoFR.put("decembre", "DECEMBRE");
+
+        LocalDate currentdate = LocalDate.now();
+        Month currentMonth = currentdate.getMonth();
+        String leMois = currentMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
+        int moisP = Integer.parseInt(dicoMois.get(leMois)) - 1;
+        String mois = "";
+        for (Map.Entry<String, String> entry : dicoMois.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if (Integer.parseInt(value) == moisP) {
+                mois = dicoFR.get(key);
+                return mois;
+            }
+        }
+        return mois;
+
     }
 
 }
