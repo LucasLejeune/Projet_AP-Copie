@@ -11,6 +11,7 @@ public class ClientCController {
     @FXML
     private void switchToValidation() throws IOException {
         App.setRoot("Validation");
+
     }
 
     /**
