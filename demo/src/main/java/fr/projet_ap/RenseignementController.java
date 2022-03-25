@@ -131,17 +131,26 @@ public class RenseignementController {
             String leMois = currentMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
             String mois = dicoFR.get(leMois);
 
-            // Recuperation de l'ID
-            String TellID = "SELECT fi_id FROM fiche order by fi_id DESC LIMIT 1;";
-            ResultSet ID = statement.executeQuery(TellID);
-            ID.next();
-            String StrID = ID.getString(1);
-            int fi_id = Integer.parseInt(StrID);
-            fi_id += 1;
+            String SQL = "SELECT fi_id FROM fiche INNER JOIN visiteur ON vi_matricule = fk_vi where fi_mois = '" + mois
+                    + "' AND vi_matricule = "
+                    + Common.login + ";";
+            ResultSet Sql = statement.executeQuery(SQL);
+            Sql.next();
 
-            String SqlFiche = "INSERT INTO fiche (fi_id, fi_mois, fi_signature, fk_vi) VALUES (" + fi_id + ", '" + mois
-                    + "', 1, " + Common.login + ");";
-            statement.executeUpdate(SqlFiche);
+            if (!Sql.next()) {
+                // Recuperation de l'ID
+                String TellID = "SELECT fi_id FROM fiche order by fi_id DESC LIMIT 1;";
+                ResultSet ID = statement.executeQuery(TellID);
+                ID.next();
+                String StrID = ID.getString(1);
+                int fi_id = Integer.parseInt(StrID);
+                fi_id += 1;
+
+                String SqlFiche = "INSERT INTO fiche (fi_id, fi_mois, fi_signature, fk_vi) VALUES (" + fi_id + ", '"
+                        + mois
+                        + "', 1, " + Common.login + ");";
+                statement.executeUpdate(SqlFiche);
+            }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -260,7 +269,7 @@ public class RenseignementController {
             String date1 = dateaf1.getText();
             String libelle1 = libelleaf1.getText();
             String montant1 = montantaf1.getText();
-            String SqlAF1 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+            String SqlAF1 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_af) VALUES ("
                     + date1 + ", " + libelle1 + ", " + montant1 + ", " + fi_id + ");";
             statement.executeUpdate(SqlAF1);
 
@@ -268,7 +277,7 @@ public class RenseignementController {
             String date2 = dateaf2.getText();
             String libelle2 = libelleaf2.getText();
             String montant2 = montantaf2.getText();
-            String SqlAF2 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+            String SqlAF2 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_af) VALUES ("
                     + date2 + ", " + libelle2 + ", " + montant2 + ", " + fi_id + ");";
             statement.executeUpdate(SqlAF2);
 
@@ -276,7 +285,7 @@ public class RenseignementController {
             String date3 = dateaf3.getText();
             String libelle3 = libelleaf3.getText();
             String montant3 = montantaf3.getText();
-            String SqlAF3 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
+            String SqlAF3 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_af) VALUES ("
                     + date3 + ", " + libelle3 + ", " + montant3 + ", " + fi_id + ");";
             statement.executeUpdate(SqlAF3);
 
@@ -301,71 +310,82 @@ public class RenseignementController {
             ID.next();
             String fi_id = ID.getString(1);
 
-            // Insert NbrNuitee
-            String nNuitee = nbrNuitee.getText();
-            String mNuitee = muNuitee.getText();
-            String SqlFFN = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Nuitee', "
-                    + nNuitee + ", " + mNuitee + ", " + fi_id + ");";
-            statement.executeUpdate(SqlFFN);
-            String TellFFID1 = "SELECT ff_id FROM frais_forfaitaires order by ff_id DESC LIMIT 1;";
-            ResultSet FFID1 = statement.executeQuery(TellFFID1);
-            FFID1.next();
-            String StrFFID1 = FFID1.getString(1);
-            // Insert a_ff
-            String SqlAFF1 = "INSERT INTO a_ff (fk_id, fk_fi) VALUES (" + StrFFID1 + ", " + fi_id + ");";
-            statement.executeUpdate(SqlAFF1);
+            String SQLN = "SELECT ff_id FROM frais_fortaires INNER JOIN visiteur ON vi_matricule = fk_vi where ff_nom = 'Nuitee' AND vi_matricule = "
+                    + Common.login + ";";
+            ResultSet SqlN = statement.executeQuery(SQLN);
+            SqlN.next();
 
-            // insert NbrRepas
-            String nRepas = nbrRepas.getText();
-            String mRepas = muRepas.getText();
-            String SqlFFR = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Repas', "
-                    + nRepas + ", " + mRepas + ", " + fi_id + " );";
-            statement.executeUpdate(SqlFFR);
-            String TellFFID2 = "SELECT ff_id FROM frais_forfaitaires order by ff_id DESC LIMIT 1;";
-            ResultSet FFID2 = statement.executeQuery(TellFFID2);
-            FFID2.next();
-            String StrFFID2 = FFID2.getString(1);
-            // Insert a_ff
-            String SqlAFF2 = "INSERT INTO a_ff (fk_id, fk_fi) VALUES (" + StrFFID2 + ", " + fi_id + ");";
-            statement.executeUpdate(SqlAFF2);
+            if (!SqlN.next()) {
+                // Insert NbrNuitee
+                String nNuitee = nbrNuitee.getText();
+                String mNuitee = muNuitee.getText();
+                String SqlFFN = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Nuitee', "
+                        + nNuitee + ", " + mNuitee + ", " + fi_id + ");";
+                statement.executeUpdate(SqlFFN);
+                String TellFFID1 = "SELECT ff_id FROM frais_forfaitaires order by ff_id DESC LIMIT 1;";
+                ResultSet FFID1 = statement.executeQuery(TellFFID1);
+                FFID1.next();
+                String StrFFID1 = FFID1.getString(1);
+                // Insert a_ff
+                String SqlAFF1 = "INSERT INTO a_ff (fk_id, fk_fi) VALUES (" + StrFFID1 + ", " + fi_id + ");";
+                statement.executeUpdate(SqlAFF1);
+            } else {
+                String nNuitee = nbrNuitee.getText();
+                String SqlFFN = "UPDATE frais_forfaitaires SET ff_quantite = " + nNuitee
+                        + " WHERE ff_nom = 'Nuitee' AND fi_id = " + fi_id + ";"
+                        + nNuitee + ", AND fi_id = " + fi_id + ");";
+                statement.executeUpdate(SqlFFN);
+            }
 
-            // insert NbrKilometrage
-            String nKilo = nbrKilo.getText();
-            String mKilo = muKilometrage.getText();
-            String SqlFFK = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Kilometrage', "
-                    + nKilo + ", " + mKilo + ", " + fi_id + " );";
-            statement.executeUpdate(SqlFFK);
-            String TellFFID3 = "SELECT ff_id FROM frais_forfaitaires order by ff_id DESC LIMIT 1;";
-            ResultSet FFID3 = statement.executeQuery(TellFFID3);
-            FFID3.next();
-            String StrFFID3 = FFID3.getString(1);
-            // Insert a_ff
-            String SqlAFF3 = "INSERT INTO a_ff (fk_id, fk_fi) VALUES (" + StrFFID3 + ", " + fi_id + ");";
-            statement.executeUpdate(SqlAFF3);
+            String SQLR = "SELECT ff_id FROM frais_fortaires INNER JOIN visiteur ON vi_matricule = fk_vi where ff_nom = 'Repas' AND vi_matricule = "
+                    + Common.login + ";";
+            ResultSet SqlR = statement.executeQuery(SQLR);
+            SqlR.next();
+            if (!SqlR.next()) {
+                // insert NbrRepas
+                String nRepas = nbrRepas.getText();
+                String mRepas = muRepas.getText();
+                String SqlFFR = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Repas', "
+                        + nRepas + ", " + mRepas + ", " + fi_id + " );";
+                statement.executeUpdate(SqlFFR);
+                String TellFFID2 = "SELECT ff_id FROM frais_forfaitaires order by ff_id DESC LIMIT 1;";
+                ResultSet FFID2 = statement.executeQuery(TellFFID2);
+                FFID2.next();
+                String StrFFID2 = FFID2.getString(1);
+                // Insert a_ff
+                String SqlAFF2 = "INSERT INTO a_ff (fk_id, fk_fi) VALUES (" + StrFFID2 + ", " + fi_id + ");";
+                statement.executeUpdate(SqlAFF2);
+            } else {
+                String nRepas = nbrRepas.getText();
+                String SqlFFR = "UPDATE frais_forfaitaires SET ff_quantite = " + nRepas
+                        + " WHERE ff_nom = 'Repas' AND fi_id = " + fi_id + ";";
+                statement.executeUpdate(SqlFFR);
+            }
 
-            // insert AF1
-            String date1 = dateaf1.getText();
-            String libelle1 = libelleaf1.getText();
-            String montant1 = montantaf1.getText();
-            String SqlAF1 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
-                    + date1 + ", " + libelle1 + ", " + montant1 + ", " + fi_id + ");";
-            statement.executeUpdate(SqlAF1);
-
-            // insert AF2
-            String date2 = dateaf2.getText();
-            String libelle2 = libelleaf2.getText();
-            String montant2 = montantaf2.getText();
-            String SqlAF2 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
-                    + date2 + ", " + libelle2 + ", " + montant2 + ", " + fi_id + ");";
-            statement.executeUpdate(SqlAF2);
-
-            // insert AF3
-            String date3 = dateaf3.getText();
-            String libelle3 = libelleaf3.getText();
-            String montant3 = montantaf3.getText();
-            String SqlAF3 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_ff) VALUES ("
-                    + date3 + ", " + libelle3 + ", " + montant3 + ", " + fi_id + ");";
-            statement.executeUpdate(SqlAF3);
+            String SQLK = "SELECT ff_id FROM frais_fortaires INNER JOIN visiteur ON vi_matricule = fk_vi where ff_nom = 'Repas' AND vi_matricule = "
+                    + Common.login + ";";
+            ResultSet SqlK = statement.executeQuery(SQLK);
+            SqlK.next();
+            if (!SqlR.next()) {
+                // insert NbrKilometrage
+                String nKilo = nbrKilo.getText();
+                String mKilo = muKilometrage.getText();
+                String SqlFFK = "INSERT INTO frais_forfaitaires (ff_nom, ff_quantite, ff_montant_unitaire, fk_fiche_ff) VALUES ('Kilometrage', "
+                        + nKilo + ", " + mKilo + ", " + fi_id + " );";
+                statement.executeUpdate(SqlFFK);
+                String TellFFID3 = "SELECT ff_id FROM frais_forfaitaires order by ff_id DESC LIMIT 1;";
+                ResultSet FFID3 = statement.executeQuery(TellFFID3);
+                FFID3.next();
+                String StrFFID3 = FFID3.getString(1);
+                // Insert a_ff
+                String SqlAFF3 = "INSERT INTO a_ff (fk_id, fk_fi) VALUES (" + StrFFID3 + ", " + fi_id + ");";
+                statement.executeUpdate(SqlAFF3);
+            } else {
+                String nKilo = nbrRepas.getText();
+                String SqlFFK = "UPDATE frais_forfaitaires SET ff_quantite = " + nKilo
+                        + " WHERE ff_nom = 'Kilometrage' AND fi_id = " + fi_id + ";";
+                statement.executeUpdate(SqlFFK);
+            }
 
             Enregistre.setText("Fiche de renseignement: Enregistrée");
 
