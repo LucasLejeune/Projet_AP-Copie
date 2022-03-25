@@ -319,15 +319,28 @@ public class ComptabiliteController {
                     + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
 
             ResultSet resultMAF = statement.executeQuery(ModifAf);
+            Statement stmt = conn.createStatement();
             if (resultMAF.next()) {
                 String mad1 = resultMAF.getString(1);
                 String mal1 = resultMAF.getString(2);
                 String mam1 = resultMAF.getString(3);
                 if (CheckAf1.isSelected()) {
-                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 1 WHERE fk_vi = '"
-                            + ident + "' AND fi_mois = '" + mois + "' AND af_date ='" + mad1 + "' AND af_libelle ='"
+                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 1 WHERE af_date ='" + mad1
+                            + "' AND af_libelle ='"
                             + mal1 + "' AND af_montant ='" + mam1 + "';";
-                    statement.executeQuery(UpdateAf);
+                    stmt.executeUpdate(UpdateAf);
+                    AutreDate1.setText("");
+                    AutreLibelle1.setText("");
+                    AutreMontant1.setText("");
+                    CheckAf1.setSelected(false);
+                } else {
+                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 2 WHERE af_date ='" + mad1
+                            + "' AND af_libelle ='"
+                            + mal1 + "' AND af_montant ='" + mam1 + "';";
+                    stmt.executeUpdate(UpdateAf);
+                    AutreDate1.setText("");
+                    AutreLibelle1.setText("");
+                    AutreMontant1.setText("");
                 }
             }
 
@@ -335,12 +348,50 @@ public class ComptabiliteController {
                 String mad2 = resultMAF.getString(1);
                 String mal2 = resultMAF.getString(2);
                 String mam2 = resultMAF.getString(3);
+                if (CheckAf2.isSelected()) {
+                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 1 WHERE af_date ='" + mad2
+                            + "' AND af_libelle ='"
+                            + mal2 + "' AND af_montant ='" + mam2 + "';";
+                    stmt.executeUpdate(UpdateAf);
+                    AutreDate2.setText("");
+                    AutreLibelle2.setText("");
+                    AutreMontant2.setText("");
+                    CheckAf2.setSelected(false);
+                } else {
+                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 2 WHERE af_date ='" + mad2
+                            + "' AND af_libelle ='"
+                            + mal2 + "' AND af_montant ='" + mam2 + "';";
+                    stmt.executeUpdate(UpdateAf);
+                    AutreDate2.setText("");
+                    AutreLibelle2.setText("");
+                    AutreMontant2.setText("");
+                    CheckAf1.setSelected(false);
+                }
             }
 
             if (resultMAF.next()) {
                 String mad3 = resultMAF.getString(1);
                 String mal3 = resultMAF.getString(2);
                 String mam3 = resultMAF.getString(3);
+                if (CheckAf3.isSelected()) {
+                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 1 WHERE af_date ='"
+                            + mad3 + "' AND af_libelle ='"
+                            + mal3 + "' AND af_montant ='" + mam3 + "';";
+                    stmt.executeUpdate(UpdateAf);
+                    AutreDate3.setText("");
+                    AutreLibelle3.setText("");
+                    AutreMontant3.setText("");
+                    CheckAf3.setSelected(false);
+                } else {
+                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 2 WHERE af_date ='" + mad3
+                            + "' AND af_libelle ='"
+                            + mal3 + "' AND af_montant ='" + mam3 + "';";
+                    stmt.executeUpdate(UpdateAf);
+                    AutreDate3.setText("");
+                    AutreLibelle3.setText("");
+                    AutreMontant3.setText("");
+                    CheckAf1.setSelected(false);
+                }
             }
 
             String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
@@ -424,6 +475,34 @@ public class ComptabiliteController {
             }
         }
         return mois;
+
+    }
+
+    @FXML
+    private void valider() throws SQLException {
+        String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
+        String username = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
+            String sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule ='" + Matricule.getText() + "';";
+
+            Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+
+            result.next();
+            String ident = result.getString(1);
+            String ValiderFiche = "UPDATE fiche SET fi_Validation_Ct = 1 WHERE fk_vi = '" + ident + "' AND fi_mois = '"
+                    + GetMois() + "';";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(ValiderFiche);
+            LocalDate currentdate = LocalDate.now();
+            String DateValid = "UPDATE fiche SET fi_Date_Validation = '" + currentdate + "' WHERE fk_vi = '" + ident
+                    + "' AND fi_mois = '"
+                    + GetMois() + "';";
+            stmt.executeUpdate(DateValid);
+
+        }
 
     }
 
