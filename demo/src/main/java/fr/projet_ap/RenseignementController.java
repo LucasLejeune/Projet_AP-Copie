@@ -41,21 +41,9 @@ public class RenseignementController {
     @FXML
     private TextField dateaf1;
     @FXML
-    private TextField dateaf2;
-    @FXML
-    private TextField dateaf3;
-    @FXML
     private TextField libelleaf1;
     @FXML
-    private TextField libelleaf2;
-    @FXML
-    private TextField libelleaf3;
-    @FXML
     private TextField montantaf1;
-    @FXML
-    private TextField montantaf2;
-    @FXML
-    private TextField montantaf3;
     @FXML
     private TextField nbrKilo;
     @FXML
@@ -158,18 +146,36 @@ public class RenseignementController {
             ID.next();
             String fi_id = ID.getString(1);
 
+            // afficher les nuitees et leurs totaux
             String SQLN = "SELECT ff_id FROM fiche INNER JOIN visiteur ON vi_matricule = fk_vi Inner Join frais_forfaitaires ON fi_id = fk_fiche_ff where ff_nom = 'Nuitee' AND vi_matricule = "
                     + Common.login + ";";
             ResultSet SqlN = statement.executeQuery(SQLN);
             if (SqlN.next()) {
                 String databaseN = "SELECT ff_quantite FROM frais_forfaitaires Inner Join fiche ON fi_id = fk_fiche_ff INNER JOIN visiteur ON vi_matricule = fk_vi where ff_nom = 'Nuitee' AND vi_matricule = '"
                         + Common.login + "';";
+
                 ResultSet quantite_nuitee = statement.executeQuery(databaseN);
                 quantite_nuitee.next();
                 String str_quantite_nuitee = quantite_nuitee.getString(1);
                 nbrNuitee.setText(str_quantite_nuitee);
+
+                String tarifUnitaireNuitee = "SELECT re_Prix_nuitee FROM region INNER JOIN visiteur ON re_nom = fk_re WHERE vi_matricule = '"
+                        + Common.login + "';";
+
+                ResultSet resultNuitee = statement.executeQuery(tarifUnitaireNuitee);
+                resultNuitee.next();
+                String str_Unitiare_Nuitee = resultNuitee.getString(1);
+
+                double MontantUN = Double.parseDouble(str_Unitiare_Nuitee);
+                double QuantiteN = Double.parseDouble(str_quantite_nuitee);
+
+                double totalNuitees = MontantUN * QuantiteN;
+                String Nuitees = String.valueOf(totalNuitees);
+                ttNuitee.setText(Nuitees);
+
             }
 
+            // afficher les repas et leurs totaux
             String SQLR = "SELECT ff_id FROM fiche INNER JOIN visiteur ON vi_matricule = fk_vi Inner Join frais_forfaitaires ON fi_id = fk_fiche_ff where ff_nom = 'Repas' AND vi_matricule = "
                     + Common.login + ";";
             ResultSet SqlR = statement.executeQuery(SQLR);
@@ -181,8 +187,23 @@ public class RenseignementController {
                 String str_quantite_repas = quantite_repas.getString(1);
                 nbrRepas.setText(str_quantite_repas);
 
+                String tarif_Unuitaire_Repas = "SELECT re_Prix_Repas FROM region INNER JOIN visiteur ON re_nom = fk_re WHERE vi_matricule = '"
+                        + Common.login + "';";
+
+                ResultSet resultRepas = statement.executeQuery(tarif_Unuitaire_Repas);
+                resultRepas.next();
+                String str_Unitaire_Nuitee = resultRepas.getString(1);
+
+                double MontantUR = Double.parseDouble(str_Unitaire_Nuitee);
+                double QuantiteR = Double.parseDouble(str_quantite_repas);
+
+                double totalRepas = QuantiteR * MontantUR;
+                String Repas = String.valueOf(totalRepas);
+                ttRepas.setText(Repas);
+
             }
 
+            // afficher les kilometrage et leurs totaux
             String SQLK = "SELECT ff_id FROM fiche INNER JOIN visiteur ON vi_matricule = fk_vi Inner Join frais_forfaitaires ON fi_id = fk_fiche_ff where ff_nom = 'Kilometrage' AND vi_matricule = "
                     + Common.login + ";";
             ResultSet SqlK = statement.executeQuery(SQLK);
@@ -193,6 +214,19 @@ public class RenseignementController {
                 quantite_kilometrage.next();
                 String str_quantite_kilometrage = quantite_kilometrage.getString(1);
                 nbrKilo.setText(str_quantite_kilometrage);
+
+                String tarif_Unitaire_Kilometrage = "SELECT ve_Prix_km FROM vehicule INNER JOIN visiteur ON ve_Puissance = fk_ve WHERE vi_matricule = '"
+                        + Common.login + "';";
+                ResultSet resultKilometrage = statement.executeQuery(tarif_Unitaire_Kilometrage);
+                resultKilometrage.next();
+                String str_Unitaire_Nuitee = resultKilometrage.getString(1);
+
+                double MontantUK = Double.parseDouble(str_Unitaire_Nuitee);
+                double QuantiteK = Double.parseDouble(str_quantite_kilometrage);
+
+                double totalKilos = QuantiteK * MontantUK;
+                String Kilos = String.valueOf(totalKilos);
+                ttKilometrage.setText(Kilos);
             }
 
         } catch (SQLException ex) {
@@ -223,7 +257,7 @@ public class RenseignementController {
 
             double totalNuitees = nbrNuitee * MontantUN;
             String Nuitee = String.valueOf(totalNuitees);
-            ttNuitee.setText(Nuitee + " €");
+            ttNuitee.setText(Nuitee);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -254,7 +288,7 @@ public class RenseignementController {
 
             double totalRepas = nbrRepas * MontantUR;
             String Repas = String.valueOf(totalRepas);
-            ttRepas.setText(Repas + " €");
+            ttRepas.setText(Repas);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -284,7 +318,7 @@ public class RenseignementController {
 
             double totalKilos = nbrKilos * MontantUK;
             String Kilos = String.valueOf(totalKilos);
-            ttKilometrage.setText(Kilos + " €");
+            ttKilometrage.setText(Kilos);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -315,22 +349,6 @@ public class RenseignementController {
             String SqlAF1 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_af) VALUES ("
                     + date1 + ", " + libelle1 + ", " + montant1 + ", " + fi_id + ");";
             statement.executeUpdate(SqlAF1);
-
-            // insert AF2
-            String date2 = dateaf2.getText();
-            String libelle2 = libelleaf2.getText();
-            String montant2 = montantaf2.getText();
-            String SqlAF2 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_af) VALUES ("
-                    + date2 + ", " + libelle2 + ", " + montant2 + ", " + fi_id + ");";
-            statement.executeUpdate(SqlAF2);
-
-            // insert AF3
-            String date3 = dateaf3.getText();
-            String libelle3 = libelleaf3.getText();
-            String montant3 = montantaf3.getText();
-            String SqlAF3 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_af) VALUES ("
-                    + date3 + ", " + libelle3 + ", " + montant3 + ", " + fi_id + ");";
-            statement.executeUpdate(SqlAF3);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
