@@ -1,13 +1,20 @@
 package fr.projet_ap;
 
 import java.io.IOException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -108,6 +115,21 @@ public class ComptabiliteController {
     @FXML
     private CheckBox CheckAf3;
 
+    @FXML
+    private TableView<Autre_frais> AF;
+
+    @FXML
+    private TableColumn<Autre_frais, Date> Af_Date;
+
+    @FXML
+    private TableColumn<Autre_frais, Boolean> Af_Validation;
+
+    @FXML
+    private TableColumn<Autre_frais, String> Af_libelle;
+
+    @FXML
+    private TableColumn<Autre_frais, Double> Af_montant;
+
     /**
      * @throws IOException
      */
@@ -119,8 +141,8 @@ public class ComptabiliteController {
 
         try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
 
-            String sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule = '" + id.getText()
-                    + "' AND vi_mdp = '" + mdp.getText() + "'; ";
+            String sql = "SELECT co_id FROM comptable WHERE co_id = '" + id.getText()
+                    + "' AND co_mdp = '" + mdp.getText() + "'; ";
 
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(sql);
@@ -191,13 +213,13 @@ public class ComptabiliteController {
 
             Mois.setText(mois);
 
-            String SqlQN = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
+            String SqlQN = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN fiche ON fk_fiche_ff = fi_id WHERE fk_vi = '"
                     + ident + "' AND ff_nom = 'Nuitee' AND fi_mois = '" + mois + "';";
 
-            String SqlQR = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
+            String SqlQR = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN fiche ON fk_fiche_ff = fi_id WHERE fk_vi = '"
                     + ident + "' AND ff_nom = 'Repas' AND fi_mois = '" + mois + "';";
 
-            String SqlQK = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN a_ff ON ff_id = fk_id JOIN fiche ON fk_fi = fi_id WHERE fk_vi = '"
+            String SqlQK = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires JOIN fiche ON fk_fiche_ff = fi_id WHERE fk_vi = '"
                     + ident + "' AND ff_nom = 'Kilometrage' AND fi_mois = '" + mois + "';";
 
             String QNuitee = "";
@@ -264,35 +286,21 @@ public class ComptabiliteController {
                     + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
             ResultSet resultAF = statement.executeQuery(SqlAf);
 
-            if (resultAF.next()) {
-                String ad1 = resultAF.getString(1);
-                String al1 = resultAF.getString(2);
-                String am1 = resultAF.getString(3);
-                AutreDate1.setText(ad1);
-                AutreLibelle1.setText(al1);
-                AutreMontant1.setText(am1);
-            }
+            ObservableList<Autre_frais> list = FXCollections.observableArrayList(
+                    new Autre_frais("2022-03-15", "Repas", 150.50),
+                    new Autre_frais("2022-03-28", "Repas", 150.50),
+                    new Autre_frais("2022-03-02", "Repas", 150.50));
 
-            if (resultAF.next()) {
-                String ad2 = resultAF.getString(1);
-                String al2 = resultAF.getString(2);
-                String am2 = resultAF.getString(3);
-                AutreDate2.setText(ad2);
-                AutreLibelle2.setText(al2);
-                AutreMontant2.setText(am2);
+            Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
+            Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
+            Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+            // Af_Validation.setCellValueFactory(new
+            // PropertyValueFactory<Autre_frais,Boolean>("validation"));
+            AF.setItems(list);
 
-            }
+        } catch (
 
-            if (resultAF.next()) {
-                String ad3 = resultAF.getString(1);
-                String al3 = resultAF.getString(2);
-                String am3 = resultAF.getString(3);
-                AutreDate3.setText(ad3);
-                AutreLibelle3.setText(al3);
-                AutreMontant3.setText(am3);
-            }
-
-        } catch (SQLException ex) {
+        SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -392,38 +400,6 @@ public class ComptabiliteController {
                     AutreMontant3.setText("");
                     CheckAf1.setSelected(false);
                 }
-            }
-
-            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
-                    + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
-
-            ResultSet resultAF = statement.executeQuery(SqlAf);
-
-            if (resultAF.next()) {
-                String ad1 = resultAF.getString(1);
-                String al1 = resultAF.getString(2);
-                String am1 = resultAF.getString(3);
-                AutreDate1.setText(ad1);
-                AutreLibelle1.setText(al1);
-                AutreMontant1.setText(am1);
-            }
-
-            if (resultAF.next()) {
-                String ad2 = resultAF.getString(1);
-                String al2 = resultAF.getString(2);
-                String am2 = resultAF.getString(3);
-                AutreDate2.setText(ad2);
-                AutreLibelle2.setText(al2);
-                AutreMontant2.setText(am2);
-            }
-
-            if (resultAF.next()) {
-                String ad3 = resultAF.getString(1);
-                String al3 = resultAF.getString(2);
-                String am3 = resultAF.getString(3);
-                AutreDate3.setText(ad3);
-                AutreLibelle3.setText(al3);
-                AutreMontant3.setText(am3);
             }
 
         } catch (SQLException ex) {
