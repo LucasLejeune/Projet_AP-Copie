@@ -282,25 +282,29 @@ public class ComptabiliteController {
             String prenomV = resultatNom.getString(2);
             Nom_prenom.setText(nomV + "-" + prenomV);
 
-            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
-                    + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
-            ResultSet resultAF = statement.executeQuery(SqlAf);
-
             int i = 1;
 
             ObservableList<Autre_frais> list = FXCollections.observableArrayList();
 
-            while (result.next()) {
-                list.addAll(new Autre_frais(resultAF.getString(i), resultAF.getString(i + 1),
-                        Double.parseDouble(resultAF.getString(i + 2))));
-                i += 3;
+            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
+                    + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
+            ResultSet resultAF = statement.executeQuery(SqlAf);
+
+            while (resultAF.next()) {
+                if (i != 1) {
+                    i += 3;
+                }
+                String date = resultAF.getString(i);
+                String libelle = resultAF.getString(i + 1);
+                double montant = Double.parseDouble(resultAF.getString(i + 2));
+                list.add(new Autre_frais(date, libelle, montant));
+
             }
 
             Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
             Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
             Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
 
-            // Af_Validation.setCellValueFactory(new
             // PropertyValueFactory<Autre_frais,Boolean>("validation"));
             AF.setItems(list);
 
