@@ -1,9 +1,5 @@
 package fr.projet_ap;
 
-import java.sql.Date;
-
-import javafx.collections.FXCollections;
-
 public class Autre_frais {
     private String Af_Date;
     private String Af_libelle;
