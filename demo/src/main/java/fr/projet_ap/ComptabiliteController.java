@@ -286,14 +286,20 @@ public class ComptabiliteController {
                     + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
             ResultSet resultAF = statement.executeQuery(SqlAf);
 
-            ObservableList<Autre_frais> list = FXCollections.observableArrayList(
-                    new Autre_frais("2022-03-15", "Repas", 150.50),
-                    new Autre_frais("2022-03-28", "Repas", 150.50),
-                    new Autre_frais("2022-03-02", "Repas", 150.50));
+            int i = 1;
+
+            ObservableList<Autre_frais> list = FXCollections.observableArrayList();
+
+            while (result.next()) {
+                list.addAll(new Autre_frais(resultAF.getString(i), resultAF.getString(i + 1),
+                        Double.parseDouble(resultAF.getString(i + 2))));
+                i += 3;
+            }
 
             Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
             Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
             Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+
             // Af_Validation.setCellValueFactory(new
             // PropertyValueFactory<Autre_frais,Boolean>("validation"));
             AF.setItems(list);
@@ -303,109 +309,6 @@ public class ComptabiliteController {
         SQLException ex) {
             ex.printStackTrace();
         }
-    }
-
-    @FXML
-    private void Generer_af() throws IOException {
-        String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
-        String username = "root";
-        String password = "";
-
-        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
-
-            String sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule ='" + Matricule.getText() + "';";
-
-            Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-
-            result.next();
-            String ident = result.getString(1);
-
-            String mois = GetMois();
-
-            String ModifAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
-                    + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
-
-            ResultSet resultMAF = statement.executeQuery(ModifAf);
-            Statement stmt = conn.createStatement();
-            if (resultMAF.next()) {
-                String mad1 = resultMAF.getString(1);
-                String mal1 = resultMAF.getString(2);
-                String mam1 = resultMAF.getString(3);
-                if (CheckAf1.isSelected()) {
-                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 1 WHERE af_date ='" + mad1
-                            + "' AND af_libelle ='"
-                            + mal1 + "' AND af_montant ='" + mam1 + "';";
-                    stmt.executeUpdate(UpdateAf);
-                    AutreDate1.setText("");
-                    AutreLibelle1.setText("");
-                    AutreMontant1.setText("");
-                    CheckAf1.setSelected(false);
-                } else {
-                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 2 WHERE af_date ='" + mad1
-                            + "' AND af_libelle ='"
-                            + mal1 + "' AND af_montant ='" + mam1 + "';";
-                    stmt.executeUpdate(UpdateAf);
-                    AutreDate1.setText("");
-                    AutreLibelle1.setText("");
-                    AutreMontant1.setText("");
-                }
-            }
-
-            if (resultMAF.next()) {
-                String mad2 = resultMAF.getString(1);
-                String mal2 = resultMAF.getString(2);
-                String mam2 = resultMAF.getString(3);
-                if (CheckAf2.isSelected()) {
-                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 1 WHERE af_date ='" + mad2
-                            + "' AND af_libelle ='"
-                            + mal2 + "' AND af_montant ='" + mam2 + "';";
-                    stmt.executeUpdate(UpdateAf);
-                    AutreDate2.setText("");
-                    AutreLibelle2.setText("");
-                    AutreMontant2.setText("");
-                    CheckAf2.setSelected(false);
-                } else {
-                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 2 WHERE af_date ='" + mad2
-                            + "' AND af_libelle ='"
-                            + mal2 + "' AND af_montant ='" + mam2 + "';";
-                    stmt.executeUpdate(UpdateAf);
-                    AutreDate2.setText("");
-                    AutreLibelle2.setText("");
-                    AutreMontant2.setText("");
-                    CheckAf1.setSelected(false);
-                }
-            }
-
-            if (resultMAF.next()) {
-                String mad3 = resultMAF.getString(1);
-                String mal3 = resultMAF.getString(2);
-                String mam3 = resultMAF.getString(3);
-                if (CheckAf3.isSelected()) {
-                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 1 WHERE af_date ='"
-                            + mad3 + "' AND af_libelle ='"
-                            + mal3 + "' AND af_montant ='" + mam3 + "';";
-                    stmt.executeUpdate(UpdateAf);
-                    AutreDate3.setText("");
-                    AutreLibelle3.setText("");
-                    AutreMontant3.setText("");
-                    CheckAf3.setSelected(false);
-                } else {
-                    String UpdateAf = "UPDATE autres_frais SET af_Est_Validee = 2 WHERE af_date ='" + mad3
-                            + "' AND af_libelle ='"
-                            + mal3 + "' AND af_montant ='" + mam3 + "';";
-                    stmt.executeUpdate(UpdateAf);
-                    AutreDate3.setText("");
-                    AutreLibelle3.setText("");
-                    AutreMontant3.setText("");
-                    CheckAf1.setSelected(false);
-                }
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
     }
 
     private String GetMois() {
