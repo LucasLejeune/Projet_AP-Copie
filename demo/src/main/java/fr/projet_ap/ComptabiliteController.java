@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.Connection;
@@ -304,13 +305,11 @@ public class ComptabiliteController {
             Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
             Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
             Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+            Af_Validation.setCellFactory(CheckBoxTableCell.forTableColumn(Af_Validation));
 
-            // PropertyValueFactory<Autre_frais,Boolean>("validation"));
             AF.setItems(list);
 
-        } catch (
-
-        SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -375,6 +374,7 @@ public class ComptabiliteController {
 
             result.next();
             String ident = result.getString(1);
+
             String ValiderFiche = "UPDATE fiche SET fi_Validation_Ct = 1 WHERE fk_vi = '" + ident + "' AND fi_mois = '"
                     + GetMois() + "';";
             Statement stmt = conn.createStatement();
@@ -385,6 +385,8 @@ public class ComptabiliteController {
                     + GetMois() + "';";
             stmt.executeUpdate(DateValid);
 
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
 
     }
