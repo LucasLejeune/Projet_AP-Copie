@@ -65,9 +65,9 @@
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="nbrNuitee" alignment="CENTER" layoutX="93.0" layoutY="163.0" onKeyPressed="#calculerTTN" prefHeight="25.0" prefWidth="53.0" promptText="00" />
-      <TextField fx:id="nbrRepas" alignment="CENTER" layoutX="93.0" layoutY="188.0" onKeyPressed="#calculerTTR" prefHeight="25.0" prefWidth="53.0" promptText="00" />
-      <TextField fx:id="nbrKilo" alignment="CENTER" layoutX="93.0" layoutY="213.0" onKeyPressed="#calculerTTK" onMouseDragExited="#calculerTTK" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <TextField fx:id="nbrNuitee" alignment="CENTER" layoutX="93.0" layoutY="163.0" onKeyReleased="#calculerTTN" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <TextField fx:id="nbrRepas" alignment="CENTER" layoutX="93.0" layoutY="188.0" onKeyReleased="#calculerTTR" prefHeight="25.0" prefWidth="53.0" promptText="00" />
+      <TextField fx:id="nbrKilo" alignment="CENTER" layoutX="93.0" layoutY="213.0" onKeyReleased="#calculerTTK" prefHeight="25.0" prefWidth="53.0" promptText="00" />
       <Label layoutX="117.0" layoutY="259.0" text="Autres Frais :" textFill="#3f6bab">
          <font>
             <Font name="Times New Roman Bold Italic" size="12.0" />
