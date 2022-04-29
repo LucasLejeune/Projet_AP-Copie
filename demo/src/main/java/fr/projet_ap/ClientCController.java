@@ -19,7 +19,7 @@ public class ClientCController {
      */
     @FXML
     private void switchToSuivi() throws IOException {
-        App.setRoot("Suivi");
+        App.setRoot("SuiviRemboursement");
     }
 
     /**
@@ -29,4 +29,5 @@ public class ClientCController {
     private void switchToAcceuil() throws IOException {
         App.setRoot("Acceuil");
     }
+
 }

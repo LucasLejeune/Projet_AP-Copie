@@ -407,7 +407,6 @@ public class ComptabiliteController {
                     String ValidationAF = "UPDATE autres_frais SET af_Est_Validee = 2 WHERE fk_fiche_af = "
                             + FicheId + " AND af_id = "
                             + p.GetId() + ";";
-                    System.out.println(p.GetId());
                     stmt.executeUpdate(ValidationAF);
                 }
             }
