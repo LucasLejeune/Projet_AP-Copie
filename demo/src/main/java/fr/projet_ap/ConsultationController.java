@@ -1,19 +1,34 @@
 package fr.projet_ap;
 
 import java.io.IOException;
+import java.net.URL;
 
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.FlowPane;
+import javafx.stage.Stage;
+
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ResourceBundle;
 
-public class ConsultationController {
+public class ConsultationController implements Initializable {
 
     @FXML
     private Button BackButton;
@@ -30,7 +45,7 @@ public class ConsultationController {
     @FXML
     private Label ttKilometrage;
     @FXML
-    private TextField mois;
+    private ComboBox combobox;
     @FXML
     private Label prki;
     @FXML
@@ -43,12 +58,22 @@ public class ConsultationController {
     private Label qunu;
     @FXML
     private Label qure;
+    @FXML
+    private TableView<Autre_frais> AF;
+    @FXML
+    private TableColumn<Autre_frais, Date> Af_Date;
+    @FXML
+    private TableColumn<Autre_frais, String> Af_libelle;
+    @FXML
+    private TableColumn<Autre_frais, Double> Af_montant;
 
     @FXML
-    public void initialize() {
+    public void initialize(URL url, ResourceBundle rb) {
         String dbURL = "jdbc:mysql://localhost:3306/projet_ap";
         String username = "root";
         String password = "";
+        ObservableList<String> list = FXCollections.observableArrayList("Janvier", "Fevrier", "Mars", "Avril");
+        combobox.setItems(list);
 
         try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
 
@@ -69,16 +94,18 @@ public class ConsultationController {
     }
 
     @FXML
-    void Generer(ActionEvent event) {
+    void SelectionnerMois(ActionEvent event) {
         String dbURL = "jdbc:mysql://localhost:3306/projet_ap";
         String username = "root";
         String password = "";
+        String s = combobox.getSelectionModel().getSelectedItem().toString();
+        String month = s;
 
         try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
 
             // Recuperation de l'ID de la fiche
-            String strmois = mois.getText();
-            String sqlSelectFiche = "Select fi_id from fiche where fi_mois = '" + strmois + "' and fk_vi = '"
+            String sqlSelectFiche = "Select fi_id from fiche where fi_mois = '" + month
+                    + "' and fk_vi = '"
                     + Common.login + "';";
             Statement statement = conn.createStatement();
             ResultSet resultfiid = statement.executeQuery(sqlSelectFiche);
@@ -128,9 +155,36 @@ public class ConsultationController {
             String MontantTK = String.valueOf(MontantK);
             ttKilometrage.setText(MontantTK);
 
+            // Autres frais
+            int i = 1;
+
+            ObservableList<Autre_frais> list = FXCollections.observableArrayList();
+
+            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
+                    + Common.login + "' AND af_Est_Validee = '0' AND fi_mois = '" + month + "';";
+            ResultSet resultAF = statement.executeQuery(SqlAf);
+
+            while (resultAF.next()) {
+                if (i != 1) {
+                    i += 3;
+                }
+                String date = resultAF.getString(i);
+                String libelle = resultAF.getString(i + 1);
+                double montant = Double.parseDouble(resultAF.getString(i + 2));
+                list.add(new Autre_frais(date, libelle, montant));
+
+            }
+
+            Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
+            Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
+            Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+
+            AF.setItems(list);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
     }
 
     /**
