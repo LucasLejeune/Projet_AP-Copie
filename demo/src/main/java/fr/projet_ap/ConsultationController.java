@@ -47,6 +47,8 @@ public class ConsultationController implements Initializable {
     @FXML
     private ComboBox combobox;
     @FXML
+    private Label fichevide;
+    @FXML
     private Label prki;
     @FXML
     private Label prnu;
@@ -72,7 +74,8 @@ public class ConsultationController implements Initializable {
         String dbURL = "jdbc:mysql://localhost:3306/projet_ap";
         String username = "root";
         String password = "";
-        ObservableList<String> list = FXCollections.observableArrayList("Janvier", "Fevrier", "Mars", "Avril");
+        ObservableList<String> list = FXCollections.observableArrayList("Janvier", "Fevrier", "Mars", "Avril", "Mai",
+                "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre");
         combobox.setItems(list);
 
         try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
@@ -109,79 +112,98 @@ public class ConsultationController implements Initializable {
                     + Common.login + "';";
             Statement statement = conn.createStatement();
             ResultSet resultfiid = statement.executeQuery(sqlSelectFiche);
-            resultfiid.next();
-            String fi_id = resultfiid.getString(1);
 
-            // frais forfaitaire
-            String SQLN = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires INNER JOIN fiche ON fk_fiche_ff = fi_id where ff_nom = 'Nuitee' AND fk_vi = "
-                    + Common.login + " and fk_fiche_ff = '" + fi_id + "';";
-            ResultSet resultnuitees = statement.executeQuery(SQLN);
-            resultnuitees.next();
-            String quantite_nuits = resultnuitees.getString(1);
-            String prix_nuits = resultnuitees.getString(2);
-            qunu.setText(quantite_nuits);
-            prnu.setText(prix_nuits);
-            double dokunu = Double.parseDouble(quantite_nuits);
-            double doprnu = Double.parseDouble(prix_nuits);
-            double MontantN = dokunu * doprnu;
-            String MontantTN = String.valueOf(MontantN);
-            ttNuitee.setText(MontantTN);
+            if (!resultfiid.next()) {
+                fichevide.setText("Fiche du mois selectionné vide");
+                qunu.setText("");
+                prnu.setText("");
+                qure.setText("");
+                prre.setText("");
+                quki.setText("");
+                prki.setText("");
+                ttNuitee.setText("");
+                ttRepas.setText("");
+                ttKilometrage.setText("");
+                ObservableList<Autre_frais> list = FXCollections.observableArrayList();
+                AF.setItems(list);
 
-            String SQLR = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires INNER JOIN fiche ON fk_fiche_ff = fi_id where ff_nom = 'Repas' AND fk_vi = "
-                    + Common.login + " and fk_fiche_ff = '" + fi_id + "';";
-            ResultSet resultrepas = statement.executeQuery(SQLR);
-            resultrepas.next();
-            String quantite_repas = resultrepas.getString(1);
-            String prix_repas = resultrepas.getString(2);
-            qure.setText(quantite_repas);
-            prre.setText(prix_repas);
-            double doqure = Double.parseDouble(quantite_repas);
-            double doprre = Double.parseDouble(prix_nuits);
-            double MontantR = doqure * doprre;
-            String MontantTR = String.valueOf(MontantR);
-            ttRepas.setText(MontantTR);
+            } else {
+                fichevide.setText("");
+                String fi_id = resultfiid.getString(1);
 
-            String SQLK = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires INNER JOIN fiche ON fk_fiche_ff = fi_id where ff_nom = 'Kilometrage' AND fk_vi = "
-                    + Common.login + " and fk_fiche_ff = '" + fi_id + "';";
-            ResultSet resultkilo = statement.executeQuery(SQLK);
-            resultkilo.next();
-            String quantite_kilo = resultkilo.getString(1);
-            String prix_kilo = resultkilo.getString(2);
-            quki.setText(quantite_kilo);
-            prki.setText(prix_kilo);
-            double doquki = Double.parseDouble(quantite_kilo);
-            double doprki = Double.parseDouble(prix_kilo);
-            double MontantK = doprki * doquki;
-            String MontantTK = String.valueOf(MontantK);
-            ttKilometrage.setText(MontantTK);
+                // frais forfaitaire
+                String SQLN = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires INNER JOIN fiche ON fk_fiche_ff = fi_id where ff_nom = 'Nuitee' AND fk_vi = "
+                        + Common.login + " and fk_fiche_ff = '" + fi_id + "';";
+                ResultSet resultnuitees = statement.executeQuery(SQLN);
+                resultnuitees.next();
+                String quantite_nuits = resultnuitees.getString(1);
+                String prix_nuits = resultnuitees.getString(2);
+                qunu.setText(quantite_nuits);
+                prnu.setText(prix_nuits);
+                double dokunu = Double.parseDouble(quantite_nuits);
+                double doprnu = Double.parseDouble(prix_nuits);
+                double MontantN = dokunu * doprnu;
+                String MontantTN = String.valueOf(MontantN);
+                ttNuitee.setText(MontantTN);
 
-            // Autres frais
-            int i = 1;
+                String SQLR = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires INNER JOIN fiche ON fk_fiche_ff = fi_id where ff_nom = 'Repas' AND fk_vi = "
+                        + Common.login + " and fk_fiche_ff = '" + fi_id + "';";
+                ResultSet resultrepas = statement.executeQuery(SQLR);
+                resultrepas.next();
+                String quantite_repas = resultrepas.getString(1);
+                String prix_repas = resultrepas.getString(2);
+                qure.setText(quantite_repas);
+                prre.setText(prix_repas);
+                double doqure = Double.parseDouble(quantite_repas);
+                double doprre = Double.parseDouble(prix_nuits);
+                double MontantR = doqure * doprre;
+                String MontantTR = String.valueOf(MontantR);
+                ttRepas.setText(MontantTR);
 
-            ObservableList<Autre_frais> list = FXCollections.observableArrayList();
+                String SQLK = "SELECT ff_quantite, ff_montant_unitaire FROM frais_forfaitaires INNER JOIN fiche ON fk_fiche_ff = fi_id where ff_nom = 'Kilometrage' AND fk_vi = "
+                        + Common.login + " and fk_fiche_ff = '" + fi_id + "';";
+                ResultSet resultkilo = statement.executeQuery(SQLK);
+                resultkilo.next();
+                String quantite_kilo = resultkilo.getString(1);
+                String prix_kilo = resultkilo.getString(2);
+                quki.setText(quantite_kilo);
+                prki.setText(prix_kilo);
+                double doquki = Double.parseDouble(quantite_kilo);
+                double doprki = Double.parseDouble(prix_kilo);
+                double MontantK = doprki * doquki;
+                String MontantTK = String.valueOf(MontantK);
+                ttKilometrage.setText(MontantTK);
 
-            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
-                    + Common.login + "' AND af_Est_Validee = '0' AND fi_mois = '" + month + "';";
-            ResultSet resultAF = statement.executeQuery(SqlAf);
+                // Autres frais
+                int i = 1;
 
-            while (resultAF.next()) {
-                if (i != 1) {
-                    i += 3;
+                ObservableList<Autre_frais> list = FXCollections.observableArrayList();
+
+                String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
+                        + Common.login + "' AND af_Est_Validee = '0' AND fi_mois = '" + month + "';";
+                ResultSet resultAF = statement.executeQuery(SqlAf);
+
+                while (resultAF.next()) {
+                    if (i != 1) {
+                        i += 3;
+                    }
+                    String date = resultAF.getString(i);
+                    String libelle = resultAF.getString(i + 1);
+                    double montant = Double.parseDouble(resultAF.getString(i + 2));
+                    list.add(new Autre_frais(date, libelle, montant));
+
                 }
-                String date = resultAF.getString(i);
-                String libelle = resultAF.getString(i + 1);
-                double montant = Double.parseDouble(resultAF.getString(i + 2));
-                list.add(new Autre_frais(date, libelle, montant));
 
+                Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
+                Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
+                Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+
+                AF.setItems(list);
             }
 
-            Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
-            Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
-            Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+        } catch (
 
-            AF.setItems(list);
-
-        } catch (SQLException ex) {
+        SQLException ex) {
             ex.printStackTrace();
         }
 

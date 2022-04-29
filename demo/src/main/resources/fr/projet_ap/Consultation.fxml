@@ -32,45 +32,45 @@
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="7.0" layoutY="146.0" prefHeight="14.0" prefWidth="87.0" text="Frais Forfaitaires">
+      <Label layoutX="7.0" layoutY="167.0" prefHeight="14.0" prefWidth="87.0" text="Frais Forfaitaires">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="100.0" layoutY="146.0" prefHeight="14.0" prefWidth="44.0" text="Quantité">
+      <Label layoutX="100.0" layoutY="167.0" prefHeight="14.0" prefWidth="44.0" text="Quantité">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Separator layoutX="-2.0" layoutY="163.0" prefHeight="3.0" prefWidth="299.0" />
-      <Separator layoutX="-2.0" layoutY="141.0" prefHeight="3.0" prefWidth="299.0" />
-      <Label layoutX="148.0" layoutY="146.0" text="Montant unitaire">
+      <Separator layoutX="-2.0" layoutY="184.0" prefHeight="3.0" prefWidth="299.0" />
+      <Separator layoutX="-2.0" layoutY="162.0" prefHeight="3.0" prefWidth="299.0" />
+      <Label layoutX="148.0" layoutY="167.0" text="Montant unitaire">
          <font>
             <Font name="Times New Roman" size="11.0" />
          </font>
       </Label>
-      <Label layoutX="245.0" layoutY="146.0" prefHeight="14.0" prefWidth="32.0" text="Total">
+      <Label layoutX="245.0" layoutY="167.0" prefHeight="14.0" prefWidth="32.0" text="Total">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Separator layoutX="97.0" layoutY="163.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
-      <Separator layoutX="145.0" layoutY="163.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
-      <Separator layoutX="221.0" layoutY="163.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
-      <Separator layoutX="-2.0" layoutY="188.0" prefHeight="3.0" prefWidth="299.0" />
-      <Separator layoutX="-1.0" layoutY="214.0" prefHeight="3.0" prefWidth="299.0" />
-      <Separator layoutX="-2.0" layoutY="237.0" prefHeight="3.0" prefWidth="299.0" />
-      <Label layoutX="34.0" layoutY="168.0" text="Nuitée">
+      <Separator layoutX="97.0" layoutY="163.0" orientation="VERTICAL" prefHeight="97.0" prefWidth="6.0" />
+      <Separator layoutX="145.0" layoutY="163.0" orientation="VERTICAL" prefHeight="97.0" prefWidth="6.0" />
+      <Separator layoutX="221.0" layoutY="163.0" orientation="VERTICAL" prefHeight="97.0" prefWidth="6.0" />
+      <Separator layoutX="-2.0" layoutY="209.0" prefHeight="3.0" prefWidth="299.0" />
+      <Separator layoutX="-1.0" layoutY="235.0" prefHeight="3.0" prefWidth="299.0" />
+      <Separator layoutX="-2.0" layoutY="258.0" prefHeight="3.0" prefWidth="299.0" />
+      <Label layoutX="34.0" layoutY="189.0" text="Nuitée">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="23.0" layoutY="193.0" text="Repas Midi">
+      <Label layoutX="23.0" layoutY="214.0" text="Repas Midi">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="20.0" layoutY="219.0" text="Kilometrage">
+      <Label layoutX="20.0" layoutY="240.0" text="Kilometrage">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
@@ -90,19 +90,19 @@
             <Font name="Times New Roman Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="117.0" layoutY="259.0" text="Autres Frais" textFill="#3f6bab">
+      <Label layoutX="117.0" layoutY="269.0" text="Autres Frais" textFill="#3f6bab">
          <font>
             <Font name="Times New Roman Bold Italic" size="12.0" />
          </font>
       </Label>
       <Button fx:id="BackButton" layoutX="15.0" layoutY="560.0" mnemonicParsing="false" onAction="#GoBack" text="Revenir en arrière" />
-      <Label fx:id="ttNuitee" alignment="CENTER_RIGHT" layoutX="227.0" layoutY="168.0" prefHeight="17.0" prefWidth="56.0" text=" " textAlignment="CENTER" />
-      <Label fx:id="ttRepas" alignment="CENTER_RIGHT" layoutX="226.0" layoutY="193.0" prefHeight="17.0" prefWidth="56.0" textAlignment="CENTER" />
-      <Label fx:id="ttKilometrage" alignment="CENTER_RIGHT" layoutX="226.0" layoutY="218.0" prefHeight="17.0" prefWidth="56.0" textAlignment="CENTER" />
-      <Label fx:id="qunu" alignment="CENTER_RIGHT" layoutX="103.0" layoutY="167.0" prefHeight="17.0" prefWidth="41.0" textAlignment="CENTER" />
-      <Label fx:id="qure" alignment="CENTER_RIGHT" layoutX="103.0" layoutY="192.0" prefHeight="17.0" prefWidth="41.0" textAlignment="CENTER" />
-      <Label fx:id="quki" alignment="CENTER_RIGHT" layoutX="103.0" layoutY="218.0" prefHeight="17.0" prefWidth="41.0" textAlignment="CENTER" />
-      <Label fx:id="prki" alignment="CENTER_RIGHT" layoutX="149.0" layoutY="219.0" prefHeight="17.0" prefWidth="53.0" textAlignment="CENTER" />
+      <Label fx:id="ttNuitee" alignment="CENTER_RIGHT" layoutX="227.0" layoutY="189.0" prefHeight="17.0" prefWidth="56.0" text=" " textAlignment="CENTER" />
+      <Label fx:id="ttRepas" alignment="CENTER_RIGHT" layoutX="226.0" layoutY="214.0" prefHeight="17.0" prefWidth="56.0" textAlignment="CENTER" />
+      <Label fx:id="ttKilometrage" alignment="CENTER_RIGHT" layoutX="226.0" layoutY="239.0" prefHeight="17.0" prefWidth="56.0" textAlignment="CENTER" />
+      <Label fx:id="qunu" alignment="CENTER_RIGHT" layoutX="103.0" layoutY="188.0" prefHeight="17.0" prefWidth="41.0" textAlignment="CENTER" />
+      <Label fx:id="qure" alignment="CENTER_RIGHT" layoutX="103.0" layoutY="213.0" prefHeight="17.0" prefWidth="41.0" textAlignment="CENTER" />
+      <Label fx:id="quki" alignment="CENTER_RIGHT" layoutX="103.0" layoutY="239.0" prefHeight="17.0" prefWidth="41.0" textAlignment="CENTER" />
+      <Label fx:id="prki" alignment="CENTER_RIGHT" layoutX="149.0" layoutY="240.0" prefHeight="17.0" prefWidth="53.0" textAlignment="CENTER" />
       <Label fx:id="matricule" layoutX="152.0" layoutY="43.0" prefHeight="25.0" prefWidth="110.0">
          <font>
             <Font name="Times New Roman Bold" size="12.0" />
@@ -111,14 +111,14 @@
          <font>
             <Font name="Times New Roman Bold Italic" size="12.0" />
          </font></Label>
-      <Label fx:id="prnu" alignment="TOP_RIGHT" layoutX="150.0" layoutY="168.0" prefHeight="17.0" prefWidth="53.0" text=" " />
-      <Label fx:id="prre" alignment="CENTER_RIGHT" layoutX="149.0" layoutY="193.0" prefHeight="17.0" prefWidth="53.0" text=" " />
-      <Label layoutX="206.0" layoutY="168.0" prefHeight="17.0" prefWidth="16.0" text="€" />
-      <Label layoutX="206.0" layoutY="193.0" prefHeight="17.0" prefWidth="16.0" text="€" />
-      <Label layoutX="206.0" layoutY="219.0" prefHeight="17.0" prefWidth="16.0" text="€" />
-      <Label layoutX="284.0" layoutY="168.0" prefHeight="17.0" prefWidth="16.0" text="€" />
-      <Label layoutX="283.0" layoutY="193.0" prefHeight="17.0" prefWidth="16.0" text="€" />
-      <Label layoutX="283.0" layoutY="218.0" prefHeight="17.0" prefWidth="16.0" text="€" />
+      <Label fx:id="prnu" alignment="TOP_RIGHT" layoutX="150.0" layoutY="189.0" prefHeight="17.0" prefWidth="53.0" text=" " />
+      <Label fx:id="prre" alignment="CENTER_RIGHT" layoutX="149.0" layoutY="214.0" prefHeight="17.0" prefWidth="53.0" text=" " />
+      <Label layoutX="206.0" layoutY="189.0" prefHeight="17.0" prefWidth="16.0" text="€" />
+      <Label layoutX="206.0" layoutY="214.0" prefHeight="17.0" prefWidth="16.0" text="€" />
+      <Label layoutX="206.0" layoutY="240.0" prefHeight="17.0" prefWidth="16.0" text="€" />
+      <Label layoutX="284.0" layoutY="189.0" prefHeight="17.0" prefWidth="16.0" text="€" />
+      <Label layoutX="283.0" layoutY="214.0" prefHeight="17.0" prefWidth="16.0" text="€" />
+      <Label layoutX="283.0" layoutY="239.0" prefHeight="17.0" prefWidth="16.0" text="€" />
       <TableView fx:id="AF" layoutX="7.0" layoutY="287.0" prefHeight="247.0" prefWidth="287.0">
         <columns>
           <TableColumn fx:id="Af_Date" prefWidth="75.0" text="Date" />
@@ -127,5 +127,10 @@
         </columns>
       </TableView>
       <ComboBox fx:id="combobox" layoutX="66.0" layoutY="102.0" onAction="#SelectionnerMois" prefHeight="25.0" prefWidth="156.0" promptText="Mois" />
+      <Label fx:id="fichevide" alignment="CENTER" layoutX="52.0" layoutY="138.0" prefHeight="17.0" prefWidth="184.0" textFill="#f20000">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -2,13 +2,20 @@ package fr.projet_ap;
 
 import java.io.IOException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,12 +39,14 @@ public class RenseignementController {
     private Label muNuitee;
     @FXML
     private Label muRepas;
+
     @FXML
     private Button BackButton;
     @FXML
     private Button Soumettre;
     @FXML
     private Button ValiderAF;
+
     @FXML
     private TextField dateaf1;
     @FXML
@@ -50,12 +59,24 @@ public class RenseignementController {
     private TextField nbrNuitee;
     @FXML
     private TextField nbrRepas;
+
     @FXML
     private Label ttNuitee;
     @FXML
     private Label ttRepas;
     @FXML
     private Label ttKilometrage;
+
+    @FXML
+    private TableView<Autre_frais> AF;
+    @FXML
+    private TableColumn<Autre_frais, Date> Af_Date;
+    @FXML
+    private TableColumn<Autre_frais, Boolean> Af_Validation;
+    @FXML
+    private TableColumn<Autre_frais, String> Af_libelle;
+    @FXML
+    private TableColumn<Autre_frais, Double> Af_montant;
 
     @FXML
     public void initialize() {
@@ -229,6 +250,33 @@ public class RenseignementController {
                 ttKilometrage.setText(Kilos);
             }
 
+            // afficher les Autres Frais
+            int i = 1;
+
+            ObservableList<Autre_frais> list = FXCollections.observableArrayList();
+
+            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = "
+                    + Common.login + " AND fi_mois = '" + mois + "';";
+            ResultSet resultAF = statement.executeQuery(SqlAf);
+
+            while (resultAF.next()) {
+                if (i != 1) {
+                    i += 3;
+                }
+                String date = resultAF.getString(i);
+                String libelle = resultAF.getString(i + 1);
+                double montant = Double.parseDouble(resultAF.getString(i + 2));
+                list.add(new Autre_frais(date, libelle, montant));
+
+            }
+
+            Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
+            Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
+            Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+            Af_Validation.setCellFactory(CheckBoxTableCell.forTableColumn(Af_Validation));
+
+            AF.setItems(list);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -346,9 +394,59 @@ public class RenseignementController {
             String date1 = dateaf1.getText();
             String libelle1 = libelleaf1.getText();
             String montant1 = montantaf1.getText();
-            String SqlAF1 = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_af) VALUES ("
-                    + date1 + ", " + libelle1 + ", " + montant1 + ", " + fi_id + ");";
-            statement.executeUpdate(SqlAF1);
+            String SqlAF = "INSERT INTO autres_frais (af_date, af_libelle, af_montant, fk_fiche_af) VALUES ('" + date1
+                    + "', '" + libelle1 + "', " + montant1 + ", " + fi_id + ");";
+            statement.executeUpdate(SqlAF);
+            dateaf1.setText("");
+            libelleaf1.setText("");
+            montantaf1.setText("");
+
+            // variable mois
+            Map<String, String> dicoFR = new HashMap<String, String>();
+            dicoFR.put("janvier", "JANVIER");
+            dicoFR.put("fevrier", "FEVRIER");
+            dicoFR.put("mars", "MARS");
+            dicoFR.put("avril", "AVRIL");
+            dicoFR.put("mai", "MAI");
+            dicoFR.put("juin", "JUIN");
+            dicoFR.put("juillet", "JUILLET");
+            dicoFR.put("aout", "AOUT");
+            dicoFR.put("septembre", "SEPTEMBRE");
+            dicoFR.put("octobre", "OCTOBRE");
+            dicoFR.put("novembre", "NOVEMBRE");
+            dicoFR.put("decembre", "DECEMBRE");
+
+            LocalDate currentdate = LocalDate.now();
+            Month currentMonth = currentdate.getMonth();
+            String leMois = currentMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
+            String mois = dicoFR.get(leMois);
+
+            // Tableview
+            int i = 1;
+
+            ObservableList<Autre_frais> list = FXCollections.observableArrayList();
+
+            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = "
+                    + Common.login + " AND fi_mois = '" + mois + "';";
+            ResultSet resultAF = statement.executeQuery(SqlAf);
+
+            while (resultAF.next()) {
+                if (i != 1) {
+                    i += 3;
+                }
+                String date = resultAF.getString(i);
+                String libelle = resultAF.getString(i + 1);
+                double montant = Double.parseDouble(resultAF.getString(i + 2));
+                list.add(new Autre_frais(date, libelle, montant));
+
+            }
+
+            Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
+            Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
+            Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+            Af_Validation.setCellFactory(CheckBoxTableCell.forTableColumn(Af_Validation));
+
+            AF.setItems(list);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
