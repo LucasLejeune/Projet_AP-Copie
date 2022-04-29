@@ -8,14 +8,14 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet_ap.ClientVController">
    <children>
-      <Button fx:id="Renseignement" layoutX="25.0" layoutY="239.0" mnemonicParsing="false" onAction="#switchToRenseignement" prefHeight="111.0" prefWidth="253.0" text="Portail de Renseignement de fiche de frais" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="Renseignement" layoutX="25.0" layoutY="239.0" mnemonicParsing="false" onAction="#switchToRenseignement" prefHeight="111.0" prefWidth="253.0" text="Espace de Renseignement/Consultation de fiche de frais" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font size="20.0" />
+            <Font size="16.0" />
          </font>
       </Button>
-      <Button fx:id="Consultation" layoutX="25.0" layoutY="357.0" onAction="#switchToConsultation" prefHeight="111.0" prefWidth="253.0" text="Espace de Consultation de votre derniere fiche de frais" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="Consultation" layoutX="25.0" layoutY="357.0" onAction="#switchToConsultation" prefHeight="111.0" prefWidth="253.0" text="Espace de Consultation de vos fiches de frais precendentes" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font size="20.0" />
+            <Font size="16.0" />
          </font>
       </Button>
       <Label layoutX="10.0" layoutY="56.0" prefHeight="148.0" prefWidth="289.0" text="Bienvenue sur votre espace Visiteur" textAlignment="CENTER" wrapText="true">

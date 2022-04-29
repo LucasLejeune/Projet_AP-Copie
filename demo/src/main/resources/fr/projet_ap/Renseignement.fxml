@@ -24,7 +24,7 @@
       </Label>
       <Separator layoutX="-2.0" layoutY="163.0" prefHeight="3.0" prefWidth="299.0" />
       <Separator layoutX="-2.0" layoutY="141.0" prefHeight="3.0" prefWidth="299.0" />
-      <Label layoutX="146.0" layoutY="144.0" prefHeight="17.0" prefWidth="80.0" text="Montant unitaire">
+      <Label layoutX="145.0" layoutY="144.0" prefHeight="17.0" prefWidth="80.0" text="Montant unitaire">
          <font>
             <Font name="Times New Roman" size="11.0" />
          </font>
@@ -127,13 +127,13 @@
       <Label alignment="CENTER" layoutX="204.0" layoutY="168.0" prefHeight="17.0" prefWidth="14.0" text="€" />
       <Label alignment="CENTER" layoutX="204.0" layoutY="193.0" prefHeight="17.0" prefWidth="14.0" text="€" />
       <Label alignment="CENTER" layoutX="204.0" layoutY="218.0" prefHeight="17.0" prefWidth="14.0" text="€" />
-      <Label fx:id="Enregistre" alignment="CENTER" layoutX="5.0" layoutY="426.0" prefHeight="26.0" prefWidth="299.0">
+      <Label fx:id="Enregistre" alignment="CENTER" layoutX="137.0" layoutY="560.0" prefHeight="26.0" prefWidth="156.0">
          <font>
             <Font name="Times New Roman Italic" size="12.0" />
          </font>
       </Label>
       <Button fx:id="ValiderAF" layoutX="82.0" layoutY="346.0" mnemonicParsing="false" onAction="#ValiderAF" text="Valider les Autres Frais" />
-      <TableView layoutX="10.0" layoutY="377.0" prefHeight="140.0" prefWidth="276.0">
+      <TableView layoutX="10.0" layoutY="379.0" prefHeight="140.0" prefWidth="276.0">
         <columns>
           <TableColumn prefWidth="75.0" text="Date" />
           <TableColumn prefWidth="75.0" text="Libellé" />
