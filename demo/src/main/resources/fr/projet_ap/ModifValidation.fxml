@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.projet_ap.ComptabiliteController">
+   <children>
+      <Label alignment="CENTER" prefHeight="35.0" prefWidth="299.0" text="ETAT DE FRAIS ENGAGES" textAlignment="CENTER" textFill="#272e5b">
+         <font>
+            <Font name="Times New Roman Bold" size="17.0" />
+         </font>
+      </Label>
+      <Separator layoutY="34.0" prefHeight="3.0" prefWidth="299.0" />
+      <Label layoutX="19.0" layoutY="43.0" prefHeight="14.0" prefWidth="53.0" text="Visiteur :" textFill="#3f6bab">
+         <font>
+            <Font name="Times New Roman Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="112.0" layoutY="63.0" text="Matricule :">
+         <font>
+            <Font name="Times New Roman" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="7.0" layoutY="233.0" prefHeight="14.0" prefWidth="87.0" text="Frais Forfaitaires">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="100.0" layoutY="233.0" prefHeight="14.0" prefWidth="44.0" text="Quantité">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Separator layoutX="-2.0" layoutY="250.0" prefHeight="3.0" prefWidth="299.0" />
+      <Separator layoutX="-2.0" layoutY="228.0" prefHeight="3.0" prefWidth="299.0" />
+      <Label alignment="CENTER" layoutX="152.0" layoutY="232.0" prefHeight="18.0" prefWidth="54.0" text="Montant" textAlignment="CENTER">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="239.0" layoutY="233.0" prefHeight="14.0" prefWidth="36.0" text="Total">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Separator layoutX="97.0" layoutY="250.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
+      <Separator layoutX="145.0" layoutY="250.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
+      <Separator layoutX="210.0" layoutY="250.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
+      <Separator layoutX="-2.0" layoutY="275.0" prefHeight="3.0" prefWidth="299.0" />
+      <Separator layoutX="-1.0" layoutY="301.0" prefHeight="3.0" prefWidth="299.0" />
+      <Separator layoutX="-2.0" layoutY="324.0" prefHeight="3.0" prefWidth="299.0" />
+      <Label layoutX="34.0" layoutY="255.0" text="Nuitée">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="23.0" layoutY="280.0" text="Repas Midi">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="306.0" text="Kilometrage">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="MontantUnuitee" layoutX="163.0" layoutY="256.0" text="80.00 €">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="MontantUrepas" layoutX="163.0" layoutY="281.0" text="29.00 €">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="122.0" layoutY="334.0" text="Autres Frais" textFill="#3f6bab">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Button layoutX="87.0" layoutY="505.0" mnemonicParsing="false" onAction="#valider" prefHeight="35.0" prefWidth="134.0" text="Valider" />
+      <Button layoutX="17.0" layoutY="560.0" mnemonicParsing="false" onAction="#RetourClient" text="Revenir en arrière" />
+      <Label fx:id="QuantiteNuitee" alignment="CENTER" layoutX="101.0" layoutY="251.0" prefHeight="26.0" prefWidth="44.0" text="00">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="QuantiteRepas" alignment="CENTER" layoutX="102.0" layoutY="275.0" prefHeight="26.0" prefWidth="41.0" text="00">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="QuantiteKilometrage" alignment="CENTER" layoutX="101.0" layoutY="301.0" prefHeight="26.0" prefWidth="44.0" text="00">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="MontantUkilometrage" alignment="CENTER" layoutX="162.0" layoutY="307.0" prefHeight="14.0" prefWidth="36.0" text="0 €">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="TotalNuitee" alignment="CENTER" layoutX="231.0" layoutY="254.0" prefHeight="18.0" prefWidth="44.0" text="0.00 €">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="TotalRepas" alignment="CENTER" layoutX="230.0" layoutY="280.0" prefHeight="18.0" prefWidth="44.0" text="0.00 €">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="TotalKilometrage" alignment="CENTER" layoutX="230.0" layoutY="305.0" prefHeight="18.0" prefWidth="44.0" text="0.00 €">
+         <font>
+            <Font name="Times New Roman" size="12.0" />
+         </font>
+      </Label>
+      <Separator layoutX="296.0" layoutY="221.0" orientation="VERTICAL" prefHeight="74.0" prefWidth="6.0" />
+      <Label layoutX="69.0" layoutY="148.0" prefHeight="18.0" prefWidth="148.0" text="Consultation de la fiche de:">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="Nom_prenom" alignment="CENTER" layoutX="61.0" layoutY="171.0" prefHeight="18.0" prefWidth="178.0">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="82.0" layoutY="196.0" text="Du mois de:">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="Mois" layoutX="149.0" layoutY="196.0" prefHeight="18.0" prefWidth="87.0">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="145.0" layoutY="551.0" prefHeight="17.0" prefWidth="148.0" text="Connecté(e) en tant que:">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="idConnexion" alignment="CENTER" layoutX="161.0" layoutY="571.0" prefHeight="17.0" prefWidth="116.0">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <TableView fx:id="AF" editable="true" layoutX="-2.0" layoutY="364.0" prefHeight="141.0" prefWidth="301.0">
+         <columns>
+            <TableColumn fx:id="Af_Date" prefWidth="74.0" text="Date" />
+            <TableColumn fx:id="Af_libelle" prefWidth="103.0" text="Libelle" />
+            <TableColumn fx:id="Af_montant" prefWidth="61.0" text="Montant" />
+            <TableColumn fx:id="Af_Validation" minWidth="0.0" prefWidth="62.0" text="Valid." />
+         </columns>
+      </TableView>
+      <Label layoutX="77.0" layoutY="85.0" prefHeight="17.0" prefWidth="134.0" />
+      <Label layoutX="102.0" layoutY="106.0" text="Etat de la fiche :" />
+      <Label layoutX="77.0" layoutY="128.0" prefHeight="17.0" prefWidth="134.0" />
+   </children>
+</AnchorPane>

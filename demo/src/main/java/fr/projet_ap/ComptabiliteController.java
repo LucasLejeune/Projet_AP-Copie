@@ -287,24 +287,27 @@ public class ComptabiliteController {
 
             ObservableList<Autre_frais> list = FXCollections.observableArrayList();
 
-            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
+            String SqlAf = "SELECT af_id, af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
                     + ident + "' AND af_Est_Validee = '0' AND fi_mois = '" + mois + "';";
             ResultSet resultAF = statement.executeQuery(SqlAf);
 
             while (resultAF.next()) {
                 if (i != 1) {
-                    i += 3;
+                    i += 4;
                 }
-                String date = resultAF.getString(i);
-                String libelle = resultAF.getString(i + 1);
-                double montant = Double.parseDouble(resultAF.getString(i + 2));
-                list.add(new Autre_frais(date, libelle, montant));
+                String idS = resultAF.getString(i);
+                String date = resultAF.getString(i + 1);
+                String libelle = resultAF.getString(i + 2);
+                double montant = Double.parseDouble(resultAF.getString(i + 3));
+                int id = Integer.parseInt(idS, 10);
+                list.add(new Autre_frais(id, date, libelle, montant));
 
             }
 
             Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
             Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
             Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+            Af_Validation.setCellValueFactory(new PropertyValueFactory<Autre_frais, Boolean>("selected"));
             Af_Validation.setCellFactory(CheckBoxTableCell.forTableColumn(Af_Validation));
 
             AF.setItems(list);
@@ -379,12 +382,34 @@ public class ComptabiliteController {
                     + GetMois() + "';";
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(ValiderFiche);
+
             LocalDate currentdate = LocalDate.now();
             String DateValid = "UPDATE fiche SET fi_Date_Validation = '" + currentdate + "' WHERE fk_vi = '" + ident
                     + "' AND fi_mois = '"
                     + GetMois() + "';";
             stmt.executeUpdate(DateValid);
 
+            String IdFiche = "SELECT fi_id FROM fiche WHERE fk_vi = '" + ident + "' AND fi_mois = '"
+                    + GetMois() + "';";
+            Statement statementId = conn.createStatement();
+            ResultSet resultId = statementId.executeQuery(IdFiche);
+            resultId.next();
+            String FicheId = resultId.getString(1);
+
+            for (Autre_frais p : AF.getItems()) {
+                if (p.isSelected() == true) {
+                    String ValidationAF = "UPDATE autres_frais SET af_Est_Validee = 1 WHERE fk_fiche_af = "
+                            + FicheId
+                            + " AND af_id = "
+                            + p.GetId() + ";";
+                    stmt.executeUpdate(ValidationAF);
+                } else {
+                    String ValidationAF = "UPDATE autres_frais SET af_Est_Validee = 2 WHERE fk_fiche_af = "
+                            + FicheId + " AND af_id = "
+                            + p.GetId() + ";";
+                    stmt.executeUpdate(ValidationAF);
+                }
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
