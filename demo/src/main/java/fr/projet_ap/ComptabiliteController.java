@@ -108,15 +108,6 @@ public class ComptabiliteController {
     private Label idConnexion;
 
     @FXML
-    private CheckBox CheckAf1;
-
-    @FXML
-    private CheckBox CheckAf2;
-
-    @FXML
-    private CheckBox CheckAf3;
-
-    @FXML
     private TableView<Autre_frais> AF;
 
     @FXML
@@ -203,7 +194,13 @@ public class ComptabiliteController {
             String prenom = result.getString(2);
             idConnexion.setText(nom + "-" + prenom);
 
-            String sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule ='" + Matricule.getText() + "';";
+            String sql = "";
+
+            if (Common.Matricule == 0) {
+                sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule ='" + Matricule.getText() + "';";
+            } else {
+                sql = "SELECT vi_matricule FROM visiteur WHERE vi_matricule ='" + Common.Matricule + "';";
+            }
 
             ResultSet resultat = statement.executeQuery(sql);
 

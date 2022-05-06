@@ -23,6 +23,6 @@
             <TableColumn fx:id="Selection" prefWidth="56.80000305175781" text="Selection" />
          </columns>
       </TableView>
-      <Button layoutX="84.0" layoutY="478.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="130.0" text="Modifier" />
+      <Button layoutX="84.0" layoutY="498.0" mnemonicParsing="false" onAction="#ouvrirFiche" prefHeight="35.0" prefWidth="130.0" text="Modifier" />
    </children>
 </AnchorPane>

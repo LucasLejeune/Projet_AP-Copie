@@ -14,6 +14,14 @@ public class Autre_frais {
         return selected;
     }
 
+    public void setSelected(boolean selected) {
+        this.selected.set(selected);
+    }
+
+    public boolean isSelected() {
+        return selected.get();
+    }
+
     public String getAf_Date() {
         return Af_Date;
     }
@@ -36,14 +44,6 @@ public class Autre_frais {
 
     public void setAf_montant(double af_montant) {
         Af_montant = af_montant;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected.set(selected);
-    }
-
-    public boolean isSelected() {
-        return selected.get();
     }
 
     public int GetId() {

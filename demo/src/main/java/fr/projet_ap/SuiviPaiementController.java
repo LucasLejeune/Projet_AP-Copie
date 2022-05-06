@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.sql.Connection;
 
 import java.sql.DriverManager;
@@ -35,8 +36,6 @@ public class SuiviPaiementController {
 
     @FXML
     private TableView<AffichageFiche> TVfiches;
-
-    String select = "";
 
     public void initialize() {
 
@@ -77,7 +76,9 @@ public class SuiviPaiementController {
 
             for (AffichageFiche p : TVfiches.getItems()) {
                 if (p.isSelected() == true) {
-                    select = p.getNumero();
+                    Common.Matricule = Integer.parseInt(p.getNumVisiteur());
+                } else {
+                    System.out.println("test");
                 }
             }
 
@@ -86,8 +87,8 @@ public class SuiviPaiementController {
         }
     }
 
-    public void ouvrirFiche() {
-
+    public void ouvrirFiche() throws IOException {
+        App.setRoot("ModifSuivi");
     }
 
 }
