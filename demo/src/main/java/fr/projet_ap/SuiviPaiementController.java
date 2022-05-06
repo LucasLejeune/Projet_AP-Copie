@@ -49,7 +49,7 @@ public class SuiviPaiementController {
 
             ObservableList<AffichageFiche> list = FXCollections.observableArrayList();
 
-            String SqlAf = "SELECT fi_id, fi_mois, fi_remboursement, fk_vi FROM fiche ;";
+            String SqlAf = "SELECT fi_id, fi_mois, fi_remboursement, fk_vi FROM fiche WHERE fi_remboursement != 'Remboursee';";
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(SqlAf);
 
