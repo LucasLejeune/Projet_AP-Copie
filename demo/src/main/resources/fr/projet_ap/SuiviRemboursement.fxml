@@ -24,5 +24,6 @@
          </columns>
       </TableView>
       <Button layoutX="84.0" layoutY="498.0" mnemonicParsing="false" onAction="#ouvrirFiche" prefHeight="35.0" prefWidth="130.0" text="Modifier" />
+      <Button layoutX="14.0" layoutY="560.0" mnemonicParsing="false" onAction="#back" text="Revenir en Arrière" />
    </children>
 </AnchorPane>

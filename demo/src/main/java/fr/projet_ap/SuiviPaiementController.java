@@ -91,4 +91,9 @@ public class SuiviPaiementController {
         App.setRoot("ModifSuivi");
     }
 
+    @FXML
+    void back() throws IOException {
+        App.setRoot("ClientC");
+    }
+
 }

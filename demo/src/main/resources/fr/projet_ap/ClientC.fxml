@@ -23,7 +23,7 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Hyperlink layoutX="110.0" layoutY="563.0" text="Deconnection" />
+      <Hyperlink fx:id="back" layoutX="110.0" layoutY="563.0" onAction="#switchToAcceuil" text="Deconnection" />
       <Label fx:id="compte" layoutX="-1.0" layoutY="-2.0" prefHeight="33.0" prefWidth="302.0" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
