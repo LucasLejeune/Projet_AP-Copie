@@ -49,7 +49,7 @@ public class SuiviPaiementController {
 
             ObservableList<AffichageFiche> list = FXCollections.observableArrayList();
 
-            String SqlAf = "SELECT fi_id, fi_mois, fi_remboursement, fk_vi FROM fiche;";
+            String SqlAf = "SELECT fi_id, fi_mois, fi_remboursement, fk_vi FROM fiche ;";
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(SqlAf);
 
@@ -74,20 +74,20 @@ public class SuiviPaiementController {
 
             TVfiches.setItems(list);
 
-            for (AffichageFiche p : TVfiches.getItems()) {
-                if (p.isSelected() == true) {
-                    Common.Matricule = Integer.parseInt(p.getNumVisiteur());
-                } else {
-                    System.out.println("test");
-                }
-            }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
     public void ouvrirFiche() throws IOException {
+        for (AffichageFiche p : TVfiches.getItems()) {
+            if (p.isSelected() == true) {
+                Common.Matricule = Integer.parseInt(p.getNumVisiteur());
+                Common.numeroFiche = Integer.parseInt(p.getNumero());
+            } else {
+                System.out.println("test");
+            }
+        }
         App.setRoot("ModifSuivi");
     }
 

@@ -150,5 +150,7 @@
          </columns>
       </TableView>
       <Button layoutX="97.0" layoutY="60.0" mnemonicParsing="false" onAction="#Generer_ff" prefHeight="25.0" prefWidth="110.0" text="Générer" />
+      <Button layoutX="19.0" layoutY="513.0" mnemonicParsing="false" onAction="#MiseEnPaiement" text="Mettre en paiement" />
+      <Button layoutX="173.0" layoutY="513.0" mnemonicParsing="false" onAction="#FicheRemboursee" text="Fiche Remboursée" />
    </children>
 </AnchorPane>

@@ -393,6 +393,9 @@ public class ComptabiliteController {
             resultId.next();
             String FicheId = resultId.getString(1);
 
+            String sqlSuivi = "UPDATE fiche SET fi_remboursement = 'En attente' WHERE fi_id = " + FicheId + ";";
+            stmt.executeUpdate(sqlSuivi);
+
             for (Autre_frais p : AF.getItems()) {
                 if (p.isSelected() == true) {
                     String ValidationAF = "UPDATE autres_frais SET af_Est_Validee = 1 WHERE fk_fiche_af = "
@@ -411,6 +414,49 @@ public class ComptabiliteController {
             ex.printStackTrace();
         }
 
+    }
+
+    @FXML
+    private void FicheRemboursee() throws SQLException {
+        String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
+        String username = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
+            String sqlremboursement = "UPDATE fiche SET fi_remboursement = 'Remboursee' WHERE fi_id = "
+                    + Common.numeroFiche
+                    + "; ";
+            String sqlDateModif = "UPDATE fiche SET fi_date_modification = '" + LocalDate.now() + "' WHERE fi_id = "
+                    + Common.numeroFiche
+                    + ";";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sqlremboursement);
+            stmt.executeUpdate(sqlDateModif);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    private void MiseEnPaiement() throws SQLException {
+        String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
+        String username = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
+            String sqlremboursement = "UPDATE fiche SET fi_remboursement = 'Mise en paiement' WHERE fi_id = "
+                    + Common.numeroFiche
+                    + "; ";
+            String sqlDateModif = "UPDATE fiche SET fi_date_modification = '" + LocalDate.now() + "' WHERE fi_id = "
+                    + Common.numeroFiche
+                    + ";";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(sqlremboursement);
+            stmt.executeUpdate(sqlDateModif);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }
