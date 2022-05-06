@@ -17,10 +17,10 @@
       <TableView fx:id="TVfiches" editable="true" layoutX="-3.0" layoutY="60.0" prefHeight="398.0" prefWidth="302.0">
          <columns>
             <TableColumn fx:id="NumeroLigne" prefWidth="40.0" text="N°" />
-            <TableColumn fx:id="Mois" prefWidth="59.999996185302734" text="Mois" />
-            <TableColumn fx:id="NumeroVisiteur" prefWidth="76.79998779296875" text="N° visiteur" />
-            <TableColumn fx:id="Etat" prefWidth="66.39996337890625" text="Etat" />
-            <TableColumn fx:id="Selection" prefWidth="56.80000305175781" text="Selection" />
+            <TableColumn fx:id="Mois" prefWidth="47.0" text="Mois" />
+            <TableColumn fx:id="NumeroVisiteur" prefWidth="71.0" text="N° visiteur" />
+            <TableColumn fx:id="Etat" prefWidth="102.0" text="Etat" />
+            <TableColumn fx:id="Selection" prefWidth="41.0" text="Select." />
          </columns>
       </TableView>
       <Button layoutX="84.0" layoutY="498.0" mnemonicParsing="false" onAction="#ouvrirFiche" prefHeight="35.0" prefWidth="130.0" text="Modifier" />
