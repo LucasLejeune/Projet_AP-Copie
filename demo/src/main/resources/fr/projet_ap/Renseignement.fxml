@@ -73,7 +73,7 @@
             <Font name="Times New Roman Bold Italic" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="21.0" layoutY="299.0" text="Date">
+      <Label layoutX="29.0" layoutY="299.0" text="Date">
          <font>
             <Font name="Times New Roman" size="12.0" />
          </font>
@@ -89,9 +89,9 @@
             <Font name="Times New Roman" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="dateaf1" alignment="TOP_CENTER" layoutX="-2.0" layoutY="316.0" prefHeight="25.0" prefWidth="70.0" promptText="jj/mm" />
-      <TextField fx:id="libelleaf1" alignment="TOP_CENTER" layoutX="67.0" layoutY="316.0" prefHeight="25.0" prefWidth="164.0" promptText="Nom de la depence" />
-      <TextField fx:id="montantaf1" alignment="TOP_CENTER" layoutX="229.0" layoutY="316.0" prefHeight="25.0" prefWidth="70.0" promptText="00,00€" />
+      <TextField fx:id="dateaf1" alignment="TOP_CENTER" layoutX="-2.0" layoutY="316.0" prefHeight="25.0" prefWidth="80.0" promptText="aaaa-mm-jj" />
+      <TextField fx:id="libelleaf1" alignment="TOP_CENTER" layoutX="75.0" layoutY="316.0" prefHeight="25.0" prefWidth="156.0" promptText="Nom de la depence" />
+      <TextField fx:id="montantaf1" alignment="TOP_CENTER" layoutX="229.0" layoutY="316.0" prefHeight="25.0" prefWidth="70.0" promptText="00,00" />
       <Button fx:id="Soumettre" layoutX="86.0" layoutY="526.0" mnemonicParsing="false" onAction="#Inserts" prefHeight="25.0" prefWidth="128.0" text="Signer et Soumettre" />
       <Button fx:id="BackButton" layoutX="15.0" layoutY="560.0" mnemonicParsing="false" onAction="#GoBack" text="Revenir en arrière" />
       <Label fx:id="ttNuitee" alignment="CENTER_RIGHT" layoutX="221.0" layoutY="167.0" prefHeight="17.0" prefWidth="60.0" textAlignment="CENTER">
@@ -132,8 +132,8 @@
             <Font name="Times New Roman Italic" size="12.0" />
          </font>
       </Label>
-      <Button fx:id="ValiderAF" layoutX="82.0" layoutY="346.0" mnemonicParsing="false" onAction="#ValiderAF" text="Valider les Autres Frais" />
-      <TableView fx:id="AF" layoutX="10.0" layoutY="379.0" prefHeight="140.0" prefWidth="276.0">
+      <Button fx:id="ValiderAF" layoutX="75.0" layoutY="348.0" mnemonicParsing="false" onAction="#ValiderAF" prefHeight="25.0" prefWidth="156.0" text="Valider les Autres Frais" />
+      <TableView fx:id="AF" editable="true" layoutX="10.0" layoutY="379.0" prefHeight="140.0" prefWidth="276.0">
         <columns>
           <TableColumn fx:id="Af_Date" prefWidth="75.0" text="Date" />
           <TableColumn fx:id="Af_libelle" prefWidth="75.0" text="Libellé" />
@@ -149,5 +149,7 @@
       <Label alignment="CENTER" layoutX="283.0" layoutY="167.0" prefHeight="17.0" prefWidth="14.0" text="€" />
       <Label alignment="CENTER" layoutX="283.0" layoutY="192.0" prefHeight="17.0" prefWidth="14.0" text="€" />
       <Label alignment="CENTER" layoutX="283.0" layoutY="218.0" prefHeight="17.0" prefWidth="14.0" text="€" />
+      <Label alignment="CENTER" layoutX="283.0" layoutY="320.0" prefHeight="17.0" prefWidth="14.0" text="€" />
+      <Button fx:id="suppr" layoutX="234.0" layoutY="526.0" mnemonicParsing="false" onAction="#suppr" text="Suppr." />
    </children>
 </AnchorPane>
