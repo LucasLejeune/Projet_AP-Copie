@@ -3,22 +3,17 @@ package fr.projet_ap;
 import java.io.IOException;
 import java.net.URL;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.FlowPane;
-import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -179,18 +174,19 @@ public class ConsultationController implements Initializable {
 
                 ObservableList<Autre_frais> list = FXCollections.observableArrayList();
 
-                String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
+                String SqlAf = "SELECT af_date, af_libelle, af_montant, af_id FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = '"
                         + Common.login + "' AND af_Est_Validee = '0' AND fi_mois = '" + month + "';";
                 ResultSet resultAF = statement.executeQuery(SqlAf);
 
                 while (resultAF.next()) {
                     if (i != 1) {
-                        i += 3;
+                        i += 4;
                     }
                     String date = resultAF.getString(i);
                     String libelle = resultAF.getString(i + 1);
                     double montant = Double.parseDouble(resultAF.getString(i + 2));
-                    list.add(new Autre_frais(date, libelle, montant));
+                    int id = Integer.parseInt(resultAF.getString(i + 3));
+                    list.add(new Autre_frais(id, date, libelle, montant));
 
                 }
 

@@ -261,12 +261,13 @@ public class RenseignementController {
 
             while (resultAF.next()) {
                 if (i != 1) {
-                    i += 3;
+                    i += 4;
                 }
                 String date = resultAF.getString(i);
                 String libelle = resultAF.getString(i + 1);
                 double montant = Double.parseDouble(resultAF.getString(i + 2));
-                list.add(new Autre_frais(date, libelle, montant));
+                int id = Integer.parseInt(resultAF.getString(i + 3));
+                list.add(new Autre_frais(id, date, libelle, montant));
 
             }
 
@@ -432,12 +433,13 @@ public class RenseignementController {
 
             while (resultAF.next()) {
                 if (i != 1) {
-                    i += 3;
+                    i += 4;
                 }
                 String date = resultAF.getString(i);
                 String libelle = resultAF.getString(i + 1);
                 double montant = Double.parseDouble(resultAF.getString(i + 2));
-                list.add(new Autre_frais(date, libelle, montant));
+                int id = Integer.parseInt(resultAF.getString(i + 3));
+                list.add(new Autre_frais(id, date, libelle, montant));
 
             }
 
