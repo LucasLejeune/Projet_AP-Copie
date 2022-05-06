@@ -46,6 +46,8 @@ public class RenseignementController {
     private Button Soumettre;
     @FXML
     private Button ValiderAF;
+    @FXML
+    private Button suppr;
 
     @FXML
     private TextField dateaf1;
@@ -173,7 +175,7 @@ public class RenseignementController {
             ResultSet SqlN = statement.executeQuery(SQLN);
             if (SqlN.next()) {
                 String databaseN = "SELECT ff_quantite FROM frais_forfaitaires Inner Join fiche ON fi_id = fk_fiche_ff INNER JOIN visiteur ON vi_matricule = fk_vi where ff_nom = 'Nuitee' AND vi_matricule = '"
-                        + Common.login + "';";
+                        + Common.login + "' AND fi_id = " + fi_id + ";";
 
                 ResultSet quantite_nuitee = statement.executeQuery(databaseN);
                 quantite_nuitee.next();
@@ -198,7 +200,7 @@ public class RenseignementController {
 
             // afficher les repas et leurs totaux
             String SQLR = "SELECT ff_id FROM fiche INNER JOIN visiteur ON vi_matricule = fk_vi Inner Join frais_forfaitaires ON fi_id = fk_fiche_ff where ff_nom = 'Repas' AND vi_matricule = "
-                    + Common.login + ";";
+                    + Common.login + " AND fi_id = " + fi_id + ";";
             ResultSet SqlR = statement.executeQuery(SQLR);
             if (SqlR.next()) {
                 String databaseR = "SELECT ff_quantite FROM frais_forfaitaires Inner Join fiche ON fi_id = fk_fiche_ff INNER JOIN visiteur ON vi_matricule = fk_vi where ff_nom = 'Repas' AND vi_matricule = '"
@@ -226,7 +228,7 @@ public class RenseignementController {
 
             // afficher les kilometrage et leurs totaux
             String SQLK = "SELECT ff_id FROM fiche INNER JOIN visiteur ON vi_matricule = fk_vi Inner Join frais_forfaitaires ON fi_id = fk_fiche_ff where ff_nom = 'Kilometrage' AND vi_matricule = "
-                    + Common.login + ";";
+                    + Common.login + " AND fi_id = " + fi_id + ";";
             ResultSet SqlK = statement.executeQuery(SQLK);
             if (SqlK.next()) {
                 String databaseK = "SELECT ff_quantite FROM frais_forfaitaires Inner Join fiche ON fi_id = fk_fiche_ff INNER JOIN visiteur ON vi_matricule = fk_vi where ff_nom = 'Kilometrage' AND vi_matricule = '"
@@ -255,8 +257,8 @@ public class RenseignementController {
 
             ObservableList<Autre_frais> list = FXCollections.observableArrayList();
 
-            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = "
-                    + Common.login + " AND fi_mois = '" + mois + "';";
+            String SqlAf = "SELECT af_date, af_libelle, af_montant, af_id FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = "
+                    + Common.login + " AND fi_id = " + fi_id + ";";
             ResultSet resultAF = statement.executeQuery(SqlAf);
 
             while (resultAF.next()) {
@@ -274,6 +276,7 @@ public class RenseignementController {
             Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
             Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
             Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+            Af_Validation.setCellValueFactory(new PropertyValueFactory<Autre_frais, Boolean>("selected"));
             Af_Validation.setCellFactory(CheckBoxTableCell.forTableColumn(Af_Validation));
 
             AF.setItems(list);
@@ -427,7 +430,7 @@ public class RenseignementController {
 
             ObservableList<Autre_frais> list = FXCollections.observableArrayList();
 
-            String SqlAf = "SELECT af_date, af_libelle, af_montant FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = "
+            String SqlAf = "SELECT af_date, af_libelle, af_montant, af_id FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = "
                     + Common.login + " AND fi_mois = '" + mois + "';";
             ResultSet resultAF = statement.executeQuery(SqlAf);
 
@@ -446,6 +449,7 @@ public class RenseignementController {
             Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
             Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
             Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+            Af_Validation.setCellValueFactory(new PropertyValueFactory<Autre_frais, Boolean>("selected"));
             Af_Validation.setCellFactory(CheckBoxTableCell.forTableColumn(Af_Validation));
 
             AF.setItems(list);
@@ -472,8 +476,9 @@ public class RenseignementController {
             String fi_id = ID.getString(1);
 
             String SQLN = "SELECT ff_id FROM fiche INNER JOIN visiteur ON vi_matricule = fk_vi Inner Join frais_forfaitaires ON fi_id = fk_fiche_ff where ff_nom = 'Nuitee' AND vi_matricule = "
-                    + Common.login + ";";
+                    + Common.login + " AND fi_id = " + fi_id + ";";
             ResultSet SqlN = statement.executeQuery(SQLN);
+
             if (!SqlN.next()) {
                 // Insert NbrNuitee
                 String nNuitee = nbrNuitee.getText();
@@ -493,7 +498,7 @@ public class RenseignementController {
             }
 
             String SQLR = "SELECT ff_id FROM fiche INNER JOIN visiteur ON vi_matricule = fk_vi Inner Join frais_forfaitaires ON fi_id = fk_fiche_ff where ff_nom = 'Repas' AND vi_matricule = "
-                    + Common.login + ";";
+                    + Common.login + " AND fi_id = " + fi_id + ";";
             ResultSet SqlR = statement.executeQuery(SQLR);
             if (!SqlR.next()) {
                 // insert NbrRepas
@@ -514,7 +519,7 @@ public class RenseignementController {
             }
 
             String SQLK = "SELECT ff_id FROM fiche INNER JOIN visiteur ON vi_matricule = fk_vi Inner Join frais_forfaitaires ON fi_id = fk_fiche_ff where ff_nom = 'Kilometrage' AND vi_matricule = "
-                    + Common.login + ";";
+                    + Common.login + " AND fi_id = " + fi_id + ";";
             ResultSet SqlK = statement.executeQuery(SQLK);
             if (!SqlK.next()) {
                 // insert NbrKilometrage
@@ -535,6 +540,82 @@ public class RenseignementController {
             }
 
             Enregistre.setText("Fiche de renseignement: Enregistrée");
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    void suppr(ActionEvent event) {
+        String dbURL = "jdbc:mysql://localhost:3306/projet_AP";
+        String username = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(dbURL, username, password)) {
+            for (Autre_frais p : AF.getItems()) {
+                if (p.isSelected() == true) {
+
+                    String SuppressionAF = "DELETE FROM `projet_ap`.`autres_frais` WHERE (`af_id` = '" + p.GetId()
+                            + "');";
+                    Statement statement = conn.createStatement();
+                    statement.executeUpdate(SuppressionAF);
+                }
+            }
+
+            ObservableList<Autre_frais> list = FXCollections.observableArrayList();
+            AF.setItems(list);
+
+            // variable mois
+            Map<String, String> dicoFR = new HashMap<String, String>();
+            dicoFR.put("janvier", "JANVIER");
+            dicoFR.put("fevrier", "FEVRIER");
+            dicoFR.put("mars", "MARS");
+            dicoFR.put("avril", "AVRIL");
+            dicoFR.put("mai", "MAI");
+            dicoFR.put("juin", "JUIN");
+            dicoFR.put("juillet", "JUILLET");
+            dicoFR.put("aout", "AOUT");
+            dicoFR.put("septembre", "SEPTEMBRE");
+            dicoFR.put("octobre", "OCTOBRE");
+            dicoFR.put("novembre", "NOVEMBRE");
+            dicoFR.put("decembre", "DECEMBRE");
+
+            LocalDate currentdate = LocalDate.now();
+            Month currentMonth = currentdate.getMonth();
+            String leMois = currentMonth.getDisplayName(TextStyle.FULL, Locale.FRANCE);
+            String mois = dicoFR.get(leMois);
+
+            // TableView
+            int i = 1;
+
+            ObservableList<Autre_frais> listb = FXCollections.observableArrayList();
+
+            String SqlAf = "SELECT af_date, af_libelle, af_montant, af_id FROM autres_frais JOIN fiche ON fk_fiche_af = fi_id WHERE fk_vi = "
+                    + Common.login + " AND fi_mois = '" + mois + "';";
+            Statement statement = conn.createStatement();
+            ResultSet resultAF = statement.executeQuery(SqlAf);
+
+            while (resultAF.next()) {
+                if (i != 1) {
+                    i += 4;
+                }
+                String date = resultAF.getString(i);
+                String libelle = resultAF.getString(i + 1);
+                double montant = Double.parseDouble(resultAF.getString(i + 2));
+                int id = Integer.parseInt(resultAF.getString(i + 3));
+                listb.add(new Autre_frais(id, date, libelle, montant));
+
+            }
+
+            Af_Date.setCellValueFactory(new PropertyValueFactory<Autre_frais, Date>("Af_Date"));
+            Af_libelle.setCellValueFactory(new PropertyValueFactory<Autre_frais, String>("Af_libelle"));
+            Af_montant.setCellValueFactory(new PropertyValueFactory<Autre_frais, Double>("Af_montant"));
+            Af_Validation.setCellValueFactory(new PropertyValueFactory<Autre_frais, Boolean>("selected"));
+            Af_Validation.setCellFactory(CheckBoxTableCell.forTableColumn(Af_Validation));
+
+            AF.setItems(listb);
 
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -108,15 +108,6 @@ public class ComptabiliteController {
     private Label idConnexion;
 
     @FXML
-    private CheckBox CheckAf1;
-
-    @FXML
-    private CheckBox CheckAf2;
-
-    @FXML
-    private CheckBox CheckAf3;
-
-    @FXML
     private TableView<Autre_frais> AF;
 
     @FXML
